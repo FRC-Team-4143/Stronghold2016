@@ -28,7 +28,7 @@ private:
 	double A;	//A is the ratio of X to turn harder 
 	double W;	//W is the distance form the mid-point of one back wheel to the mid-point of the other back wheel
 	double X;	//X is the distance form the mid-point of the back wheels to the mid-point of the front wheels 
-	double Y;	//Y is the distance from the mid-point of one front wheel to the mid-point of the other font wheel
+	double Y;	//Y is the distance from the mid-point of one front wheel to the mid-point of the other front wheel
 	
 	double FL;	//FL, distance from Front Left Wheel to the center of rotation
 	double FR;	//FR, distance from Front Right Wheel to the center of rotation

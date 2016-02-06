@@ -69,6 +69,8 @@ void Robot::TeleopInit() {
 	// these lines or comment it out.
 	if (autonomousCommand.get() != nullptr)
 		autonomousCommand->Cancel();
+
+	driveTrain->SetWheelbase(24, 21.5, 24);
 }
 
 void Robot::TeleopPeriodic() {

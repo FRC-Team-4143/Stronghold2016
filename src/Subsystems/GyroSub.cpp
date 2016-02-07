@@ -1,5 +1,5 @@
 #include "GyroSub.h"
-#include "../Logger.h"
+#include "../Modules/Logger.h"
 
 // ==========================================================================
 

@@ -3,8 +3,8 @@
 
 #include <WPILib.h>
 #include <math.h>
-#include "../AnalogChannelVolt.h"
-#include "../Subsystems/GyroSub.h"
+#include "../Modules/AnalogChannelVolt.h"
+#include "GyroSub.h"
 //#include "../Subsystems/MouseSubsystem.h"
 
 class DriveTrain: public Subsystem {

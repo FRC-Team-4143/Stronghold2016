@@ -12,8 +12,8 @@
 #ifndef ROBOTMAP_H
 #define ROBOTMAP_H
 #include "WPILib.h"
-#include "AHRS.h"
-#include "AnalogChannelVolt.h"
+#include "Modules/AHRS.h"
+#include "Modules/AnalogChannelVolt.h"
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into

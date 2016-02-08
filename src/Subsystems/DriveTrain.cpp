@@ -52,6 +52,11 @@ DriveTrain::DriveTrain(): Subsystem("DriveTrain") {
 	DriveBackFlag = false;
 	robotangle = 0;
 	unwinding = false;
+
+	FLValue = 0;
+	FRValue = 0;
+	RLValue = 0;
+	RRValue = 0;
 }
 
 void DriveTrain::InitDefaultCommand() {
@@ -508,4 +513,24 @@ bool DriveTrain::GetDriveBackFlag() {
 
 void DriveTrain::SetDriveBackFlag(bool flag) {
 	DriveBackFlag = flag;
+}
+
+void DriveTrain::updateDistanceEncoders() {
+	FLValue = frontLeftDrive->GetEncPosition();
+	FRValue = frontRightDrive->GetEncPosition();
+	RLValue = rearLeftDrive->GetEncPosition();
+	RRValue = rearRightDrive->GetEncPosition();
+}
+
+double DriveTrain::getDistanceEncodersValues() {
+	double average = (FLValue + FRValue + RLValue + RRValue)/4;
+	return average;
+}
+
+void DriveTrain::zeroDistanceEncoders() {
+	frontLeftDrive->SetPosition(0);
+	frontRightDrive->SetPosition(0);
+	rearLeftDrive->SetPosition(0);
+	rearRightDrive->SetPosition(0);
+
 }

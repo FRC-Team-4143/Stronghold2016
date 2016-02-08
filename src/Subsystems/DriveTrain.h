@@ -5,7 +5,6 @@
 #include <math.h>
 #include "../Modules/AnalogChannelVolt.h"
 #include "GyroSub.h"
-//#include "../Subsystems/MouseSubsystem.h"
 
 class DriveTrain: public Subsystem {
 private:
@@ -125,26 +124,31 @@ private:
 
 	bool DriveBackFlag;
 
+	double FLValue;
+	double FRValue;
+	double RLValue;
+	double RRValue;
+
 public:
 	PIDController*     frontLeft;
-	SpeedController*   frontLeftDrive;
+	CANTalon*   frontLeftDrive;
 	AnalogChannelVolt* frontLeftPos;
-	SpeedController*   frontLeftSteer;
+	CANTalon*   frontLeftSteer;
 
 	PIDController*     frontRight;
-	SpeedController*   frontRightDrive;
+	CANTalon*   frontRightDrive;
 	AnalogChannelVolt* frontRightPos;
-	SpeedController*   frontRightSteer;
+	CANTalon*   frontRightSteer;
 
 	PIDController*     rearLeft;
-	SpeedController*   rearLeftDrive;
+	CANTalon*   rearLeftDrive;
 	AnalogChannelVolt* rearLeftPos;
-	SpeedController*   rearLeftSteer;
+	CANTalon*   rearLeftSteer;
 
 	PIDController*     rearRight;
-	SpeedController*   rearRightDrive;
+	CANTalon*   rearRightDrive;
 	AnalogChannelVolt* rearRightPos;
-	SpeedController*   rearRightSteer;
+	CANTalon*   rearRightSteer;
 
 	DriveTrain();
 	void SetWheelbase(float w, float x, float y);
@@ -165,6 +169,9 @@ public:
 	bool unwindwheel(AnalogChannelVolt*, PIDController*);
 	void GyroCrab(float desiredangle, float y, float x, bool operatorControl);
 	void FieldCentricCrab(float twist, float y, float x, bool operatorControl);
+	void updateDistanceEncoders();
+	double getDistanceEncodersValues();
+	void zeroDistanceEncoders();
 };
 
 #endif

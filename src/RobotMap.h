@@ -25,24 +25,24 @@ class RobotMap {
 public:
 
 	static PIDController*     driveTrainFrontLeft;
-	static SpeedController*   driveTrainFrontLeftDrive;
+	static CANTalon*   driveTrainFrontLeftDrive;
 	static AnalogChannelVolt* driveTrainFrontLeftPos;
-	static SpeedController*   driveTrainFrontLeftSteer;
+	static CANTalon*   driveTrainFrontLeftSteer;
 
 	static PIDController*     driveTrainFrontRight;
-	static SpeedController*   driveTrainFrontRightDrive;
+	static CANTalon*   driveTrainFrontRightDrive;
 	static AnalogChannelVolt* driveTrainFrontRightPos;
-	static SpeedController*   driveTrainFrontRightSteer;
+	static CANTalon*   driveTrainFrontRightSteer;
 
 	static PIDController*     driveTrainRearLeft;
-	static SpeedController*   driveTrainRearLeftDrive;
+	static CANTalon*   driveTrainRearLeftDrive;
 	static AnalogChannelVolt* driveTrainRearLeftPos;
-	static SpeedController*   driveTrainRearLeftSteer;
+	static CANTalon*   driveTrainRearLeftSteer;
 
 	static PIDController*     driveTrainRearRight;
-	static SpeedController*   driveTrainRearRightDrive;
+	static CANTalon*   driveTrainRearRightDrive;
 	static AnalogChannelVolt* driveTrainRearRightPos;
-	static SpeedController*   driveTrainRearRightSteer;
+	static CANTalon*   driveTrainRearRightSteer;
 
 	static I2C* i2c;
 

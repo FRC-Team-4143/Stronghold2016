@@ -2,24 +2,24 @@
 #include "LiveWindow/LiveWindow.h"
 
 PIDController*     RobotMap::driveTrainFrontLeft = nullptr;
-SpeedController*   RobotMap::driveTrainFrontLeftDrive = nullptr;
+CANTalon*   RobotMap::driveTrainFrontLeftDrive = nullptr;
 AnalogChannelVolt* RobotMap::driveTrainFrontLeftPos = nullptr;
-SpeedController*   RobotMap::driveTrainFrontLeftSteer = nullptr;
+CANTalon*   RobotMap::driveTrainFrontLeftSteer = nullptr;
 
 PIDController*     RobotMap::driveTrainFrontRight = nullptr;
-SpeedController*   RobotMap::driveTrainFrontRightDrive = nullptr;
+CANTalon*   RobotMap::driveTrainFrontRightDrive = nullptr;
 AnalogChannelVolt* RobotMap::driveTrainFrontRightPos = nullptr;
-SpeedController*   RobotMap::driveTrainFrontRightSteer = nullptr;
+CANTalon*   RobotMap::driveTrainFrontRightSteer = nullptr;
 
 PIDController*     RobotMap::driveTrainRearLeft = nullptr;
-SpeedController*   RobotMap::driveTrainRearLeftDrive = nullptr;
+CANTalon*   RobotMap::driveTrainRearLeftDrive = nullptr;
 AnalogChannelVolt* RobotMap::driveTrainRearLeftPos = nullptr;
-SpeedController*   RobotMap::driveTrainRearLeftSteer = nullptr;
+CANTalon*   RobotMap::driveTrainRearLeftSteer = nullptr;
 
 PIDController*     RobotMap::driveTrainRearRight = nullptr;
-SpeedController*   RobotMap::driveTrainRearRightDrive = nullptr;
+CANTalon*   RobotMap::driveTrainRearRightDrive = nullptr;
 AnalogChannelVolt* RobotMap::driveTrainRearRightPos = nullptr;
-SpeedController*   RobotMap::driveTrainRearRightSteer = nullptr;
+CANTalon*   RobotMap::driveTrainRearRightSteer = nullptr;
 
 I2C* RobotMap::i2c = nullptr;
 
@@ -73,7 +73,7 @@ void RobotMap::init() {
     //serialPort = new SerialPort(57600, SerialPort::kOnboard);
     imu = new AHRS(SerialPort::Port::kUSB);//serialPort, 100);
 
-    driveTrainFrontLeftDrive = new Victor(FLD);
+    driveTrainFrontLeftDrive = new CANTalon(FLD);
 	driveTrainFrontLeftPos   = new AnalogChannelVolt(FLP, true, RATIO);
 	driveTrainFrontLeftSteer = new CANTalon(FLS);
 	driveTrainFrontLeft      = new PIDController(P, I, D, F, driveTrainFrontLeftPos, driveTrainFrontLeftSteer, PERIOD);
@@ -82,7 +82,7 @@ void RobotMap::init() {
 	driveTrainFrontLeft->SetInputRange(POTMIN, POTMAX);
 	driveTrainFrontLeft->SetOutputRange(-STEERPOW, STEERPOW);
 
-	driveTrainFrontRightDrive = new Victor(FRD);
+	driveTrainFrontRightDrive = new CANTalon(FRD);
 	driveTrainFrontRightPos   = new AnalogChannelVolt(FRP, true, RATIO);
 	driveTrainFrontRightSteer = new CANTalon(FRS);
 	driveTrainFrontRight      = new PIDController(P, I, D, F, driveTrainFrontRightPos, driveTrainFrontRightSteer, PERIOD);
@@ -91,7 +91,7 @@ void RobotMap::init() {
 	driveTrainFrontRight->SetInputRange(POTMIN, POTMAX);
 	driveTrainFrontRight->SetOutputRange(-STEERPOW, STEERPOW);
 
-	driveTrainRearLeftDrive = new Victor(RLD);
+	driveTrainRearLeftDrive = new CANTalon(RLD);
 	driveTrainRearLeftPos   = new AnalogChannelVolt(RLP, true, RATIO);
 	driveTrainRearLeftSteer = new CANTalon(RLS);
 	driveTrainRearLeft      = new PIDController(P, I, D, F, driveTrainRearLeftPos, driveTrainRearLeftSteer, PERIOD);
@@ -100,7 +100,7 @@ void RobotMap::init() {
 	driveTrainRearLeft->SetInputRange(POTMIN, POTMAX);
 	driveTrainRearLeft->SetOutputRange(-STEERPOW, STEERPOW);
 
-	driveTrainRearRightDrive = new Victor(RRD);
+	driveTrainRearRightDrive = new CANTalon(RRD);
 	driveTrainRearRightPos   = new AnalogChannelVolt(RRP, true, RATIO);
 	driveTrainRearRightSteer = new CANTalon(RRS);
 	driveTrainRearRight      = new PIDController(P, I, D, F, driveTrainRearRightPos, driveTrainRearRightSteer, PERIOD);

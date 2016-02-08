@@ -172,6 +172,7 @@ public:
 	void updateDistanceEncoders();
 	double getDistanceEncodersValues();
 	void zeroDistanceEncoders();
+	void zeroSteeringEncoders();
 };
 
 #endif

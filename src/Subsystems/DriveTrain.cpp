@@ -150,13 +150,17 @@ void DriveTrain::GyroCrab(float desiredangle, float y, float x, bool operatorCon
 }
 
 void DriveTrain::Crab(float twist, float y, float x, bool operatorControl) {
-  // stop PID loop if wires wrap.
+	SmartDashboard::PutNumber("Steering Motor Encoder FR", frontRightPos->PIDGet());
+	SmartDashboard::PutNumber("Steering Motor Encoder FL", frontLeftPos->PIDGet());
+	SmartDashboard::PutNumber("Steering Motor Encoder RR", rearRightPos->PIDGet());
+	SmartDashboard::PutNumber("Steering Motor Encoder RL", rearLeftPos->PIDGet());
 
-  if(unwinding ||
-  	abs(frontRightPos->getturns()) > MAXTURNS ||
-  	abs(rearRightPos->getturns()) > MAXTURNS ||
-  	abs(frontLeftPos->getturns()) > MAXTURNS ||
-  	abs(rearLeftPos->getturns()) > MAXTURNS) 
+	// stop PID loop if wires wrap.
+	if(unwinding ||
+		abs(frontRightPos->getturns()) > MAXTURNS ||
+		abs(rearRightPos->getturns()) > MAXTURNS ||
+		abs(frontLeftPos->getturns()) > MAXTURNS ||
+		abs(rearLeftPos->getturns()) > MAXTURNS)
 	{
 		SetDriveSpeed(0,0,0,0);
 		return;
@@ -532,5 +536,13 @@ void DriveTrain::zeroDistanceEncoders() {
 	frontRightDrive->SetPosition(0);
 	rearLeftDrive->SetPosition(0);
 	rearRightDrive->SetPosition(0);
+
+}
+
+void DriveTrain::zeroSteeringEncoders() {
+	frontLeftSteer->SetPosition(0);
+	frontRightSteer->SetPosition(0);
+	rearLeftSteer->SetPosition(0);
+	rearRightSteer->SetPosition(0);
 
 }

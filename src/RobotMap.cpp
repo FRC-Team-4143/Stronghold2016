@@ -50,19 +50,19 @@ AHRS* RobotMap::imu = nullptr;
 #define PERIOD .02
 #define RATIO 1
 
-#define FLD 2
+#define FLD 12
 #define FLP 2
 #define FLS 2
 
-#define FRD 1
+#define FRD 11
 #define FRP 1
-#define FRS 4
+#define FRS 1
 
-#define RLD 3
+#define RLD 14
 #define RLP 3
-#define RLS 1
+#define RLS 4
 
-#define RRD 0
+#define RRD 13
 #define RRP 0
 #define RRS 3
 
@@ -71,39 +71,52 @@ void RobotMap::init() {
     LiveWindow *lw = LiveWindow::GetInstance();
 
     //serialPort = new SerialPort(57600, SerialPort::kOnboard);
-    imu = new AHRS(SerialPort::Port::kUSB);//serialPort, 100);
+    imu = new AHRS(SPI::kOnboardCS0);//serialPort, 100);
 
     driveTrainFrontLeftDrive = new CANTalon(FLD);
-	driveTrainFrontLeftPos   = new AnalogChannelVolt(FLP, true, RATIO);
+	driveTrainFrontLeftDrive->SetFeedbackDevice(CANTalon::CtreMagEncoder_Relative);
+	driveTrainFrontLeftDrive->ConfigEncoderCodesPerRev(1024);
 	driveTrainFrontLeftSteer = new CANTalon(FLS);
+	driveTrainFrontLeftSteer->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
+	driveTrainFrontLeftSteer->ConfigEncoderCodesPerRev(360);
+	driveTrainFrontLeftPos   = new AnalogChannelVolt(FLP, true, RATIO, driveTrainFrontLeftSteer);
 	driveTrainFrontLeft      = new PIDController(P, I, D, F, driveTrainFrontLeftPos, driveTrainFrontLeftSteer, PERIOD);
 	driveTrainFrontLeft->SetContinuous(CONTINUOUS);
 	driveTrainFrontLeft->SetAbsoluteTolerance(TOLERANCE);
-	driveTrainFrontLeft->SetInputRange(POTMIN, POTMAX);
 	driveTrainFrontLeft->SetOutputRange(-STEERPOW, STEERPOW);
 
 	driveTrainFrontRightDrive = new CANTalon(FRD);
-	driveTrainFrontRightPos   = new AnalogChannelVolt(FRP, true, RATIO);
+	driveTrainFrontRightDrive->SetFeedbackDevice(CANTalon::CtreMagEncoder_Relative);
+	driveTrainFrontRightDrive->ConfigEncoderCodesPerRev(1024);
 	driveTrainFrontRightSteer = new CANTalon(FRS);
+	driveTrainFrontRightSteer->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
+	driveTrainFrontRightSteer->ConfigEncoderCodesPerRev(360);
+	driveTrainFrontRightPos   = new AnalogChannelVolt(FRP, true, RATIO, driveTrainFrontRightSteer);
 	driveTrainFrontRight      = new PIDController(P, I, D, F, driveTrainFrontRightPos, driveTrainFrontRightSteer, PERIOD);
 	driveTrainFrontRight->SetContinuous(CONTINUOUS);
 	driveTrainFrontRight->SetAbsoluteTolerance(TOLERANCE);
-	driveTrainFrontRight->SetInputRange(POTMIN, POTMAX);
 	driveTrainFrontRight->SetOutputRange(-STEERPOW, STEERPOW);
 
 	driveTrainRearLeftDrive = new CANTalon(RLD);
-	driveTrainRearLeftPos   = new AnalogChannelVolt(RLP, true, RATIO);
+	driveTrainRearLeftDrive->SetFeedbackDevice(CANTalon::CtreMagEncoder_Relative);
+	driveTrainRearLeftDrive->ConfigEncoderCodesPerRev(1024);
 	driveTrainRearLeftSteer = new CANTalon(RLS);
+	driveTrainRearLeftSteer->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
+	driveTrainRearLeftSteer->ConfigEncoderCodesPerRev(360);
+	driveTrainRearLeftPos   = new AnalogChannelVolt(RLP, true, RATIO, driveTrainRearLeftSteer);
 	driveTrainRearLeft      = new PIDController(P, I, D, F, driveTrainRearLeftPos, driveTrainRearLeftSteer, PERIOD);
 	driveTrainRearLeft->SetContinuous(CONTINUOUS);
 	driveTrainRearLeft->SetAbsoluteTolerance(TOLERANCE);
-	driveTrainRearLeft->SetInputRange(POTMIN, POTMAX);
 	driveTrainRearLeft->SetOutputRange(-STEERPOW, STEERPOW);
 
 	driveTrainRearRightDrive = new CANTalon(RRD);
-	driveTrainRearRightPos   = new AnalogChannelVolt(RRP, true, RATIO);
+	driveTrainRearRightDrive->SetFeedbackDevice(CANTalon::CtreMagEncoder_Relative);
+	driveTrainRearRightDrive->ConfigEncoderCodesPerRev(1024);
 	driveTrainRearRightSteer = new CANTalon(RRS);
-	driveTrainRearRight      = new PIDController(P, I, D, F, driveTrainRearRightPos, driveTrainRearRightSteer, PERIOD);
+	driveTrainRearRightSteer->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
+	driveTrainRearRightSteer->ConfigEncoderCodesPerRev(360);
+	driveTrainRearRightPos   = new AnalogChannelVolt(RRP, true, RATIO, driveTrainRearRightSteer);
+	driveTrainRearRight = new PIDController(P, I, D, F, driveTrainRearRightPos, driveTrainRearRightSteer, PERIOD);
 	driveTrainRearRight->SetContinuous(CONTINUOUS);
 	driveTrainRearRight->SetAbsoluteTolerance(TOLERANCE);
 	driveTrainRearRight->SetInputRange(POTMIN, POTMAX);

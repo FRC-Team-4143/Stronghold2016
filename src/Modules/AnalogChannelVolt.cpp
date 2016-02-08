@@ -1,7 +1,7 @@
 #include "AnalogChannelVolt.h"
 #include <math.h>
 
-AnalogChannelVolt::AnalogChannelVolt(uint32_t channel, bool inv, int ratio)
+AnalogChannelVolt::AnalogChannelVolt(uint32_t channel, bool inv, int ratio, CANTalon* Motor)
   : AnalogInput(channel)
 {
     Inv = inv;
@@ -25,6 +25,7 @@ AnalogChannelVolt::AnalogChannelVolt(uint32_t channel, bool inv, int ratio)
     m_count->SetUpSourceEdge(true,false);
     m_count->SetDownSourceEdge(true,false);
 
+    motor = Motor;
 }
 
 float AnalogChannelVolt::GetAverageVoltage()
@@ -39,19 +40,12 @@ void AnalogChannelVolt::ResetTurns()
 
 void AnalogChannelVolt::Start()
 {
-    printf("analogChannelVolt start\n\r");
+	LOG("analogChannelVolt start\r");
 }
 
 float AnalogChannelVolt::GetVoltage()
 {
-  float temp = AnalogInput::GetVoltage();
-  temp = (((temp - halfrev) * scale) + halfrev);  // scale
-  if(temp < 0) temp = 0; // min
-  if(temp > rev) temp = rev; // max
-  temp = (temp / Ratio) + ((m_count->Get() % Ratio) * halfrev); // half scale
-  if(Inv)
-     temp = rev - temp; // inverse
-  return temp;
+  return PIDGet();
 }
 
 int AnalogChannelVolt::getturns()
@@ -60,7 +54,12 @@ int AnalogChannelVolt::getturns()
 }
 double AnalogChannelVolt::PIDGet()
 {
-  return GetVoltage();
+	double position = motor->GetPosition();
+	position -= trunc(position);
+	if (position < 0)
+	position += 1;
+	position *= 5;
+	return position;
 }
 
 AnalogChannelVolt::~AnalogChannelVolt()

@@ -14,6 +14,7 @@
 #include "WPILib.h"
 #include "Modules/AHRS.h"
 #include "Modules/AnalogChannelVolt.h"
+#include "Modules/Logger.h"
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into

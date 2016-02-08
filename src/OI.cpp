@@ -7,6 +7,7 @@
 #include "Commands/ArmUp.h"
 #include "Commands/ArmDown.h"
 #include "Commands/UseCamera.h"
+#include "Commands/ResetSteeringEncoders.h"
 
 const uint32_t JOYSTICK_LX_AXIS    = 0;
 const uint32_t JOYSTICK_LY_AXIS    = 1;
@@ -44,6 +45,7 @@ OI::OI() {
     SmartDashboard::PutData("Pickup", new Pickup());
     SmartDashboard::PutData("Shoot", new Shoot());
     SmartDashboard::PutData("Autonomous Command", new AutonomousCommand());
+    SmartDashboard::PutData("Reset Steering Encoders", new ResetSteeringEncoders());
 }
 
 float OI::GetJoystickX() {

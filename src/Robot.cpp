@@ -1,5 +1,6 @@
 #include "Robot.h"
 #include "Commands/DriveDistance.h"
+#include "Modules/Logger.h"
 
 OI* Robot::oi;
 Shooter* Robot::shooter = nullptr;
@@ -19,6 +20,11 @@ void Robot::RobotInit() {
 	oi = new OI();
 
 	driveTrain->SetWheelbase(24, 21.5, 24);
+
+	driveTrain->frontLeft->Enable();
+	driveTrain->frontRight->Enable();
+	driveTrain->rearLeft->Enable();
+	driveTrain->rearRight->Enable();
 
 	autonomousCommand = new DriveDistance(0.5, 0, 0, 5);
   }

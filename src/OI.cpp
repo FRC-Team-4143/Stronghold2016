@@ -8,6 +8,8 @@
 #include "Commands/ArmDown.h"
 #include "Commands/UseCamera.h"
 #include "Commands/ResetSteeringEncoders.h"
+#include "Commands/PneumaticIn.h"
+#include "Commands/PneumaticOut.h"
 
 const uint32_t JOYSTICK_LX_AXIS    = 0;
 const uint32_t JOYSTICK_LY_AXIS    = 1;
@@ -35,12 +37,16 @@ OI::OI() {
 	armUp = new ArmUp();
 	armDown = new ArmDown();
 	useCamera = new UseCamera();
+	pneumaticIn = new PneumaticIn();
+	pneumaticOut = new PneumaticOut();
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(shoot);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhileHeld(feed);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(armUp);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhileHeld(armDown);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhenPressed(useCamera);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhileHeld(armUp);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhileHeld(armDown);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhenPressed(useCamera);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhileHeld(pneumaticIn);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_B))->WhileHeld(pneumaticOut);
 
     SmartDashboard::PutData("Pickup", new Feed());
     SmartDashboard::PutData("Shoot", new Shoot());

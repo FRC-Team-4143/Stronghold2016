@@ -33,6 +33,9 @@ SpeedController* RobotMap::feeder;
 
 SpeedController* RobotMap::armMotor;
 
+DoubleSolenoid* RobotMap::pickupSolenoid;
+Compressor* RobotMap::compressor;
+
 #ifdef USE_NAVX
 KauaiNavX::AHRS* RobotMap::imu = nullptr;
 #else
@@ -132,5 +135,8 @@ void RobotMap::init() {
     feeder = new Talon(2);
     
     armMotor = new Talon(0);
+
+    compressor = new Compressor(0);
+    pickupSolenoid = new DoubleSolenoid(5, 0, 1);
 
 }

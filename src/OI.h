@@ -19,6 +19,8 @@ public:
 	Command* armUp;
 	Command* armDown;
 	Command* useCamera;
+	Command* pneumaticIn;
+	Command* pneumaticOut;
 
 	Joystick* GetDriverJoystick() { return driverJoystick; }
 	Joystick* GetPickerJoystick() { return pickerJoystick; }

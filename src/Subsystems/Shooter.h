@@ -10,12 +10,15 @@ private:
 	SpeedController* rightRear;
 	SpeedController* rightFront;
 	SpeedController* leftRear;
+
+	SpeedController* feeder;
 public:
 	Shooter();
 	void InitDefaultCommand();
 	void shoot();
 	void stop();
-	void pickup();
+	void feed();
+	void stopFeed();
 };
 
 #endif

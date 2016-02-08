@@ -29,6 +29,7 @@ SpeedController* RobotMap::leftFront;
 SpeedController* RobotMap::rightRear;
 SpeedController* RobotMap::rightFront;
 SpeedController* RobotMap::leftRear;
+SpeedController* RobotMap::feeder;
 
 SpeedController* RobotMap::armMotor;
 
@@ -124,10 +125,11 @@ void RobotMap::init() {
 
     i2c = new I2C((I2C::Port) 1, 0x04);
 
-    leftFront = new Talon(8);
-    rightRear = new Talon(7);
+    rightRear = new Talon(3);
+    leftFront = new Talon(4);
     rightFront = new Talon(5);
     leftRear = new Talon(6);
+    feeder = new Talon(2);
     
     armMotor = new Talon(0);
 

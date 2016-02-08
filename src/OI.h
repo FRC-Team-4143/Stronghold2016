@@ -15,7 +15,7 @@ public:
 	bool GetButtonStart();
 
 	Command* shoot;
-	Command* pickup;
+	Command* feed;
 	Command* armUp;
 	Command* armDown;
 	Command* useCamera;

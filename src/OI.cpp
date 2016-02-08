@@ -1,8 +1,8 @@
+#include <Commands/Feed.h>
 #include "OI.h"
 
 #include "SmartDashboard/SmartDashboard.h"
 #include "Commands/AutonomousCommand.h"
-#include "Commands/Pickup.h"
 #include "Commands/Shoot.h"
 #include "Commands/ArmUp.h"
 #include "Commands/ArmDown.h"
@@ -31,18 +31,18 @@ const float JOYSTICK_DEAD_ZONE = 0.1;
 OI::OI() {
 	driverJoystick = new Joystick(0);
 	shoot = new Shoot();
-	pickup = new Pickup();
+	feed = new Feed();
 	armUp = new ArmUp();
 	armDown = new ArmDown();
 	useCamera = new UseCamera();
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(shoot);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhileHeld(pickup);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhileHeld(feed);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(armUp);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhileHeld(armDown);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhenPressed(useCamera);
 
-    SmartDashboard::PutData("Pickup", new Pickup());
+    SmartDashboard::PutData("Pickup", new Feed());
     SmartDashboard::PutData("Shoot", new Shoot());
     SmartDashboard::PutData("Autonomous Command", new AutonomousCommand());
     SmartDashboard::PutData("Reset Steering Encoders", new ResetSteeringEncoders());

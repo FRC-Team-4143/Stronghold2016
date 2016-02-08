@@ -6,6 +6,7 @@
 #include "Commands/Shoot.h"
 #include "Commands/ArmUp.h"
 #include "Commands/ArmDown.h"
+#include "Commands/UseCamera.h"
 
 const uint32_t JOYSTICK_LX_AXIS    = 0;
 const uint32_t JOYSTICK_LY_AXIS    = 1;
@@ -32,11 +33,13 @@ OI::OI() {
 	pickup = new Pickup();
 	armUp = new ArmUp();
 	armDown = new ArmDown();
+	useCamera = new UseCamera();
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(shoot);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhileHeld(pickup);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(armUp);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhileHeld(armDown);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhenPressed(useCamera);
 
     SmartDashboard::PutData("Pickup", new Pickup());
     SmartDashboard::PutData("Shoot", new Shoot());
@@ -56,4 +59,9 @@ float OI::GetJoystickY() {
 float OI::GetJoystickZ() {
 	auto value = driverJoystick->GetRawAxis(JOYSTICK_RX_AXIS);
 	return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : value;
+}
+
+bool OI::GetButtonStart(){
+	auto value = GetDriverJoystick()->GetRawButton(JOYSTICK_BUTTON_START);
+	return (value);
 }

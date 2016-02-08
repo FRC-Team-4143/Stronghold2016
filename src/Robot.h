@@ -10,6 +10,7 @@
 #include "Subsystems/DriveTrain.h"
 #include "Subsystems/ArmSub.h"
 #include "Subsystems/Shooter.h"
+#include "Subsystems/CameraSub.h"
 #include "Commands/AutonomousCommand.h"
 
 class Robot : public IterativeRobot {
@@ -20,7 +21,9 @@ public:
 	static ArmSub* armSub;
 	static GyroSub* gyroSub;
 	static Shooter* shooter;
+	static CameraSub* cameraSub;
 	LiveWindow *lw = LiveWindow::GetInstance();
+
 	virtual void RobotInit();
 	virtual void DisabledInit();
 	virtual void DisabledPeriodic();
@@ -29,5 +32,6 @@ public:
 	virtual void TeleopInit();
 	virtual void TeleopPeriodic();
 	virtual void TestPeriodic();
+	void cameraInit();
 };
 #endif

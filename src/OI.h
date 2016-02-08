@@ -12,11 +12,13 @@ public:
 	float GetJoystickX();
 	float GetJoystickY();
 	float GetJoystickZ();
+	bool GetButtonStart();
 
 	Command* shoot;
 	Command* pickup;
 	Command* armUp;
 	Command* armDown;
+	Command* useCamera;
 
 	Joystick* GetDriverJoystick() { return driverJoystick; }
 	Joystick* GetPickerJoystick() { return pickerJoystick; }

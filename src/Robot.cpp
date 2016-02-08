@@ -1,10 +1,11 @@
 #include "Robot.h"
 
 OI* Robot::oi;
-Shooter* Robot::shooter;
-ArmSub* Robot::armSub;
+Shooter* Robot::shooter = nullptr;
+ArmSub* Robot::armSub = nullptr;
 GyroSub* Robot::gyroSub = nullptr;
 DriveTrain* Robot::driveTrain = nullptr;
+CameraSub* Robot::cameraSub = nullptr;
 
 void Robot::RobotInit() {
 
@@ -13,6 +14,7 @@ void Robot::RobotInit() {
 	driveTrain = new DriveTrain();
     shooter = new Shooter();
     armSub = new ArmSub();
+    cameraSub = new CameraSub();
 	oi = new OI();
 
 	autonomousCommand = new AutonomousCommand();

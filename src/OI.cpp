@@ -40,13 +40,13 @@ OI::OI() {
 	pneumaticIn = new PneumaticIn();
 	pneumaticOut = new PneumaticOut();
 
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(shoot);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhileHeld(feed);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhileHeld(armUp);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhileHeld(armDown);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhenPressed(useCamera);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhileHeld(pneumaticIn);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_B))->WhileHeld(pneumaticOut);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(shoot); //sets right bumper to shoot
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhileHeld(feed); //sets left bumper to feed
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhileHeld(armUp); //sets Y button to raise arm
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhileHeld(armDown); //sets A button to lower arm
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhenPressed(useCamera); //sets Start button to start camera
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhileHeld(pneumaticIn); //sets X button to pull pneumatics in
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_B))->WhileHeld(pneumaticOut); //sets B button to push penumatics out
 
     SmartDashboard::PutData("Pickup", new Feed());
     SmartDashboard::PutData("Shoot", new Shoot());

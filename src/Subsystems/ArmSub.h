@@ -6,7 +6,7 @@
 
 class ArmSub: public Subsystem {
 private:
-	SpeedController* armMotor;
+	SpeedController* armMotor; //motor for arm
 
 public:
 	ArmSub();

@@ -30,17 +30,31 @@ void CameraSub::InitDefaultCommand()
 }
 
 void CameraSub::StartCamera(){
+
+	//Configuring properties for Camera
 	IMAQdxConfigureAcquisition(sessionCam0, true, 100);
+
+	//Starts connection with Camera
 	cam0.OpenCamera();
+
+	//Starts displaying image
 	cam0.StartCapture();
 }
 
 void CameraSub::StopCamera(){
+
+	//Stop displaying image
 	cam0.StopCapture();
+
+	//Stops connection with Camera
 	cam0.CloseCamera();
 }
 
 void CameraSub::ShowCamera(){
+
+	//Getting image from Camera
 	cam0.GetImage(frameCam0);
+
+	//Setting image from Camera
 	server->SetImage(frameCam0);
 }

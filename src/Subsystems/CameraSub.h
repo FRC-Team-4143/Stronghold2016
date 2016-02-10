@@ -20,8 +20,7 @@ public:
 	IMAQdxSession sessionCam0;
 	Image *frameCam0;
 	IMAQdxError imaqError;
-	int cameraCurrent;
-	USBCamera cam0;
+	USBCamera cam0; //Camera object
 };
 
 #endif

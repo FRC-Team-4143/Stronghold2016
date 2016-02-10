@@ -14,13 +14,13 @@ public:
 	float GetJoystickZ();
 	bool GetButtonStart();
 
-	Command* shoot;
-	Command* feed;
-	Command* armUp;
-	Command* armDown;
-	Command* useCamera;
-	Command* pneumaticIn;
-	Command* pneumaticOut;
+	Command* shoot; //command for shooting
+	Command* feed; //command for feeding
+	Command* armUp; //command for raising arm
+	Command* armDown; //command for lowering arm
+	Command* useCamera; //command for using camera
+	Command* pneumaticIn; //command for pulling pneumatics in
+	Command* pneumaticOut; //command for pushing pneumatics out
 
 	Joystick* GetDriverJoystick() { return driverJoystick; }
 	Joystick* GetPickerJoystick() { return pickerJoystick; }

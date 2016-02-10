@@ -5,6 +5,7 @@
 
 class PneumaticIn: public Command
 {
+
 public:
 	PneumaticIn();
 	void Initialize();

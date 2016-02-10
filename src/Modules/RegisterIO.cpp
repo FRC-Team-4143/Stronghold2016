@@ -24,6 +24,7 @@ RegisterIO::RegisterIO( IRegisterIO *io_provider,
     board_id        = {0};
 }
 
+
 static const double IO_TIMEOUT_SECONDS = 1.0;
 
 RegisterIO::~RegisterIO() {

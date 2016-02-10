@@ -20,6 +20,7 @@ void GyroSub::InitDefaultCommand() {
 // ==========================================================================
 
 double GyroSub::PIDGet() {
+	//yet rotation around z axis
 	return theGyro()->GetYaw();
 }
 
@@ -29,12 +30,14 @@ double GyroSub::PIDGet() {
 // ==========================================================================
 
 double GyroSub::GetHeading() {
+	//get tilt
 	return theGyro()->GetCompassHeading();
 }
 
 // ==========================================================================
 
 bool GyroSub::IsCalibrating() {
+	//is the thinggyy calibrating?
 	return theGyro()->IsCalibrating();
 }
 

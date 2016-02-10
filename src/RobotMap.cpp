@@ -1,6 +1,7 @@
 #include "RobotMap.h"
 #include "LiveWindow/LiveWindow.h"
 
+//get all the pointers #star #and
 PIDController*     RobotMap::driveTrainFrontLeft = nullptr;
 CANTalon*   RobotMap::driveTrainFrontLeftDrive = nullptr;
 AnalogChannelVolt* RobotMap::driveTrainFrontLeftPos = nullptr;

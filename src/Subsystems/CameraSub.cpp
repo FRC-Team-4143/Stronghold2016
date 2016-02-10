@@ -15,7 +15,7 @@ CameraSub::CameraSub() :
 	//sets camera server quality
 	server->SetQuality(50);
 
-	//sets framerate
+	//sets frame rate
 	cam0.SetFPS(5);
 
 	//sets size

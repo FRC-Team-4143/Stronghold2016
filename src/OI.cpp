@@ -11,6 +11,8 @@
 #include "Commands/PneumaticIn.h"
 #include "Commands/PneumaticOut.h"
 
+//We need all of the buttons!!!!!!!!!!!
+
 const uint32_t JOYSTICK_LX_AXIS    = 0;
 const uint32_t JOYSTICK_LY_AXIS    = 1;
 const uint32_t JOYSTICK_LTRIG_AXIS = 2;

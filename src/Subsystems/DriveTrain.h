@@ -20,7 +20,7 @@ private:
 	void RightTurn4Wheels();	//Calculates a right hand turn
 	
 	//DriveDirection
-	bool driveFront;
+	bool driveFront; //direction of robot driving
 	
 	//Steering Variables	
 	double radian; // input steering angle in radians
@@ -47,23 +47,23 @@ private:
 	double RRRatio;	//Ratio of Speed of Rear Right wheel
 	double RLRatio;	//Ratio of Speed of Rear Left wheel
 
-	double FLOffset;
-	double FROffset;
-	double RLOffset;
-	double RROffset;
+	double FLOffset; //Front left wheel position
+	double FROffset; //Front right wheel position
+	double RLOffset; //Rear left wheel position
+	double RROffset; //Rear right wheel position
 
 	//Crab & Pivot Variables
 	double position; //Input position for crab
-	double AP;
-	double BP;
-	double CP;
-	double DP;
+	double AP; //variable used in swerve calculations
+	double BP; //variable used in swerve calculations
+	double CP; //variable used in swerve calculations
+	double DP; //variable used in swerve calculations
 
-	//Inversion Variabls
-	int FLInv;
-	int FRInv;
-	int RLInv;
-	int RRInv;
+	//Inversion Variables
+	int FLInv; //Direction of front left drive motor
+	int FRInv; //Direction of front right drive motor
+	int RLInv; //Direction of right left drive motor
+	int RRInv; //Direction of right rear drive motor
 
 	//Pivot Variables
 	double radius; //distance from center to each wheel
@@ -124,55 +124,55 @@ private:
 
 	bool DriveBackFlag;
 
-	double FLValue;
-	double FRValue;
-	double RLValue;
-	double RRValue;
+	double FLValue; //Current value measured from front left drive encoder
+	double FRValue; //Current value measured from front right drive encoder
+	double RLValue; //Current value measured from rear left drive encoder
+	double RRValue; //Current value measured from rear right drive encoder
 
 public:
-	PIDController*     frontLeft;
-	CANTalon*   frontLeftDrive;
-	AnalogChannelVolt* frontLeftPos;
-	CANTalon*   frontLeftSteer;
+	PIDController*     frontLeft; //PID object for front left steering motor
+	CANTalon*   frontLeftDrive; //Speed controller for front left drive motor
+	AnalogChannelVolt* frontLeftPos; //Encoder for front left steering motor
+	CANTalon*   frontLeftSteer; //Speed controller for front left steering motor
 
-	PIDController*     frontRight;
-	CANTalon*   frontRightDrive;
-	AnalogChannelVolt* frontRightPos;
-	CANTalon*   frontRightSteer;
+	PIDController*     frontRight; //PID object for front right steering motor
+	CANTalon*   frontRightDrive; //Speed controller for front right drive motor
+	AnalogChannelVolt* frontRightPos; //Encoder for front right steering motor
+	CANTalon*   frontRightSteer; //Speed controller for front right steering motor
 
-	PIDController*     rearLeft;
-	CANTalon*   rearLeftDrive;
-	AnalogChannelVolt* rearLeftPos;
-	CANTalon*   rearLeftSteer;
+	PIDController*     rearLeft; //PID object for rear left steering motor
+	CANTalon*   rearLeftDrive; //Speed controller for rear left drive motor
+	AnalogChannelVolt* rearLeftPos; // Encoder for rear left steering motor
+	CANTalon*   rearLeftSteer; //Speed controller for rear left steering motor
 
-	PIDController*     rearRight;
-	CANTalon*   rearRightDrive;
-	AnalogChannelVolt* rearRightPos;
-	CANTalon*   rearRightSteer;
+	PIDController*     rearRight; //PID object for rear right steering motor
+	CANTalon*   rearRightDrive; //Speed controller for rear right drive motor
+	AnalogChannelVolt* rearRightPos; //Encoder for rear right steering motor
+	CANTalon*   rearRightSteer; //Speed controller for rear right steering motor
 
 	DriveTrain();
-	void SetWheelbase(float w, float x, float y);
-	void SetMaxSpeed(float MaxSpeed);
-	void SetOffsets(double FLOff, double FROff, double RLOff, double RROff);
-	void ToggleFrontBack();
-	void outputLED();
-	void InitDefaultCommand();
+	void SetWheelbase(float w, float x, float y); //sets dimensions of drive train
+	void SetMaxSpeed(float MaxSpeed); //sets the max speed of drive motors
+	void SetOffsets(double FLOff, double FROff, double RLOff, double RROff); //sets wheels to correct positions
+	void ToggleFrontBack(); //switches direction of driving
+	void outputLED(); //sets LED color based on drive direction
+	void InitDefaultCommand(); //sets default command
 	void Steer(float radian, float speed, float a);
-	void Crab(float twist, float y, float x, bool operatorControl);
+	void Crab(float twist, float y, float x, bool operatorControl); //default driving command
 	bool ResetTurns();
 	void Lock();
-	void SideLock();
+	void SideLock(); //locks steering
 	bool GetDriveBackFlag();
 	void SetDriveBackFlag(bool flag);
-	bool unwind();
-	void doneunwind();
-	bool unwindwheel(AnalogChannelVolt*, PIDController*);
-	void GyroCrab(float desiredangle, float y, float x, bool operatorControl);
-	void FieldCentricCrab(float twist, float y, float x, bool operatorControl);
-	void updateDistanceEncoders();
-	double getDistanceEncodersValues();
-	void zeroDistanceEncoders();
-	void zeroSteeringEncoders();
+	bool unwind(); //unwinds all wheels
+	void doneunwind(); //called when unwinding is finished
+	bool unwindwheel(AnalogChannelVolt*, PIDController*); //unwinds one wheel to fix wires (returns false if not done unwinding)
+	void GyroCrab(float desiredangle, float y, float x, bool operatorControl); //drive using gyro values
+	void FieldCentricCrab(float twist, float y, float x, bool operatorControl); //drive at 90 degree angle to field
+	void updateDistanceEncoders(); //updates the values of drive train variables with distance encoder values
+	double getDistanceEncodersValues(); // returns average value from driving encoders
+	void zeroDistanceEncoders(); //Reset driving encoders to 0
+	void zeroSteeringEncoders(); //Reset steering encoders to 0
 };
 
 #endif

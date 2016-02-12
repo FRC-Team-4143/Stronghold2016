@@ -5,6 +5,7 @@
 #include <Commands/Subsystem.h>
 #include <PIDSource.h>
 #include "../RobotMap.h"
+#include <AHRS.h>
 
 //
 // The GyroSub subsystem represents the NAV6 accelerometer.

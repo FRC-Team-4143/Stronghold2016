@@ -71,9 +71,6 @@ AHRS* RobotMap::imu = nullptr;
 #define RRS 3
 
 void RobotMap::init() {
-
-    LiveWindow *lw = LiveWindow::GetInstance();
-
     //serialPort = new SerialPort(57600, SerialPort::kOnboard);
     imu = new AHRS(SPI::kOnboardCS0);//serialPort, 100);
 

@@ -21,6 +21,7 @@ public:
 	Command* useCamera;
 	Command* pneumaticIn;
 	Command* pneumaticOut;
+	Command* unwindWheels;
 
 	Joystick* GetDriverJoystick() { return driverJoystick; }
 	Joystick* GetPickerJoystick() { return pickerJoystick; }

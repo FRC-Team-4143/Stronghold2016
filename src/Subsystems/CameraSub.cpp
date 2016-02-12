@@ -21,7 +21,6 @@ CameraSub::CameraSub() :
 	//sets size
 	cam0.SetSize(320, 240);
 
-	cameraCurrent = 0;
 }
 
 void CameraSub::InitDefaultCommand()

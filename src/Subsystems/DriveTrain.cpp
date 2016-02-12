@@ -7,7 +7,7 @@
 #ifdef TESTSWERVE
 #define MAXTURNS 5
 #else
-#define MAXTURNS 100
+#define MAXTURNS 5
 #endif
 
 const float TWISTSCALE = .5;
@@ -105,14 +105,15 @@ bool DriveTrain::unwindwheel(AnalogChannelVolt * wheel, PIDController * pid){
 }
 
 bool DriveTrain::unwind(){
-	bool retval = 0;
-	unwinding = 1;
+	bool retval = true;
+	unwinding = true;
 	robotangle = 0;
-	retval |= unwindwheel(frontLeftPos, frontLeft);
-	retval |= unwindwheel(frontRightPos, frontRight);
-	retval |= unwindwheel(rearLeftPos, rearLeft);
-	retval |= unwindwheel(rearRightPos, rearRight);
-	if(!retval) unwinding = 0;
+	if(!(unwindwheel(frontLeftPos, frontLeft) || unwindwheel(frontRightPos, frontRight) ||
+			unwindwheel(rearLeftPos, rearLeft) || unwindwheel(rearRightPos, rearRight)))
+	{
+		unwinding = 0;
+		retval = 0;
+	}
  	return retval;
 }
 
@@ -379,52 +380,91 @@ double DriveTrain::CorrectSteerSetpoint(double setpoint) {
 
 void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSetPoint, float RRSetPoint) {
 	if(driveFront) {
+		if(frontLeftDrive->GetPosition() > 3){
+			if (FLSetPoint + FLOffset < frontLeftPos->GetAverageVoltage){
+
+        	}
+		} else if (frontLeftDrive->GetPosition() < -3){
+			if (FLSetPoint + FLOffset > frontLeftPos->GetAverageVoltage){
+
+			}
+
+
+		} else {
 		
-		if(fabs(FLSetPoint + FLOffset - frontLeftPos->GetAverageVoltage()) < 1.25 || fabs(FLSetPoint + FLOffset - frontLeftPos->GetAverageVoltage()) > 3.75)
-		{
-			frontLeft->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + FLOffset));
-			FLInv = 1;
-		}
-			else
-		{
-			frontLeft->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + FLOffset-2.5));
-			FLInv = -1;
-		}
-		
-		if(fabs(FRSetPoint + FROffset - frontRightPos->GetAverageVoltage()) < 1.25 || fabs(FRSetPoint + FROffset - frontRightPos->GetAverageVoltage()) > 3.75)
-		{
-			frontRight->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + FROffset));
-			FRInv = 1;
-		}
-			else
-		{
-			frontRight->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + FROffset-2.5));
-			FRInv = -1;
-		}
-		
-		if(fabs(RLSetPoint + RLOffset - rearLeftPos->GetAverageVoltage()) < 1.25 || fabs(RLSetPoint + RLOffset - rearLeftPos->GetAverageVoltage()) > 3.75)
-		{
-			rearLeft->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + RLOffset));
-			RLInv = 1;
-		}
-			else
-		{
-			rearLeft->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + RLOffset-2.5));
-			RLInv = -1;
+
+			if(fabs(FLSetPoint + FLOffset - frontLeftPos->GetAverageVoltage()) < 1.25 || fabs(FLSetPoint + FLOffset - frontLeftPos->GetAverageVoltage()) > 3.75)
+			{
+				frontLeft->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + FLOffset));
+				FLInv = 1;
+			}
+				else
+			{
+				frontLeft->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + FLOffset-2.5));
+				FLInv = -1;
+			}
 		}
 		
-		if(fabs(RRSetPoint + RROffset - rearRightPos->GetAverageVoltage()) < 1.25 || fabs(RRSetPoint + RROffset - rearRightPos->GetAverageVoltage()) > 3.75)
-		{
-			rearRight->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + RROffset));
-			RRInv = 1;
+		if(frontRightDrive->GetPosition() > 3){
+			if (FRSetPoint + FROffset < frontRightPos->GetAverageVoltage){
 		}
-			else
-		{
-			rearRight->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + RROffset-2.5));
-			RRInv = -1;
+		} else if (frontRightDrive->GetPosition() < -3){
+			if (FRSetPoint + FROffset > frontRightPos->GetAverageVoltage){
+			}
+
+		} else {
+
+
+			if(fabs(FRSetPoint + FROffset - frontRightPos->GetAverageVoltage()) < 1.25 || fabs(FRSetPoint + FROffset - frontRightPos->GetAverageVoltage()) > 3.75)
+			{
+				frontRight->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + FROffset));
+				FRInv = 1;
+			}
+				else
+			{
+				frontRight->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + FROffset-2.5));
+				FRInv = -1;
+			}
 		}
-	
+		
+		if(rearLeftDrive->GetPosition() > 3){
+		} else if (rearLeftDrive->GetPosition() < -3){
+
+		} else {
+
+
+			if(fabs(RLSetPoint + RLOffset - rearLeftPos->GetAverageVoltage()) < 1.25 || fabs(RLSetPoint + RLOffset - rearLeftPos->GetAverageVoltage()) > 3.75)
+			{
+				rearLeft->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + RLOffset));
+				RLInv = 1;
+			}
+
+				else
+			{
+				rearLeft->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + RLOffset-2.5));
+				RLInv = -1;
+			}
+		}
+		
+		if(rearRightDrive->GetPosition() > 3){
+		} else if (rearRightDrive->GetPosition() < -3){
+
+		} else {
+
+
+			if(fabs(RRSetPoint + RROffset - rearRightPos->GetAverageVoltage()) < 1.25 || fabs(RRSetPoint + RROffset - rearRightPos->GetAverageVoltage()) > 3.75)
+			{
+				rearRight->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + RROffset));
+				RRInv = 1;
+			}
+				else
+			{
+				rearRight->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + RROffset-2.5));
+				RRInv = -1;
+			}
+		}
 	}
+	
 	else {
 	
 		if(fabs(RRSetPoint + FLOffset - frontLeftPos->GetAverageVoltage()) < 1.25 || fabs(RRSetPoint + FLOffset - frontLeftPos->GetAverageVoltage()) > 3.75)

@@ -10,6 +10,7 @@
 #include "Commands/ResetSteeringEncoders.h"
 #include "Commands/PneumaticIn.h"
 #include "Commands/PneumaticOut.h"
+#include "Commands/UnwindWheels.h"
 
 const uint32_t JOYSTICK_LX_AXIS    = 0;
 const uint32_t JOYSTICK_LY_AXIS    = 1;
@@ -39,6 +40,7 @@ OI::OI() {
 	useCamera = new UseCamera();
 	pneumaticIn = new PneumaticIn();
 	pneumaticOut = new PneumaticOut();
+	unwindWheels = new UnwindWheels();
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(shoot);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhileHeld(feed);
@@ -47,6 +49,7 @@ OI::OI() {
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhenPressed(useCamera);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhileHeld(pneumaticIn);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_B))->WhileHeld(pneumaticOut);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(unwindWheels);
 
     SmartDashboard::PutData("Pickup", new Feed());
     SmartDashboard::PutData("Shoot", new Shoot());

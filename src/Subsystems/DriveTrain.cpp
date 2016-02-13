@@ -63,7 +63,7 @@ void DriveTrain::InitDefaultCommand() {
 	// Set the default command for a subsystem here.
 	//SetDefaultCommand(new MySpecialCommand());
 	SetDefaultCommand(new CrabDrive());
-	driveFront = true;
+
 }
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
@@ -78,14 +78,7 @@ void DriveTrain::SetOffsets(double FLOff, double FROff, double RLOff, double RRO
 	RLOffset = RLOff;
 	RROffset = RROff;
 }
-void DriveTrain::ToggleFrontBack(){
-	driveFront = !driveFront;
-	outputLED();
-}
 
-void DriveTrain::outputLED(){
-	RobotMap::i2c->Write(0x0, 40*driveFront);
-}
 
 bool DriveTrain::unwindwheel(AnalogChannelVolt * wheel, PIDController * pid){
 	float temp;
@@ -264,103 +257,6 @@ void DriveTrain::Crab(float twist, float y, float x, bool operatorControl) {
 
 	//Set drive speeds
 	SetDriveSpeed(FLRatio, -FRRatio, RLRatio, -RRRatio);
-}
-
-void DriveTrain::Steer(float radian, float speed, float a) {
-	A=a;
-
-	thetaRC = pi - radian;  //convert steering angle to rear center wheel angle
-
-	if(thetaRC != pi / 2)	//If we are not driving straight forward...
-	{
-		if(thetaRC < pi / 2)	//Right Turn
-		{
-			this->RightTurn4Wheels();
-		}
-		else if(thetaRC > pi / 2)	//Left Turn
-		{
-			this->LeftTurn4Wheels();
-		}
-	}
-	else	//thetaRC = pi / 2
-	{
-		thetaFL = pi / 2;
-		thetaFR = pi / 2;
-		thetaRL = pi / 2;
-		thetaRR = pi / 2;
-		FLRatio = 1;
-		FRRatio = 1;
-		RLRatio = 1;
-		RRRatio = 1;
-	}
-
-	//Solve for fastest wheel speed
-	double speedarray[] = {fabs(FL), fabs(FR), fabs(RL), fabs(RR)};
-		
-	 int length = 4;
-     double maxspeed = speedarray[0];
-     for(int i = 1; i < length; i++)
-     {
-          if(speedarray[i] > maxspeed)
-                maxspeed = speedarray[i];
-     }
-
-	//Set ratios based on maximum wheel speed
-	FLRatio = FL/maxspeed;
-	FRRatio = FR/maxspeed;
-	RLRatio = RL/maxspeed;
-	RRRatio = RR/maxspeed;
-
-	//Set drive speeds
-	SetDriveSpeed(-FLRatio*speed, FRRatio*speed, -RLRatio*speed, RRRatio*speed);
-
-	//Set Steering PID Setpoints
-	float FLSetPoint = (1.25 + 2.5/pi*thetaFL);
-	float FRSetPoint = (1.25 + 2.5/pi*thetaFR);
-	float RLSetPoint = (1.25 + 2.5/pi*thetaRL);
-	float RRSetPoint = (1.25 + 2.5/pi*thetaRR);
-
-	SetSteerSetpoint(FLSetPoint, FRSetPoint, RLSetPoint, RRSetPoint);
-}
-
-void DriveTrain::LeftTurn4Wheels() {
-	Z = ((A * X) * tan(pi - thetaRC));				//pi was subtracted out of this earlier
-
-	thetaRL = pi - atan((Z - W) / (A * X));
-	thetaRR = pi - atan((Z + W) / (A * X));
-	thetaFR = pi / 2;
-	thetaFL = pi / 2;
-
-	if(A != 1)
-	{
-		thetaFL = atan((Z - Y) / ((1 - A) * X));	//These are identical for right and left turns
-		thetaFR = atan((Z + Y) / ((1 - A) * X));	//These are identical for right and left turns
-	}
-	//Solve for radii (wheel speed)
-	FL = (Z - Y) / sin(thetaFL);
-	FR = (Z + Y) / sin(thetaFR);
-	RL = (Z - W) / sin(pi - thetaRL);
-	RR = (Z + W) / sin(pi - thetaRR);
-}
-
-void DriveTrain::RightTurn4Wheels() {
-	Z = ((A * X) * tan(thetaRC));				//pi was subtracted out of this earlier
-
-	thetaRL = atan((Z + W) / (A * X));
-	thetaRR = atan((Z - W) / (A * X));
-	thetaFR = pi / 2;
-	thetaFL = pi / 2;
-
-	if(A != 1)
-	{
-		thetaFR = pi - atan((Z - Y) / ((1 - A) * X));	//These are identical for right and left turns
-		thetaFL = pi - atan((Z + Y) / ((1 - A) * X));	//These are identical for right and left turns
-	}
-
-	FL = (Z + Y) / sin(pi - thetaFL);
-	FR = (Z - Y) / sin(pi - thetaFR);
-	RL = (Z + W) / sin(thetaRL);
-	RR = (Z - W) / sin(thetaRR);
 }
 
 double DriveTrain::CorrectSteerSetpoint(double setpoint) {
@@ -574,71 +470,15 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
 				RRInv = -1;
 			}
 		}
-	/*
-	}
 	
-	else {
-	
-		if(fabs(RRSetPoint + FLOffset - frontLeftPos->GetAverageVoltage()) < 1.25 || fabs(RRSetPoint + FLOffset - frontLeftPos->GetAverageVoltage()) > 3.75)
-		{
-			frontLeft->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + FLOffset));
-			FLInv = 1;
-		}
-			else
-		{
-			frontLeft->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + FLOffset-2.5));
-			FLInv = -1;
-		}
-		
-		if(fabs(RLSetPoint + FROffset - frontRightPos->GetAverageVoltage()) < 1.25 || fabs(RLSetPoint + FROffset - frontRightPos->GetAverageVoltage()) > 3.75)
-		{
-			frontRight->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + FROffset));
-			FRInv = 1;
-		}
-			else
-		{
-			frontRight->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + FROffset-2.5));
-			FRInv = -1;
-		}
-		
-		if(fabs(FRSetPoint + RLOffset - rearLeftPos->GetAverageVoltage()) < 1.25 || fabs(FRSetPoint + RLOffset - rearLeftPos->GetAverageVoltage()) > 3.75)
-		{
-			rearLeft->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + RLOffset));
-			RLInv = 1;
-		}
-			else
-		{
-			rearLeft->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + RLOffset-2.5));
-			RLInv = -1;
-		}
-		
-		if(fabs(FLSetPoint + RROffset - rearRightPos->GetAverageVoltage()) < 1.25 || fabs(FLSetPoint + RROffset - rearRightPos->GetAverageVoltage()) > 3.75)
-		{
-			rearRight->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + RROffset));
-			RRInv = 1;
-		}
-			else
-		{
-			rearRight->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + RROffset-2.5));
-			RRInv = -1;
-		}
-	}
-	*/
 }
 
 void DriveTrain::SetDriveSpeed(float FLSpeed, float FRSpeed, float RLSpeed, float RRSpeed) {
-	if(driveFront) {
+
 		frontLeftDrive->Set(FLSpeed*FLInv);
 		frontRightDrive->Set(FRSpeed*FRInv);
 		rearLeftDrive->Set(RLSpeed*RLInv);
 		rearRightDrive->Set(RRSpeed*RRInv);
-	}
-	else {
-		frontLeftDrive->Set(RRSpeed*FLInv);
-		frontRightDrive->Set(RLSpeed*FRInv);
-		rearLeftDrive->Set(FRSpeed*RLInv);
-		rearRightDrive->Set(FLSpeed*RRInv);
-	}
 }
 
 void DriveTrain::Lock() {

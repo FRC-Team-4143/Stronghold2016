@@ -25,9 +25,9 @@ I2C* RobotMap::i2c = nullptr;
 
 SerialPort* RobotMap::serialPort = nullptr;
 
-SpeedController* RobotMap::leftFront;
+CANTalon* RobotMap::leftFront;
 SpeedController* RobotMap::rightRear;
-SpeedController* RobotMap::rightFront;
+CANTalon* RobotMap::rightFront;
 SpeedController* RobotMap::leftRear;
 SpeedController* RobotMap::feeder;
 
@@ -129,8 +129,8 @@ void RobotMap::init() {
     i2c = new I2C((I2C::Port) 1, 0x04);
 
     rightRear = new Talon(3);
-    leftFront = new Talon(4);
-    rightFront = new Talon(5);
+    leftFront = new CANTalon(9);
+    rightFront = new CANTalon(10);
     leftRear = new Talon(6);
     feeder = new Talon(2);
     

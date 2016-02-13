@@ -53,10 +53,10 @@ public:
 	static SerialPort* serialPort;
 
 
-	static SpeedController* leftFront;
-	static SpeedController* rightRear;
-	static SpeedController* rightFront;
-	static SpeedController* leftRear;
+	static  CANTalon* leftFront;
+	static  SpeedController* rightRear;
+	static  CANTalon* rightFront;
+	static  SpeedController* leftRear;
 	static SpeedController* feeder;
 
 

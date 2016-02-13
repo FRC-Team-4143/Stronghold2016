@@ -9,6 +9,8 @@ Shooter::Shooter() : Subsystem("Shooter") {
 
 	leftFront->SetFeedbackDevice(CANTalon::CtreMagEncoder_Relative);
 	leftFront->SetControlMode(CANSpeedController::kPosition);
+	rightFront->SetFeedbackDevice(CANTalon::CtreMagEncoder_Relative);
+	rightFront->SetControlMode(CANSpeedController::kPosition);
 
 
 	feeder = RobotMap::feeder;

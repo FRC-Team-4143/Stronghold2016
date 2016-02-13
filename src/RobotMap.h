@@ -54,9 +54,9 @@ public:
 
 
 	static  CANTalon* leftFront;
-	static  SpeedController* rightRear;
+	static  CANTalon* rightRear;
 	static  CANTalon* rightFront;
-	static  SpeedController* leftRear;
+	static  CANTalon* leftRear;
 	static SpeedController* feeder;
 
 

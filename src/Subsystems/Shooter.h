@@ -8,9 +8,9 @@
 class Shooter: public Subsystem {
 private:
 	 CANTalon* leftFront;
-	 SpeedController* rightRear;
+	 CANTalon* rightRear;
 	 CANTalon* rightFront;
-	 SpeedController* leftRear;
+	 CANTalon* leftRear;
 
 	SpeedController* feeder;
 

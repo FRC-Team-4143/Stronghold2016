@@ -24,6 +24,7 @@ public:
 	void stopBack();
 	void feed();
 	void stopFeed();
+	double getVelocity();
 };
 
 #endif

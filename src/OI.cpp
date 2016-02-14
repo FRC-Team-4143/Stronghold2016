@@ -51,12 +51,15 @@ OI::OI() {
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(shoot);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhileHeld(prepareShoot);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhileHeld(feed);
+
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhileHeld(armUp);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhileHeld(armDown);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhenPressed(feed);
+
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhileHeld(pneumaticIn);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_B))->WhileHeld(pneumaticOut);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(unwindWheels);
+
+	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(unwindWheels);
 
     SmartDashboard::PutData("Camera", useCamera);
     SmartDashboard::PutData("Reset Steering Encoders", new ResetSteeringEncoders());

@@ -8,11 +8,12 @@
 #define MAXTURNS 3
 #else
 #define MAXTURNS 3
+#define SOFTTURNLIMIT 1
 #endif
 
 const float TWISTSCALE = .5;
 
-const float DEAD_ZONE = 0.1;
+const float DEAD_ZONE = 0.2;
 
 //#define GYROP  .05
 #define GYROP	.07
@@ -284,9 +285,9 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
 //////////////////////////////////
 //Front Left Wheel
 //////////////////////////////////
-		if(frontLeftSteer->GetPosition() > 1)
+		if(frontLeftSteer->GetPosition() > SOFTTURNLIMIT)
 		{
-			if (FLSetPoint + FLOffset < frontLeftPos->GetAverageVoltage())
+			if (CorrectSteerSetpoint(FLSetPoint + FLOffset - frontLeftPos->GetAverageVoltage()) > 2.5)
 			{
 				frontLeft->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + FLOffset));
 				FLInv = 1;
@@ -295,9 +296,9 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
         		frontLeft->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + FLOffset - 2.5));
         		FLInv = -1;
         	}
-		} else if (frontLeftSteer->GetPosition() < -1)
+		} else if (frontLeftSteer->GetPosition() < -SOFTTURNLIMIT)
 		{
-			if (FLSetPoint + FLOffset > frontLeftPos->GetAverageVoltage())
+			if (CorrectSteerSetpoint(FLSetPoint + FLOffset - frontLeftPos->GetAverageVoltage()) < 2.5)
 			{
 				frontLeft->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + FLOffset));
 				FLInv = 1;
@@ -323,9 +324,9 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
 //Front Right Wheel
 //////////////////////////////////
 		
-		if(frontRightSteer->GetPosition() > 1)
+		if(frontRightSteer->GetPosition() > SOFTTURNLIMIT)
 		{
-			if (FRSetPoint + FROffset < frontLeftPos->GetAverageVoltage())
+			if (CorrectSteerSetpoint(FRSetPoint + FROffset - frontLeftPos->GetAverageVoltage()) > 2.5)
 			{
 				frontRight->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + FROffset));
 				FRInv = 1;
@@ -334,9 +335,9 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
 				frontRight->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + FROffset - 2.5));
 				FRInv = -1;
 			}
-		} else if (frontRightSteer->GetPosition() < -1)
+		} else if (frontRightSteer->GetPosition() < -SOFTTURNLIMIT)
 		{
-			if (FRSetPoint + FROffset > frontRightPos->GetAverageVoltage())
+			if (CorrectSteerSetpoint(FRSetPoint + FROffset - frontRightPos->GetAverageVoltage()) < 2.5)
 			{
 				frontRight->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + FROffset));
 				FRInv = 1;
@@ -365,8 +366,8 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
 //Rear Left Wheel
 //////////////////////////////////
 		
-		if(rearLeftSteer->GetPosition() > 1){
-			if (RLSetPoint + RLOffset < rearLeftPos->GetAverageVoltage())
+		if(rearLeftSteer->GetPosition() > SOFTTURNLIMIT){
+			if (CorrectSteerSetpoint(RLSetPoint + RLOffset - rearLeftPos->GetAverageVoltage()) > 2.5)
 			{
 				rearLeft->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + RLOffset));
 				RLInv = 1;
@@ -376,8 +377,8 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
 				rearLeft->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + RLOffset - 2.5));
 				RLInv = -1;
 			}
-		} else if (rearLeftSteer->GetPosition() < -1){
-			if (RLSetPoint + RLOffset > rearLeftPos->GetAverageVoltage())
+		} else if (rearLeftSteer->GetPosition() < -SOFTTURNLIMIT){
+			if (CorrectSteerSetpoint(RLSetPoint + RLOffset - rearLeftPos->GetAverageVoltage()) < 2.5)
 			{
 				rearLeft->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + RLOffset));
 				RLInv = 1;
@@ -405,8 +406,8 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
 //////////////////////////////////
 //Rear Right Wheel
 //////////////////////////////////
-		if(rearRightSteer->GetPosition() > 1){
-			if (RRSetPoint + RROffset < rearRightPos->GetAverageVoltage())
+		if(rearRightSteer->GetPosition() > SOFTTURNLIMIT){
+			if (CorrectSteerSetpoint(RRSetPoint + RROffset - rearRightPos->GetAverageVoltage()) > 2.5)
 			{
 				rearRight->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + RROffset));
 				RRInv = 1;
@@ -416,8 +417,8 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
 				rearRight->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + RROffset - 2.5));
 				RRInv = -1;
 			}
-		} else if (rearRightSteer->GetPosition() < -1){
-			if (RRSetPoint + RROffset > rearRightPos->GetAverageVoltage())
+		} else if (rearRightSteer->GetPosition() < -SOFTTURNLIMIT){
+			if (CorrectSteerSetpoint(RRSetPoint + RROffset - rearRightPos->GetAverageVoltage()) < 2.5)
 			{
 				rearRight->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + RROffset));
 				RRInv = 1;

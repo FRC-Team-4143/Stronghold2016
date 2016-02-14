@@ -60,7 +60,7 @@ public:
 	static SpeedController* feeder;
 
 
-	static SpeedController* armMotor;
+	static CANTalon* armMotor;
 
 	static Compressor* compressor;
 	static DoubleSolenoid* pickupSolenoid;

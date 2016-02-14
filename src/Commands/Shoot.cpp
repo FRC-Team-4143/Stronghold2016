@@ -23,7 +23,7 @@ Shoot::Shoot(): Command() {
 
 // Called just before this Command runs the first time
 void Shoot::Initialize() {
-	Robot::shooter->shootBack();
+Robot::shooter->shootBack();
 }
 
 // Called repeatedly when this Command is scheduled to run

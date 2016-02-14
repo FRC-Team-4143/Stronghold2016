@@ -20,7 +20,7 @@ class AnalogChannelVolt : public AnalogInput
   float GetVoltage();
   void ResetTurns();
   void Start();
-  int getturns();
+  double getturns();
 
  private:
   CANTalon* motor;

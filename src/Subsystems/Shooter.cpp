@@ -7,14 +7,23 @@ Shooter::Shooter() : Subsystem("Shooter") {
 	rightRear = RobotMap::rightRear;
 	rightFront = RobotMap::rightFront;
 	leftRear = RobotMap::leftRear;
-
-	leftFront->SetFeedbackDevice(CANTalon::CtreMagEncoder_Relative);
+/*
+	leftFront->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
 	leftFront->SetControlMode(CANSpeedController::kSpeed);
-	leftFront->Set(-1);
-	rightFront->SetFeedbackDevice(CANTalon::CtreMagEncoder_Relative);
-	rightFront->SetControlMode(CANSpeedController::kSpeed);
-	rightFront->Set(-1);
+	leftFront->SetP(0.8);
+	leftFront->SetI(0.0);
+	leftFront->SetD(0.05);
+	leftFront->SetF(0.0);
+	leftFront->Enable();
 
+	rightFront->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
+	rightFront->SetControlMode(CANSpeedController::kSpeed);
+	rightFront->SetP(0.8);
+	rightFront->SetI(0.0);
+	rightFront->SetD(0.05);
+	rightFront->SetF(0.0);
+	rightFront->Enable();
+*/
 	feeder = RobotMap::feeder;
 }
 
@@ -23,29 +32,33 @@ void Shooter::InitDefaultCommand() {
     // SetDefaultCommand(new MySpecialCommand());
 }
 void Shooter::shootFront() {
-	Shooter::leftFront->Enable();
-	Shooter::leftFront->Enable();
+	leftFront->Set(1);//8
+	rightFront->Set(-1);//8
 }
 
 void Shooter::shootBack(){
-	Shooter::leftRear->Set(-1);
-	Shooter::rightRear->Set(-1);
+	leftRear->Set(-1);
+	rightRear->Set(1);
 }
 
 void Shooter::stopFront() {
-	Shooter::leftFront->Disable();
-	Shooter::rightFront->Disable();
+	leftFront->Set(0);
+	rightFront->Set(0);
 }
 
 void Shooter::stopBack(){
-	Shooter::rightRear->Set(0);
-	Shooter::leftRear->Set(0);
+	rightRear->Set(0);
+	leftRear->Set(0);
 }
 
 void Shooter::feed() {
-	Shooter::feeder->Set(1);
+	feeder->Set(-1);
 }
 
 void Shooter::stopFeed(){
-	Shooter::feeder->Set(0);
+	feeder->Set(0);
+}
+
+double Shooter::getVelocity(){
+	return leftFront->GetSpeed();
 }

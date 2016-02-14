@@ -48,7 +48,7 @@ float AnalogChannelVolt::GetVoltage()
   return PIDGet();
 }
 
-int AnalogChannelVolt::getturns()
+double AnalogChannelVolt::getturns()
 {
     return motor->GetPosition();
 }

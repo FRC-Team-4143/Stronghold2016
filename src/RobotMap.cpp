@@ -128,10 +128,10 @@ void RobotMap::init() {
 
     i2c = new I2C((I2C::Port) 1, 0x04);
 
-    rightRear = new CANTalon(3);
-    leftFront = new CANTalon(4);
-    rightFront = new CANTalon(5);
-    leftRear = new CANTalon(6);
+    rightRear = new CANTalon(9);
+    leftFront = new CANTalon(7);
+    rightFront = new CANTalon(8);
+    leftRear = new CANTalon(10);
     feeder = new Talon(4);
     
     armMotor = new Talon(0);

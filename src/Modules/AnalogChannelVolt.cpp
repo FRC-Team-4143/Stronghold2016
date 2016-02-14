@@ -50,7 +50,7 @@ float AnalogChannelVolt::GetVoltage()
 
 int AnalogChannelVolt::getturns()
 {
-    return m_count->Get();
+    return motor->GetPosition();
 }
 double AnalogChannelVolt::PIDGet()
 {

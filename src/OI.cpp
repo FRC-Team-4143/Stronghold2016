@@ -11,6 +11,7 @@
 #include "Commands/PneumaticIn.h"
 #include "Commands/PneumaticOut.h"
 #include "Commands/UnwindWheels.h"
+#include "Commands/RunMotor.h"
 
 const uint32_t JOYSTICK_LX_AXIS    = 0;
 const uint32_t JOYSTICK_LY_AXIS    = 1;
@@ -41,6 +42,10 @@ OI::OI() {
 	pneumaticIn = new PneumaticIn();
 	pneumaticOut = new PneumaticOut();
 	unwindWheels = new UnwindWheels();
+	turnFrontRightSteer = new RunMotor(RobotMap::driveTrainFrontRightSteer);
+	turnFrontLeftSteer = new RunMotor(RobotMap::driveTrainFrontLeftSteer);
+	turnRearRightSteer = new RunMotor(RobotMap::driveTrainRearRightSteer);
+	turnRearLeftSteer = new RunMotor(RobotMap::driveTrainRearLeftSteer);
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(shoot);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhileHeld(feed);
@@ -55,6 +60,11 @@ OI::OI() {
     SmartDashboard::PutData("Shoot", new Shoot());
     SmartDashboard::PutData("Autonomous Command", new AutonomousCommand());
     SmartDashboard::PutData("Reset Steering Encoders", new ResetSteeringEncoders());
+
+    SmartDashboard::PutData("Turn Front Left Steering Motor", turnFrontLeftSteer);
+    SmartDashboard::PutData("Turn Front Right Steering Motor", turnFrontRightSteer);
+    SmartDashboard::PutData("Turn Rear Left Steering Motor", turnRearLeftSteer);
+    SmartDashboard::PutData("Turn Rear Right Steering Motor", turnRearRightSteer);
 }
 
 float OI::GetJoystickX() {

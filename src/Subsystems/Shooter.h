@@ -6,10 +6,10 @@
 
 class Shooter: public Subsystem {
 private:
-	SpeedController* leftFront;
-	SpeedController* rightRear;
-	SpeedController* rightFront;
-	SpeedController* leftRear;
+	CANTalon* leftFront;
+	CANTalon* rightRear;
+	CANTalon* rightFront;
+	CANTalon* leftRear;
 
 	SpeedController* feeder;
 public:

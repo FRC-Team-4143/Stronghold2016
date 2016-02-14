@@ -22,6 +22,10 @@ public:
 	Command* pneumaticIn;
 	Command* pneumaticOut;
 	Command* unwindWheels;
+	Command* turnFrontRightSteer;
+	Command* turnFrontLeftSteer;
+	Command* turnRearRightSteer;
+	Command* turnRearLeftSteer;
 
 	Joystick* GetDriverJoystick() { return driverJoystick; }
 	Joystick* GetPickerJoystick() { return pickerJoystick; }

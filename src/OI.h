@@ -15,6 +15,7 @@ public:
 	bool GetButtonStart();
 
 	Command* shoot;
+	Command* prepareShoot;
 	Command* feed;
 	Command* armUp;
 	Command* armDown;

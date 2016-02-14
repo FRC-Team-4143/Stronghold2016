@@ -18,11 +18,12 @@ private:
 public:
 	Shooter();
 	void InitDefaultCommand();
-	void shoot();
-	void stop();
+	void shootFront();
+	void shootBack();
+	void stopFront();
+	void stopBack();
 	void feed();
 	void stopFeed();
-	double getPos(CANTalon* motor);
 };
 
 #endif

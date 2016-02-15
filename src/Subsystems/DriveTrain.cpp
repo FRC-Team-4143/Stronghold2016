@@ -326,7 +326,7 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
 		
 		if(frontRightSteer->GetPosition() > SOFTTURNLIMIT)
 		{
-			if (CorrectSteerSetpoint(FRSetPoint + FROffset - frontLeftPos->GetAverageVoltage()) > 2.5)
+			if (CorrectSteerSetpoint(FRSetPoint + FROffset - frontRightPos->GetAverageVoltage()) > 2.5)
 			{
 				frontRight->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + FROffset));
 				FRInv = 1;

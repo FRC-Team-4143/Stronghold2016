@@ -46,8 +46,8 @@ AHRS* RobotMap::imu = nullptr;
 #define CONTINUOUS true
 #define P 0.8
 #define I 0.0
-#define D 0.05
-#define F 0.0
+#define D 0.0
+#define F 0.
 #define POTMIN 0.0
 #define POTMAX 5.0
 #define STEERPOW  0.6

@@ -82,6 +82,7 @@ void DriveTrain::SetOffsets(double FLOff, double FROff, double RLOff, double RRO
 
 
 bool DriveTrain::unwindwheel(AnalogChannelVolt * wheel, PIDController * pid){
+
 	float temp;
 	float turns = wheel->getturns();
 	if(turns >= 1) {
@@ -96,9 +97,11 @@ bool DriveTrain::unwindwheel(AnalogChannelVolt * wheel, PIDController * pid){
 		pid->SetSetpoint(temp);
 		return true;
 	} else return false;
+
 }
 
-bool DriveTrain::unwind(){
+bool DriveTrain::unwind(float y, float x){
+	/*
 	bool retval = true;
 	unwinding = true;
 	robotangle = 0;
@@ -109,6 +112,39 @@ bool DriveTrain::unwind(){
 		retval = 0;
 	}
  	return retval;
+ 	*/
+	frontLeftSteer->SetSetpoint(0);
+	frontRightSteer->SetSetpoint(0);
+	rearLeftSteer->SetSetpoint(0);
+	rearRightSteer->SetSetpoint(0);
+
+	if (y > 0.1){
+		frontLeftDrive->Set(-1);
+		frontRightDrive->Set(-1);
+		rearLeftDrive->Set(-1);
+		rearRightDrive->Set(-1);
+	} else if (y < -0.1){
+		frontLeftDrive->Set(1);
+		frontRightDrive->Set(1);
+		rearLeftDrive->Set(1);
+		rearRightDrive->Set(1);
+	} else if (x > 0.1){
+		frontLeftDrive->Set(1);
+		frontRightDrive->Set(-1);
+		rearLeftDrive->Set(1);
+		rearRightDrive->Set(-1);
+	} else if (x < 0.1){
+		frontLeftDrive->Set(-1);
+		frontRightDrive->Set(1);
+		rearLeftDrive->Set(-1);
+		rearRightDrive->Set(1);
+	} else {
+		frontLeftDrive->Set(0);
+		frontRightDrive->Set(0);
+		rearLeftDrive->Set(0);
+		rearRightDrive->Set(0);
+	}
+	return false;
 }
 
 void DriveTrain::doneunwind(){

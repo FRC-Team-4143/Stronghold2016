@@ -32,7 +32,7 @@ CANTalon* RobotMap::rightFront;
 CANTalon* RobotMap::leftRear;
 SpeedController* RobotMap::feeder;
 
-SpeedController* RobotMap::armMotor;
+CANTalon* RobotMap::armMotor;
 
 DoubleSolenoid* RobotMap::pickupSolenoid;
 Compressor* RobotMap::compressor;
@@ -46,11 +46,11 @@ AHRS* RobotMap::imu = nullptr;
 #define CONTINUOUS true
 #define P 0.8
 #define I 0.0
-#define D 0.1
+#define D 0.05
 #define F 0.0
 #define POTMIN 0.0
 #define POTMAX 5.0
-#define STEERPOW  1.0
+#define STEERPOW  0.6
 #define TOLERANCE 0.2
 #define PERIOD .02
 #define RATIO 1
@@ -126,13 +126,13 @@ void RobotMap::init() {
 
     i2c = new I2C((I2C::Port) 1, 0x04);
 
-    rightRear = new CANTalon(7);
-    leftFront = new CANTalon(8);
-    rightFront = new CANTalon(9);
+    rightRear = new CANTalon(9);
+    leftFront = new CANTalon(7);
+    rightFront = new CANTalon(8);
     leftRear = new CANTalon(10);
-    feeder = new Talon(2);
+    feeder = new Talon(4);
     
-    armMotor = new Talon(0);
+    armMotor = new CANTalon(5);
 
     compressor = new Compressor(0);
     pickupSolenoid = new DoubleSolenoid(5, 0, 1);

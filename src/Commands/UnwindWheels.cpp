@@ -18,14 +18,15 @@ bool doneUnwinding = false;
 // Called repeatedly when this Command is scheduled to run
 void UnwindWheels::Execute()
 {
-doneUnwinding = !Robot::driveTrain->unwind();
+//doneUnwinding = !Robot::driveTrain->unwind();
+	Robot::driveTrain->unwind(Robot::oi->GetJoystickY(), Robot::oi->GetJoystickX());
 
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool UnwindWheels::IsFinished()
 {
-	return doneUnwinding;
+	return false;//doneUnwinding;
 }
 
 // Called once after isFinished returns true

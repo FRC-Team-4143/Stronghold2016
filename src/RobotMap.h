@@ -52,14 +52,14 @@ public:
 	static SerialPort* serialPort;
 
 
-	static  CANTalon* leftFront;
-	static  CANTalon* rightRear;
-	static  CANTalon* rightFront;
-	static  CANTalon* leftRear;
+	static CANTalon* leftFront;
+	static CANTalon* rightRear;
+	static CANTalon* rightFront;
+	static CANTalon* leftRear;
 	static SpeedController* feeder;
 
 
-	static SpeedController* armMotor;
+	static CANTalon* armMotor;
 
 	static Compressor* compressor;
 	static DoubleSolenoid* pickupSolenoid;

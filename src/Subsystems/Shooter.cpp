@@ -1,5 +1,6 @@
 #include "Shooter.h"
 #include "../RobotMap.h"
+#include "CANTalon.h"
 
 Shooter::Shooter() : Subsystem("Shooter") {
 	//Shooter is a shooter. Who knew?
@@ -7,13 +8,23 @@ Shooter::Shooter() : Subsystem("Shooter") {
 	rightRear = RobotMap::rightRear;
 	rightFront = RobotMap::rightFront;
 	leftRear = RobotMap::leftRear;
+/*
+	leftFront->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
+	leftFront->SetControlMode(CANSpeedController::kSpeed);
+	leftFront->SetP(0.8);
+	leftFront->SetI(0.0);
+	leftFront->SetD(0.05);
+	leftFront->SetF(0.0);
+	leftFront->Enable();
 
-	leftFront->SetFeedbackDevice(CANTalon::CtreMagEncoder_Relative);
-	leftFront->SetControlMode(CANSpeedController::kPosition);
-	rightFront->SetFeedbackDevice(CANTalon::CtreMagEncoder_Relative);
-	rightFront->SetControlMode(CANSpeedController::kPosition);
-
-
+	rightFront->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
+	rightFront->SetControlMode(CANSpeedController::kSpeed);
+	rightFront->SetP(0.8);
+	rightFront->SetI(0.0);
+	rightFront->SetD(0.05);
+	rightFront->SetF(0.0);
+	rightFront->Enable();
+*/
 	feeder = RobotMap::feeder;
 
 	timer = new Timer();
@@ -23,40 +34,35 @@ void Shooter::InitDefaultCommand() {
     // Set the default command for a subsystem here.
     // SetDefaultCommand(new MySpecialCommand());
 }
-void Shooter::shoot() {
-	//Sets all motors' speeds to full
-	timer->Start();
-
-	double dist = 34.5*timer->Get();
-
-	Shooter::leftFront->Set(-dist);
-	Shooter::rightFront->Set(-dist);
-	Shooter::leftRear->Set(-1);
-	Shooter::rightRear->Set(-1);
+void Shooter::shootFront() {
+	leftFront->Set(1);//8
+	rightFront->Set(-1);//8
 }
-void Shooter::stop() {
 
-	//Stops all motors' speeds
-	Shooter::leftFront->SetPosition(0);
-	Shooter::rightFront->SetPosition(0);
-
-	Shooter::leftFront->Set(0);
-	Shooter::rightRear->Set(0);
-	Shooter::rightFront->Set(0);
-	Shooter::leftRear->Set(0);
+void Shooter::shootBack(){
+	leftRear->Set(-1);
+	rightRear->Set(1);
 }
+
+void Shooter::stopFront() {
+	leftFront->Set(0);
+	rightFront->Set(0);
+}
+
+void Shooter::stopBack(){
+	rightRear->Set(0);
+	leftRear->Set(0);
+}
+
 void Shooter::feed() {
-
 	//Set feeder to full speed
-	Shooter::feeder->Set(1);
+	feeder->Set(-1);
 }
 void Shooter::stopFeed(){
-
 	//Stop feeder
-	Shooter::feeder->Set(0);
+	feeder->Set(0);
 }
 
-double Shooter::getPos(CANTalon* motor){
-
-	return motor->GetPosition();
+double Shooter::getVelocity(){
+	return leftFront->GetSpeed();
 }

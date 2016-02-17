@@ -12,17 +12,21 @@ private:
 	 CANTalon* rightFront;
 	 CANTalon* leftRear;
 
+	Timer* timer;
+
 	SpeedController* feeder;
 
 	Timer* timer;
 public:
 	Shooter();
 	void InitDefaultCommand();
-	void shoot();
-	void stop();
+	void shootFront();
+	void shootBack();
+	void stopFront();
+	void stopBack();
 	void feed();
 	void stopFeed();
-	double getPos(CANTalon* motor);
+	double getVelocity();
 };
 
 #endif

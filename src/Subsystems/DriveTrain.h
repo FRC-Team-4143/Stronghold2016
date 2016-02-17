@@ -154,7 +154,7 @@ public:
 	void SideLock(); //locks steering
 	bool GetDriveBackFlag();
 	void SetDriveBackFlag(bool flag);
-	bool unwind(); //unwinds all wheels
+	bool unwind(float y, float x); //unwinds all wheels
 	void doneunwind(); //called when unwinding is finished
 	bool unwindwheel(AnalogChannelVolt*, PIDController*); //unwinds one wheel to fix wires (returns false if not done unwinding)
 	void GyroCrab(float desiredangle, float y, float x, bool operatorControl); //drive using gyro values

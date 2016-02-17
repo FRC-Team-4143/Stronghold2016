@@ -15,13 +15,17 @@ public:
 	bool GetButtonStart();
 
 	Command* shoot; //command for shooting
-	Command* feed; //command for feeding
+	Command* prepareShoot;
 	Command* armUp; //command for raising arm
 	Command* armDown; //command for lowering arm
 	Command* useCamera; //command for using camera
 	Command* pneumaticIn; //command for pulling pneumatics in
 	Command* pneumaticOut; //command for pushing pneumatics out
 	Command* unwindWheels;
+	Command* turnFrontRightSteer;
+	Command* turnFrontLeftSteer;
+	Command* turnRearRightSteer;
+	Command* turnRearLeftSteer;
 
 	Joystick* GetDriverJoystick() { return driverJoystick; }
 	Joystick* GetPickerJoystick() { return pickerJoystick; }

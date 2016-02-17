@@ -4,6 +4,7 @@
 #include "SmartDashboard/SmartDashboard.h"
 #include "Commands/AutonomousCommand.h"
 #include "Commands/Shoot.h"
+#include "Commands/PrepareShoot.h"
 #include "Commands/ArmUp.h"
 #include "Commands/ArmDown.h"
 #include "Commands/UseCamera.h"
@@ -11,6 +12,7 @@
 #include "Commands/PneumaticIn.h"
 #include "Commands/PneumaticOut.h"
 #include "Commands/UnwindWheels.h"
+#include "Commands/RunMotor.h"
 
 //We need all of the buttons!!!!!!!!!!!
 
@@ -36,6 +38,7 @@ const float JOYSTICK_DEAD_ZONE = 0.1;
 OI::OI() {
 	driverJoystick = new Joystick(0);
 	shoot = new Shoot();
+	prepareShoot = new PrepareShoot();
 	feed = new Feed();
 	armUp = new ArmUp();
 	armDown = new ArmDown();
@@ -43,20 +46,28 @@ OI::OI() {
 	pneumaticIn = new PneumaticIn();
 	pneumaticOut = new PneumaticOut();
 	unwindWheels = new UnwindWheels();
+	turnFrontRightSteer = new RunMotor(RobotMap::driveTrainFrontRightSteer);
+	turnFrontLeftSteer = new RunMotor(RobotMap::driveTrainFrontLeftSteer);
+	turnRearRightSteer = new RunMotor(RobotMap::driveTrainRearRightSteer);
+	turnRearLeftSteer = new RunMotor(RobotMap::driveTrainRearLeftSteer);
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(shoot); //sets right bumper to shoot
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhileHeld(feed); //sets left bumper to feed
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhileHeld(armUp); //sets Y button to raise arm
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhileHeld(armDown); //sets A button to lower arm
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhileHeld(prepareShoot);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhileHeld(feed);
+
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhenPressed(useCamera); //sets Start button to start camera
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhileHeld(pneumaticIn); //sets X button to pull pneumatics in
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_B))->WhileHeld(pneumaticOut); //sets B button to push penumatics out
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(unwindWheels);
 
-    SmartDashboard::PutData("Pickup", new Feed());
-    SmartDashboard::PutData("Shoot", new Shoot());
-    SmartDashboard::PutData("Autonomous Command", new AutonomousCommand());
+
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhileHeld(unwindWheels);
+
+    SmartDashboard::PutData("Camera", useCamera);
     SmartDashboard::PutData("Reset Steering Encoders", new ResetSteeringEncoders());
+
+    SmartDashboard::PutData("Turn Front Left Steering Motor", turnFrontLeftSteer);
+    SmartDashboard::PutData("Turn Front Right Steering Motor", turnFrontRightSteer);
+    SmartDashboard::PutData("Turn Rear Left Steering Motor", turnRearLeftSteer);
+    SmartDashboard::PutData("Turn Rear Right Steering Motor", turnRearRightSteer);
 }
 
 float OI::GetJoystickX() {

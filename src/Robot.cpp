@@ -1,7 +1,7 @@
 #include "Robot.h"
 #include "Commands/DriveDistance.h"
 #include "Modules/Logger.h"
-
+//declare all of the pointers!!!!!!!
 OI* Robot::oi;
 Shooter* Robot::shooter = nullptr;
 ArmSub* Robot::armSub = nullptr;
@@ -32,7 +32,10 @@ void Robot::RobotInit() {
   }
 
 void Robot::DisabledInit(){
-
+/*Does an'tony even read all of the comments? I should leave a message.
+ * Potato
+ * Potato
+ * */
 }
 
 void Robot::DisabledPeriodic() {

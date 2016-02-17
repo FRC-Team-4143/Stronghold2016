@@ -18,7 +18,7 @@ Logger::Logger() {
 void Logger::Log(std::string msg) {
 	//DriverStation::ReportError(msg.append("\r\n"));
 	std::lock_guard<std::mutex> lck (m_mutex);
-
+//timey wimey wobley stuff
 	time_t rawtime;
 	time(&rawtime);
 

@@ -10,6 +10,7 @@
 #include "Commands/ResetSteeringEncoders.h"
 #include "Commands/PneumaticIn.h"
 #include "Commands/PneumaticOut.h"
+#include "Commands/UnwindWheels.h"
 
 //We need all of the buttons!!!!!!!!!!!
 
@@ -41,6 +42,7 @@ OI::OI() {
 	useCamera = new UseCamera();
 	pneumaticIn = new PneumaticIn();
 	pneumaticOut = new PneumaticOut();
+	unwindWheels = new UnwindWheels();
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(shoot); //sets right bumper to shoot
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhileHeld(feed); //sets left bumper to feed
@@ -49,6 +51,7 @@ OI::OI() {
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhenPressed(useCamera); //sets Start button to start camera
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhileHeld(pneumaticIn); //sets X button to pull pneumatics in
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_B))->WhileHeld(pneumaticOut); //sets B button to push penumatics out
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(unwindWheels);
 
     SmartDashboard::PutData("Pickup", new Feed());
     SmartDashboard::PutData("Shoot", new Shoot());

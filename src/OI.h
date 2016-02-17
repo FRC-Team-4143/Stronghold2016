@@ -21,6 +21,7 @@ public:
 	Command* useCamera; //command for using camera
 	Command* pneumaticIn; //command for pulling pneumatics in
 	Command* pneumaticOut; //command for pushing pneumatics out
+	Command* unwindWheels;
 
 	Joystick* GetDriverJoystick() { return driverJoystick; }
 	Joystick* GetPickerJoystick() { return pickerJoystick; }

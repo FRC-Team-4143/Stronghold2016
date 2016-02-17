@@ -3,15 +3,18 @@
 
 #include "Commands/Subsystem.h"
 #include "WPILib.h"
+#include "Timer.h"
 
 class Shooter: public Subsystem {
 private:
-	SpeedController* leftFront; //left front shooter motor
-	SpeedController* rightRear; //right rear shooter motor
-	SpeedController* rightFront; //right front shooter motor
-	SpeedController* leftRear; //left rear shooter motor
+	 CANTalon* leftFront;
+	 CANTalon* rightRear;
+	 CANTalon* rightFront;
+	 CANTalon* leftRear;
 
 	SpeedController* feeder;
+
+	Timer* timer;
 public:
 	Shooter();
 	void InitDefaultCommand();
@@ -19,6 +22,7 @@ public:
 	void stop();
 	void feed();
 	void stopFeed();
+	double getPos(CANTalon* motor);
 };
 
 #endif

@@ -15,13 +15,6 @@ private:
 		
 	bool unwinding;
 	
-	//Steering Functions
-	void LeftTurn4Wheels();	//Calculates a left hand turn
-	void RightTurn4Wheels();	//Calculates a right hand turn
-	
-	//DriveDirection
-	bool driveFront; //direction of robot driving
-	
 	//Steering Variables	
 	double radian; // input steering angle in radians
 	double A;	//A is the ratio of X to turn harder 
@@ -154,10 +147,7 @@ public:
 	void SetWheelbase(float w, float x, float y); //sets dimensions of drive train
 	void SetMaxSpeed(float MaxSpeed); //sets the max speed of drive motors
 	void SetOffsets(double FLOff, double FROff, double RLOff, double RROff); //sets wheels to correct positions
-	void ToggleFrontBack(); //switches direction of driving
-	void outputLED(); //sets LED color based on drive direction
 	void InitDefaultCommand(); //sets default command
-	void Steer(float radian, float speed, float a);
 	void Crab(float twist, float y, float x, bool operatorControl); //default driving command
 	bool ResetTurns();
 	void Lock();

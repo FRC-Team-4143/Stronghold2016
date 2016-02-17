@@ -327,10 +327,12 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
 			{
 				frontLeft->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + FLOffset));
 				FLInv = 1;
+				SmartDashboard::PutNumber("FL Setpoint", CorrectSteerSetpoint(FLSetPoint + FLOffset));
         	} else
         	{
         		frontLeft->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + FLOffset - 2.5));
         		FLInv = -1;
+        		SmartDashboard::PutNumber("FL Setpoint", CorrectSteerSetpoint(FLSetPoint + FLOffset));
         	}
 		} else if (frontLeftSteer->GetPosition() < -SOFTTURNLIMIT)
 		{
@@ -338,10 +340,12 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
 			{
 				frontLeft->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + FLOffset));
 				FLInv = 1;
+				SmartDashboard::PutNumber("FL Setpoint", CorrectSteerSetpoint(FLSetPoint + FLOffset));
 			} else
 			{
 				frontLeft->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + FLOffset - 2.5));
 				FLInv = -1;
+				SmartDashboard::PutNumber("FL Setpoint", CorrectSteerSetpoint(FLSetPoint + FLOffset));
 			}
 		} else {
 			//Default rotation logic
@@ -349,11 +353,13 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
 			{
 				frontLeft->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + FLOffset));
 				FLInv = 1;
+				SmartDashboard::PutNumber("FL Setpoint", CorrectSteerSetpoint(FLSetPoint + FLOffset));
 			}
 				else
 			{
 				frontLeft->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + FLOffset-2.5));
 				FLInv = -1;
+				SmartDashboard::PutNumber("FL Setpoint", CorrectSteerSetpoint(FLSetPoint + FLOffset));
 			}
 		}
 //////////////////////////////////
@@ -366,10 +372,12 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
 			{
 				frontRight->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + FROffset));
 				FRInv = 1;
+				SmartDashboard::PutNumber("FR Setpoint", CorrectSteerSetpoint(FRSetPoint + FROffset));
 			} else
 			{
 				frontRight->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + FROffset - 2.5));
 				FRInv = -1;
+				SmartDashboard::PutNumber("FR Setpoint", CorrectSteerSetpoint(FRSetPoint + FROffset));
 			}
 		} else if (frontRightSteer->GetPosition() < -SOFTTURNLIMIT)
 		{
@@ -377,11 +385,13 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
 			{
 				frontRight->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + FROffset));
 				FRInv = 1;
+				SmartDashboard::PutNumber("FR Setpoint", CorrectSteerSetpoint(FRSetPoint + FROffset));
 			} else
 			{
 
 				frontRight->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + FROffset - 2.5));
 				FRInv = -1;
+				SmartDashboard::PutNumber("FR Setpoint", CorrectSteerSetpoint(FRSetPoint + FROffset));
 			}
 
 		} else
@@ -391,11 +401,13 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
 			{
 				frontRight->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + FROffset));
 				FRInv = 1;
+				SmartDashboard::PutNumber("FR Setpoint", CorrectSteerSetpoint(FRSetPoint + FROffset));
 			}
 				else
 			{
 				frontRight->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + FROffset-2.5));
 				FRInv = -1;
+				SmartDashboard::PutNumber("FR Setpoint", CorrectSteerSetpoint(FRSetPoint + FROffset));
 			}
 		}
 //////////////////////////////////
@@ -407,22 +419,26 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
 			{
 				rearLeft->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + RLOffset));
 				RLInv = 1;
+				SmartDashboard::PutNumber("RL Setpoint", CorrectSteerSetpoint(RLSetPoint + RLOffset));
 			} else
 			{
 
 				rearLeft->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + RLOffset - 2.5));
 				RLInv = -1;
+				SmartDashboard::PutNumber("RL Setpoint", CorrectSteerSetpoint(RLSetPoint + RLOffset));
 			}
 		} else if (rearLeftSteer->GetPosition() < -SOFTTURNLIMIT){
 			if (CorrectSteerSetpoint(RLSetPoint + RLOffset - rearLeftPos->GetAverageVoltage()) < 2.5)
 			{
 				rearLeft->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + RLOffset));
 				RLInv = 1;
+				SmartDashboard::PutNumber("RL Setpoint", CorrectSteerSetpoint(RLSetPoint + RLOffset));
 			} else
 			{
 
 				rearLeft->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + RLOffset - 2.5));
 				RLInv = -1;
+				SmartDashboard::PutNumber("RL Setpoint", CorrectSteerSetpoint(RLSetPoint + RLOffset));
 			}
 		} else {
 			//default rotation logic
@@ -430,12 +446,14 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
 			{
 				rearLeft->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + RLOffset));
 				RLInv = 1;
+				SmartDashboard::PutNumber("RL Setpoint", CorrectSteerSetpoint(RLSetPoint + RLOffset));
 			}
 
 				else
 			{
 				rearLeft->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + RLOffset-2.5));
 				RLInv = -1;
+				SmartDashboard::PutNumber("RL Setpoint", CorrectSteerSetpoint(RLSetPoint + RLOffset));
 			}
 		}
 		
@@ -447,22 +465,26 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
 			{
 				rearRight->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + RROffset));
 				RRInv = 1;
+				SmartDashboard::PutNumber("RR Setpoint", CorrectSteerSetpoint(RRSetPoint + RROffset));
 			} else
 			{
 
 				rearRight->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + RROffset - 2.5));
 				RRInv = -1;
+				SmartDashboard::PutNumber("RR Setpoint", CorrectSteerSetpoint(RRSetPoint + RROffset));
 			}
 		} else if (rearRightSteer->GetPosition() < -SOFTTURNLIMIT){
 			if (CorrectSteerSetpoint(RRSetPoint + RROffset - rearRightPos->GetAverageVoltage()) < 2.5)
 			{
 				rearRight->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + RROffset));
 				RRInv = 1;
+				SmartDashboard::PutNumber("RR Setpoint", CorrectSteerSetpoint(RRSetPoint + RROffset));
 			} else
 			{
 
 				rearRight->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + RROffset - 2.5));
 				RRInv = -1;
+				SmartDashboard::PutNumber("RR Setpoint", CorrectSteerSetpoint(RRSetPoint + RROffset));
 			}
 		} else {
 			//default rotation logic
@@ -470,11 +492,13 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
 			{
 				rearRight->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + RROffset));
 				RRInv = 1;
+				SmartDashboard::PutNumber("RR Setpoint", CorrectSteerSetpoint(RRSetPoint + RROffset));
 			}
 				else
 			{
 				rearRight->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + RROffset-2.5));
 				RRInv = -1;
+				SmartDashboard::PutNumber("RR Setpoint", CorrectSteerSetpoint(RRSetPoint + RROffset));
 			}
 		}
 	

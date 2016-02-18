@@ -2,28 +2,34 @@
 #include "../RobotMap.h"
 #include "CANTalon.h"
 
+const int RPM = 5000;
+
 Shooter::Shooter() : Subsystem("Shooter") {
 	leftFront = RobotMap::leftFront;
 	rightRear = RobotMap::rightRear;
 	rightFront = RobotMap::rightFront;
 	leftRear = RobotMap::leftRear;
-/*
+
 	leftFront->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
 	leftFront->SetControlMode(CANSpeedController::kSpeed);
-	leftFront->SetP(0.8);
+	leftFront->ConfigNominalOutputVoltage(0.0, 0.0);
+	leftFront->ConfigPeakOutputVoltage(12.0, -12.0);
+	leftFront->SetSensorDirection(true);
+	leftFront->SetP(0.05);
 	leftFront->SetI(0.0);
-	leftFront->SetD(0.05);
-	leftFront->SetF(0.0);
-	leftFront->Enable();
+	leftFront->SetD(0.0);
+	leftFront->SetF(0.03);
 
 	rightFront->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
 	rightFront->SetControlMode(CANSpeedController::kSpeed);
-	rightFront->SetP(0.8);
+	rightFront->ConfigNominalOutputVoltage(0.0, 0.0);
+	rightFront->ConfigPeakOutputVoltage(12.0, -12.0);
+	rightFront->SetSensorDirection(true);
+	rightFront->SetP(0.05);
 	rightFront->SetI(0.0);
-	rightFront->SetD(0.05);
-	rightFront->SetF(0.0);
-	rightFront->Enable();
-*/
+	rightFront->SetD(0.0);
+	rightFront->SetF(0.03);
+
 	feeder = RobotMap::feeder;
 }
 
@@ -32,8 +38,10 @@ void Shooter::InitDefaultCommand() {
     // SetDefaultCommand(new MySpecialCommand());
 }
 void Shooter::shootFront() {
-	leftFront->Set(1);//8
-	rightFront->Set(-1);//8
+	leftFront->SetControlMode(CANSpeedController::kSpeed);
+	leftFront->Set(RPM);
+	rightFront->SetControlMode(CANSpeedController::kSpeed);
+	rightFront->Set(-RPM);
 }
 
 void Shooter::shootBack(){
@@ -42,7 +50,9 @@ void Shooter::shootBack(){
 }
 
 void Shooter::stopFront() {
+	leftFront->SetControlMode(CANSpeedController::kPercentVbus);
 	leftFront->Set(0);
+	rightFront->SetControlMode(CANSpeedController::kPercentVbus);
 	rightFront->Set(0);
 }
 

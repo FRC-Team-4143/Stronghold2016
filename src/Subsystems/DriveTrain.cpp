@@ -3,6 +3,7 @@
 #include "../RobotMap.h"
 #include "../Commands/CrabDrive.h"
 #include "../Robot.h"
+#include "../Modules/Constants.h"
 
 #ifdef TESTSWERVE
 #define MAXTURNS 3
@@ -14,6 +15,7 @@
 const float TWISTSCALE = .5;
 
 const float DEAD_ZONE = 0.2;
+const double AVERAGE_VOLTAGE_BASE = 2.5;
 
 //#define GYROP  .05
 #define GYROP	.07
@@ -81,38 +83,44 @@ void DriveTrain::SetOffsets(double FLOff, double FROff, double RLOff, double RRO
 }
 
 
-bool DriveTrain::unwindwheel(AnalogChannelVolt * wheel, PIDController * pid){
+bool DriveTrain::unwindwheel(AnalogChannelVolt * wheel, PIDController * pid, double offset, bool output){
 
-	float temp;
-	float turns = wheel->getturns();
-	if(turns >= 1) {
-		temp = wheel->GetAverageVoltage() - 1.0;
+	double temp;
+	offset /= 5.0;
+	double turns = wheel->getturns() - offset;
+	if (output) SmartDashboard::PutNumber("offset", offset);
+	if (output) SmartDashboard::PutNumber("turns", turns);
+	if (output) SmartDashboard::PutNumber("curr", wheel->GetAverageVoltage());
+	if(turns >= 0.25) {
+		temp = wheel->GetAverageVoltage() - 0.5;
 		if(temp < 0.0) temp = 5.0 + temp;
 		pid->SetSetpoint(temp);
+		if (output) SmartDashboard::PutNumber("temp", temp);
 		return true;
 	} else
-	if(turns <= -1) {
-		temp = wheel->GetAverageVoltage() + 1.0;
+	if(turns <= -0.25) {
+		temp = wheel->GetAverageVoltage() + 0.5;
 		if(temp > 5.0) temp = temp - 5.0;
 		pid->SetSetpoint(temp);
+		if (output) SmartDashboard::PutNumber("temp", temp);
 		return true;
 	} else return false;
 
 }
 
-bool DriveTrain::unwind(float y, float x){
-	/*
+bool DriveTrain::unwind(){//float y, float x){
+
 	bool retval = true;
 	unwinding = true;
 	robotangle = 0;
-	if(!(unwindwheel(frontLeftPos, frontLeft) || unwindwheel(frontRightPos, frontRight) ||
-			unwindwheel(rearLeftPos, rearLeft) || unwindwheel(rearRightPos, rearRight)))
+	if(!(unwindwheel(frontLeftPos, frontLeft, FLOffset, false) || unwindwheel(frontRightPos, frontRight, FROffset, false) ||
+			unwindwheel(rearLeftPos, rearLeft, RLOffset, true) || unwindwheel(rearRightPos, rearRight, RROffset, false)))
 	{
 		unwinding = 0;
 		retval = 0;
 	}
  	return retval;
- 	*/
+ 	/*
 	frontLeftSteer->SetSetpoint(0);
 	frontRightSteer->SetSetpoint(0);
 	rearLeftSteer->SetSetpoint(0);
@@ -144,7 +152,7 @@ bool DriveTrain::unwind(float y, float x){
 		rearLeftDrive->Set(0);
 		rearRightDrive->Set(0);
 	}
-	return false;
+	return false;*/
 }
 
 void DriveTrain::doneunwind(){
@@ -206,13 +214,13 @@ void DriveTrain::Crab(float twist, float y, float x, bool operatorControl) {
 	// and keeps the wheels pointed that direction
 	// this .1 should be kept the same as the deadzone in oi.cpp
 	if (operatorControl && x == 0.0 && y == 0.0 && twist == 0.0) {
-		if (fabs(lasty) > DEAD_ZONE || fabs(lastx) > DEAD_ZONE || fabs(lasttwist) > DEAD_ZONE) {
+		/*if (fabs(lasty) > DEAD_ZONE || fabs(lastx) > DEAD_ZONE || fabs(lasttwist) > DEAD_ZONE) {
 			y = std::min(std::max(lasty, -DEAD_ZONE), DEAD_ZONE);
 			x = std::min(std::max(lastx, -DEAD_ZONE), DEAD_ZONE);
 			twist = std::min(std::max(lasttwist, -DEAD_ZONE), DEAD_ZONE);
-		} else {
+		} else {*/
 			y = .05; // default wheel position
-		}
+		//}
 	}
 	lastx = x;
 	lasty = y;
@@ -569,4 +577,47 @@ void DriveTrain::zeroSteeringEncoders() {
 	rearLeftSteer->SetPosition(0);
 	rearRightSteer->SetPosition(0);
 
+}
+
+void DriveTrain::setWheelOffsets(){
+	// Get the current steering positions from the drive train.
+	auto FLPosition = Robot::driveTrain->frontLeftPos->GetAverageVoltage();
+	auto FRPosition = Robot::driveTrain->frontRightPos->GetAverageVoltage();
+	auto RLPosition = Robot::driveTrain->rearLeftPos->GetAverageVoltage();
+	auto RRPosition = Robot::driveTrain->rearRightPos->GetAverageVoltage();
+
+	LogSettings(FLPosition, FRPosition, RLPosition, RRPosition);
+
+	// Save the positions to Preferences.
+	auto prefs = Preferences::GetInstance();
+	prefs->PutDouble(Constants::FL_POS_NAME, FLPosition);
+	prefs->PutDouble(Constants::FR_POS_NAME, FRPosition);
+	prefs->PutDouble(Constants::RL_POS_NAME, RLPosition);
+	prefs->PutDouble(Constants::RR_POS_NAME, RRPosition);
+	prefs->Save();
+
+	// Set the drive train positions.
+	SetOffsets(FLPosition, FRPosition, RLPosition, RRPosition);
+}
+
+void DriveTrain::loadWheelOffsets() {
+	LOG("DriveTrainSettings::LoadSettings");
+
+	// Load the positions from Preferences.
+	auto prefs = Preferences::GetInstance();
+	auto FLPosition = prefs->GetDouble(Constants::FL_POS_NAME, Constants::FL_POS_DEFAULT);
+	auto FRPosition = prefs->GetDouble(Constants::FR_POS_NAME, Constants::FR_POS_DEFAULT);
+	auto RLPosition = prefs->GetDouble(Constants::RL_POS_NAME, Constants::RL_POS_DEFAULT);
+	auto RRPosition = prefs->GetDouble(Constants::RR_POS_NAME, Constants::RR_POS_DEFAULT);
+
+	LogSettings(FLPosition, FRPosition, RLPosition, RRPosition);
+
+	// Set the drive train positions.
+	SetOffsets(FLPosition, FRPosition, RLPosition, RRPosition);
+}
+
+void DriveTrain::LogSettings(double fl, double fr, double rl, double rr) {
+	char sz[256];
+	sprintf(sz, "Wheel Positions: FL %f, FR %f, RL %f, RR %f", fl, fr, rl, rr);
+	LOG(sz);
 }

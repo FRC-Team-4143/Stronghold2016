@@ -1,38 +1,39 @@
-#include "ResetSteeringEncoders.h"
+#include <Commands/SetWheelOffsets.h>
 #include "../Robot.h"
 
-ResetSteeringEncoders::ResetSteeringEncoders()
+SetWheelOffsets::SetWheelOffsets()
 {
 	SetRunWhenDisabled(true);
+	SetTimeout(1);
 }
 
 // Called just before this Command runs the first time
-void ResetSteeringEncoders::Initialize()
+void SetWheelOffsets::Initialize()
 {
-
+	Robot::driveTrain->setWheelOffsets();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void ResetSteeringEncoders::Execute()
+void SetWheelOffsets::Execute()
 {
-	Robot::driveTrain->zeroSteeringEncoders();
+
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool ResetSteeringEncoders::IsFinished()
+bool SetWheelOffsets::IsFinished()
 {
-	return true;
+	return IsTimedOut();
 }
 
 // Called once after isFinished returns true
-void ResetSteeringEncoders::End()
+void SetWheelOffsets::End()
 {
 
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void ResetSteeringEncoders::Interrupted()
+void SetWheelOffsets::Interrupted()
 {
 
 }

@@ -1,12 +1,12 @@
-#ifndef ResetSteeringEncoders_H
-#define ResetSteeringEncoders_H
+#ifndef SetWheelOffsets_H
+#define SetWheelOffsets_H
 
 #include "WPILib.h"
 
-class ResetSteeringEncoders: public Command
+class SetWheelOffsets: public Command
 {
 public:
-	ResetSteeringEncoders();
+	SetWheelOffsets();
 	void Initialize();
 	void Execute();
 	bool IsFinished();

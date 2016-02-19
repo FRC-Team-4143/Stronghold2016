@@ -64,6 +64,8 @@ OI::OI() {
     SmartDashboard::PutNumber("Winch pos 1", 0.0);
     SmartDashboard::PutNumber("Winch pos 2", 0.0);
     SmartDashboard::PutNumber("Winch pos 3", 0.0);
+    SmartDashboard::PutNumber("Arm pos 1", 0.0);
+    SmartDashboard::PutNumber("Arm pos 2", 0.0);
 }
 
 float OI::GetRightTrigger() {

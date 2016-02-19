@@ -1,5 +1,6 @@
 #include "ArmSub.h"
 #include "../RobotMap.h"
+#include "SmartDashboard/SmartDashboard.h"
 
  ArmSub::ArmSub() : Subsystem("Arm") {
  	armMotor = RobotMap::armMotor;
@@ -19,15 +20,11 @@
      // SetDefaultCommand(new MySpecialCommand());
  }
  void ArmSub::armDown() {
-	 double Position = ArmSub::armMotor->GetPosition();
-	 Position -= 0.5;
-	 ArmSub::armMotor->Set(Position);
+	 ArmSub::armMotor->Set(SmartDashboard::GetNumber("Arm pos 1", 0.0));
  }
  void ArmSub::stop() {
  	//ArmSub::armMotor->Set(0);
  }
  void ArmSub::armUp() {
-	 double Position = ArmSub::armMotor->GetPosition();
-	 Position += 0.5;
-	 ArmSub::armMotor->Set(Position);
+	 ArmSub::armMotor->Set((SmartDashboard::GetNumber("Arm pos 2", 0.0)));
  }

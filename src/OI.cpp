@@ -1,4 +1,5 @@
 #include <Commands/Feed.h>
+#include <Commands/SetWheelOffsets.h>
 #include "OI.h"
 
 #include "SmartDashboard/SmartDashboard.h"
@@ -8,11 +9,11 @@
 #include "Commands/ArmUp.h"
 #include "Commands/ArmDown.h"
 #include "Commands/UseCamera.h"
-#include "Commands/ResetSteeringEncoders.h"
 #include "Commands/PneumaticIn.h"
 #include "Commands/PneumaticOut.h"
 #include "Commands/UnwindWheels.h"
 #include "Commands/RunMotor.h"
+#include "Commands/SetWheelOffsets.h"
 
 //We need all of the buttons!!!!!!!!!!!
 
@@ -62,7 +63,7 @@ OI::OI() {
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhileHeld(unwindWheels);
 
     SmartDashboard::PutData("Camera", useCamera);
-    SmartDashboard::PutData("Reset Steering Encoders", new ResetSteeringEncoders());
+    SmartDashboard::PutData("SetWheelOffsets", new SetWheelOffsets());
 
     SmartDashboard::PutData("Turn Front Left Steering Motor", turnFrontLeftSteer);
     SmartDashboard::PutData("Turn Front Right Steering Motor", turnFrontRightSteer);

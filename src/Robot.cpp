@@ -12,6 +12,7 @@ Pickup* Robot::pickup = nullptr;
 
 void Robot::RobotInit() {
 
+	Preferences::GetInstance();
 	RobotMap::init();
 	gyroSub = new GyroSub();
 	driveTrain = new DriveTrain();
@@ -22,6 +23,7 @@ void Robot::RobotInit() {
 	oi = new OI();
 
 	driveTrain->SetWheelbase(24, 21.5, 24);
+	driveTrain->loadWheelOffsets();
 
 	driveTrain->frontLeft->Enable();
 	driveTrain->frontRight->Enable();

@@ -154,15 +154,18 @@ public:
 	void SideLock(); //locks steering
 	bool GetDriveBackFlag();
 	void SetDriveBackFlag(bool flag);
-	bool unwind(float y, float x); //unwinds all wheels
+	bool unwind();//float y, float x); //unwinds all wheels
 	void doneunwind(); //called when unwinding is finished
-	bool unwindwheel(AnalogChannelVolt*, PIDController*); //unwinds one wheel to fix wires (returns false if not done unwinding)
+	bool unwindwheel(AnalogChannelVolt*, PIDController*, double offset, bool output); //unwinds one wheel to fix wires (returns false if not done unwinding)
 	void GyroCrab(float desiredangle, float y, float x, bool operatorControl); //drive using gyro values
 	void FieldCentricCrab(float twist, float y, float x, bool operatorControl); //drive at 90 degree angle to field
 	void updateDistanceEncoders(); //updates the values of drive train variables with distance encoder values
 	double getDistanceEncodersValues(); // returns average value from driving encoders
 	void zeroDistanceEncoders(); //Reset driving encoders to 0
 	void zeroSteeringEncoders(); //Reset steering encoders to 0
+	void setWheelOffsets();
+	void loadWheelOffsets();
+	void LogSettings(double fl, double fr, double rl, double rr);
 };
 
 #endif

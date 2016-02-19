@@ -7,10 +7,10 @@
  	armMotor->SetControlMode(CANSpeedController::kPosition);
  	armMotor->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
  	armMotor->SetP(0.8);
- 		armMotor->SetI(0.0);
- 		armMotor->SetD(0.05);
- 		armMotor->SetF(0.0);
- 		armMotor->Enable();
+ 	armMotor->SetI(0.0);
+ 	armMotor->SetD(0.05);
+ 	armMotor->SetF(0.0);
+ 	armMotor->Enable();
 
  }
 
@@ -18,13 +18,14 @@
      // Set the default command for a subsystem here.
      // SetDefaultCommand(new MySpecialCommand());
  }
+ 
  //sets the arm motor to full speed reverse
  void ArmSub::armDown() {
-	 //move it on dowwwwnnnnn
 	 double Position = ArmSub::armMotor->GetPosition();
-	 Position -= +50;
+	 Position -= 50;	 ArmSub::armMotor->Set(Position);
  	ArmSub::armMotor->Set(Position);
  }
+ 
  //stops the arm motor
  void ArmSub::stop() {
  	//stop collaborate and listen
@@ -34,6 +35,6 @@
  void ArmSub::armUp() {
 	//Everybody put your hands up!
 	double Position = ArmSub::armMotor->GetPosition();
-	Position += -50;
+	Position += 50;
 	ArmSub::armMotor->Set(Position);
 }

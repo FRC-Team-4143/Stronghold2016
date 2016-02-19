@@ -11,6 +11,7 @@
 #include "Subsystems/ArmSub.h"
 #include "Subsystems/Shooter.h"
 #include "Subsystems/CameraSub.h"
+#include "Subsystems/WinchSub.h"
 #include "Commands/AutonomousCommand.h"
 
 class Robot : public IterativeRobot {
@@ -22,6 +23,7 @@ public:
 	static GyroSub* gyroSub;
 	static Shooter* shooter;
 	static CameraSub* cameraSub;
+	static WinchSub* winchSub;
 	LiveWindow *lw = LiveWindow::GetInstance();
 
 	virtual void RobotInit();

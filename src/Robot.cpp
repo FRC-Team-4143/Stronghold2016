@@ -8,6 +8,7 @@ ArmSub* Robot::armSub = nullptr;
 GyroSub* Robot::gyroSub = nullptr;
 DriveTrain* Robot::driveTrain = nullptr;
 CameraSub* Robot::cameraSub = nullptr;
+WinchSub* Robot::winchSub = nullptr;
 
 void Robot::RobotInit() {
 
@@ -18,6 +19,7 @@ void Robot::RobotInit() {
     shooter = new Shooter();
     armSub = new ArmSub();
     cameraSub = new CameraSub();
+    winchSub = new WinchSub();
 	oi = new OI();
 
 	driveTrain->SetWheelbase(24, 21.5, 24);

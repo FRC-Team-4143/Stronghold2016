@@ -62,8 +62,7 @@ public:
 
 	static CANTalon* armMotor;
 
-	static Compressor* compressor;
-	static DoubleSolenoid* pickupSolenoid;
+	static CANTalon* winchMotor;
 
 	static void init();
 };

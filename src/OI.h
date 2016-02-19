@@ -6,7 +6,6 @@
 class OI {
 private:
 	Joystick* driverJoystick;
-	Joystick* pickerJoystick;
 public:
 	OI();
 	float GetRightTrigger();
@@ -24,9 +23,11 @@ public:
 	Command* turnFrontLeftSteer;
 	Command* turnRearRightSteer;
 	Command* turnRearLeftSteer;
+	Command* winchSet1;
+	Command* winchSet2;
+	Command* winchSet3;
 
 	Joystick* GetDriverJoystick() { return driverJoystick; }
-	Joystick* GetPickerJoystick() { return pickerJoystick; }
 };
 
 #endif

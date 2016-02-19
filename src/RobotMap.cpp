@@ -43,7 +43,7 @@ AHRS* RobotMap::imu = nullptr;
 #endif
 
 #define CONTINUOUS true
-#define P 0.4
+#define P 0.7
 #define I 0.0
 #define D 0.0
 #define F 0.0
@@ -71,8 +71,7 @@ AHRS* RobotMap::imu = nullptr;
 #define RRS 3
 
 void RobotMap::init() {
-
-    LiveWindow *lw = LiveWindow::GetInstance();
+    //LiveWindow *lw = LiveWindow::GetInstance();
 
     //serialPort = new SerialPort(57600, SerialPort::kOnboard);
     imu = new AHRS(SPI::kOnboardCS0);//serialPort, 100);
@@ -82,6 +81,7 @@ void RobotMap::init() {
 	//driveTrainFrontLeftDrive->ConfigEncoderCodesPerRev(1024);
 	driveTrainFrontLeftSteer = new CANTalon(FLS);
 	driveTrainFrontLeftSteer->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
+
 	//driveTrainFrontLeftSteer->ConfigEncoderCodesPerRev(360);
 	driveTrainFrontLeftPos   = new AnalogChannelVolt(FLP, true, RATIO, driveTrainFrontLeftSteer);
 	driveTrainFrontLeft      = new PIDController(P, I, D, F, driveTrainFrontLeftPos, driveTrainFrontLeftSteer, PERIOD);
@@ -94,6 +94,7 @@ void RobotMap::init() {
 	//driveTrainFrontRightDrive->ConfigEncoderCodesPerRev(1024);
 	driveTrainFrontRightSteer = new CANTalon(FRS);
 	driveTrainFrontRightSteer->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
+
 	//driveTrainFrontRightSteer->ConfigEncoderCodesPerRev(360);
 	driveTrainFrontRightPos   = new AnalogChannelVolt(FRP, true, RATIO, driveTrainFrontRightSteer);
 	driveTrainFrontRight      = new PIDController(P, I, D, F, driveTrainFrontRightPos, driveTrainFrontRightSteer, PERIOD);
@@ -106,6 +107,7 @@ void RobotMap::init() {
 	//driveTrainRearLeftDrive->ConfigEncoderCodesPerRev(1024);
 	driveTrainRearLeftSteer = new CANTalon(RLS);
 	driveTrainRearLeftSteer->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
+
 	//driveTrainRearLeftSteer->ConfigEncoderCodesPerRev(360);
 	driveTrainRearLeftPos   = new AnalogChannelVolt(RLP, true, RATIO, driveTrainRearLeftSteer);
 	driveTrainRearLeft      = new PIDController(P, I, D, F, driveTrainRearLeftPos, driveTrainRearLeftSteer, PERIOD);
@@ -118,6 +120,7 @@ void RobotMap::init() {
 	//driveTrainRearRightDrive->ConfigEncoderCodesPerRev(1024);
 	driveTrainRearRightSteer = new CANTalon(RRS);
 	driveTrainRearRightSteer->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
+
 	//driveTrainRearRightSteer->ConfigEncoderCodesPerRev(360);
 	driveTrainRearRightPos   = new AnalogChannelVolt(RRP, true, RATIO, driveTrainRearRightSteer);
 	driveTrainRearRight = new PIDController(P, I, D, F, driveTrainRearRightPos, driveTrainRearRightSteer, PERIOD);

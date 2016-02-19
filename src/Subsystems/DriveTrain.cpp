@@ -4,18 +4,19 @@
 #include "../Commands/CrabDrive.h"
 #include "../Robot.h"
 #include "../Modules/Constants.h"
+#include "Subsystems/EncoderConstants.h"
 
 #ifdef TESTSWERVE
 #define MAXTURNS 3
 #else
 #define MAXTURNS 3
-#define SOFTTURNLIMIT 1
+#define SOFTTURNLIMIT 2
 #endif
 
 const float TWISTSCALE = .5;
 
 const float DEAD_ZONE = 0.2;
-const double AVERAGE_VOLTAGE_BASE = 2.5;
+//const double AVERAGE_VOLTAGE_BASE = EncoderConstants::HALF_TURN;
 
 //#define GYROP  .05
 #define GYROP	.07
@@ -81,44 +82,68 @@ void DriveTrain::SetOffsets(double FLOff, double FROff, double RLOff, double RRO
 	RLOffset = RLOff;
 	RROffset = RROff;
 }
-
-
+/*
 bool DriveTrain::unwindwheel(AnalogChannelVolt * wheel, PIDController * pid, double offset, bool output){
-
 	double temp;
-	offset /= 5.0;
-	double turns = wheel->getturns() - offset;
+	offset /= EncoderConstants::FULL_TURN;
+	double turns = wheel->GetTurns() - offset;
 	if (output) SmartDashboard::PutNumber("offset", offset);
 	if (output) SmartDashboard::PutNumber("turns", turns);
-	if (output) SmartDashboard::PutNumber("curr", wheel->GetAverageVoltage());
-	if(turns >= 0.25) {
-		temp = wheel->GetAverageVoltage() - 0.5;
-		if(temp < 0.0) temp = 5.0 + temp;
+	if (output) SmartDashboard::PutNumber("curr", wheel->GetAngle());
+	if(turns >= 0.1) {
+		temp = wheel->GetAngle() - 0.75;
+		if(temp < 0.0) temp += EncoderConstants::FULL_TURN;
 		pid->SetSetpoint(temp);
 		if (output) SmartDashboard::PutNumber("temp", temp);
 		return true;
 	} else
-	if(turns <= -0.25) {
-		temp = wheel->GetAverageVoltage() + 0.5;
-		if(temp > 5.0) temp = temp - 5.0;
+	if(turns <= -0.1) {
+		temp = wheel->GetAngle() + 0.75;
+		if(temp > EncoderConstants::FULL_TURN) temp -= EncoderConstants::FULL_TURN;
 		pid->SetSetpoint(temp);
 		if (output) SmartDashboard::PutNumber("temp", temp);
 		return true;
 	} else return false;
-
 }
-
+*/
 bool DriveTrain::unwind(){//float y, float x){
+	Dashboard();
+	frontLeft->Disable();
+	frontRight->Disable();
+	rearLeft->Disable();
+	rearRight->Disable();
+
+	frontLeftSteer->SetControlMode(CANSpeedController::kPosition);
+	frontRightSteer->SetControlMode(CANSpeedController::kPosition);
+	rearLeftSteer->SetControlMode(CANSpeedController::kPosition);
+	rearRightSteer->SetControlMode(CANSpeedController::kPosition);
+
+	frontLeftSteer->SetP(0.4);
+	frontRightSteer->SetP(0.4);
+	rearLeftSteer->SetP(0.4);
+	rearRightSteer->SetP(0.4);
+
+	frontLeftSteer->ConfigPeakOutputVoltage(6.0, -6.0);
+	frontRightSteer->ConfigPeakOutputVoltage(6.0, -6.0);
+	rearLeftSteer->ConfigPeakOutputVoltage(6.0, -6.0);
+	rearRightSteer->ConfigPeakOutputVoltage(6.0, -6.0);
+
+	frontLeftSteer->Set(FLOffset / EncoderConstants::FULL_TURN);
+	frontRightSteer->Set(FROffset / EncoderConstants::FULL_TURN);
+	rearLeftSteer->Set(RLOffset / EncoderConstants::FULL_TURN);
+	rearRightSteer->Set(RROffset / EncoderConstants::FULL_TURN);
+
 
 	bool retval = true;
 	unwinding = true;
 	robotangle = 0;
-	if(!(unwindwheel(frontLeftPos, frontLeft, FLOffset, false) || unwindwheel(frontRightPos, frontRight, FROffset, false) ||
-			unwindwheel(rearLeftPos, rearLeft, RLOffset, true) || unwindwheel(rearRightPos, rearRight, RROffset, false)))
-	{
+	//if(!(unwindwheel(frontLeftPos, frontLeft, FLOffset, false) || unwindwheel(frontRightPos, frontRight, FROffset, false) ||
+	//		unwindwheel(rearLeftPos, rearLeft, RLOffset, true) || unwindwheel(rearRightPos, rearRight, RROffset, false)))
+	/*{
 		unwinding = 0;
 		retval = 0;
 	}
+	 */
  	return retval;
  	/*
 	frontLeftSteer->SetSetpoint(0);
@@ -189,22 +214,14 @@ void DriveTrain::GyroCrab(float desiredangle, float y, float x, bool operatorCon
 }
 
 void DriveTrain::Crab(float twist, float y, float x, bool operatorControl) {
-	SmartDashboard::PutNumber("Steering Motor Encoder FR", frontRightPos->PIDGet());
-	SmartDashboard::PutNumber("Steering Motor Encoder FL", frontLeftPos->PIDGet());
-	SmartDashboard::PutNumber("Steering Motor Encoder RR", rearRightPos->PIDGet());
-	SmartDashboard::PutNumber("Steering Motor Encoder RL", rearLeftPos->PIDGet());
-
-	SmartDashboard::PutNumber("Steering Motor Turns FR", frontRightPos->getturns());
-	SmartDashboard::PutNumber("Steering Motor Turns FL", frontLeftPos->getturns());
-	SmartDashboard::PutNumber("Steering Motor Turns RR", rearRightPos->getturns());
-	SmartDashboard::PutNumber("Steering Motor Turns RL", rearLeftPos->getturns());
+	Dashboard();
 
 	// stop PID loop if wires wrap.
 	if(unwinding ||
-		abs(frontRightPos->getturns()) > MAXTURNS ||
-		abs(rearRightPos->getturns()) > MAXTURNS ||
-		abs(frontLeftPos->getturns()) > MAXTURNS ||
-		abs(rearLeftPos->getturns()) > MAXTURNS)
+		abs(frontRightPos->GetTurns()) > MAXTURNS ||
+		abs(rearRightPos->GetTurns()) > MAXTURNS ||
+		abs(frontLeftPos->GetTurns()) > MAXTURNS ||
+		abs(rearLeftPos->GetTurns()) > MAXTURNS)
 	{
 		SetDriveSpeed(0,0,0,0);
 		return;
@@ -249,19 +266,19 @@ void DriveTrain::Crab(float twist, float y, float x, bool operatorControl) {
 	CP = FWD - twist*Y/radius;
 	DP = FWD + twist*Y/radius;
 
-	float FLSetPoint = 2.5;
-	float FRSetPoint = 2.5;
-	float RLSetPoint = 2.5;
-	float RRSetPoint = 2.5;
+	float FLSetPoint = EncoderConstants::HALF_TURN;
+	float FRSetPoint = EncoderConstants::HALF_TURN;
+	float RLSetPoint = EncoderConstants::HALF_TURN;
+	float RRSetPoint = EncoderConstants::HALF_TURN;
 
 	if(DP != 0 || BP != 0)
-		FLSetPoint = (2.5 + 2.5/pi*atan2(BP,DP));
+		FLSetPoint = (EncoderConstants::HALF_TURN + EncoderConstants::HALF_TURN/pi*atan2(BP,DP));
 	if(BP != 0 || CP != 0)	
-		FRSetPoint = (2.5 + 2.5/pi*atan2(BP,CP));
+		FRSetPoint = (EncoderConstants::HALF_TURN + EncoderConstants::HALF_TURN/pi*atan2(BP,CP));
 	if(AP != 0 || DP != 0)
-		RLSetPoint = (2.5 + 2.5/pi*atan2(AP,DP));
+		RLSetPoint = (EncoderConstants::HALF_TURN + EncoderConstants::HALF_TURN/pi*atan2(AP,DP));
 	if(AP != 0 || CP != 0)
-		RRSetPoint = (2.5 + 2.5/pi*atan2(AP,CP));
+		RRSetPoint = (EncoderConstants::HALF_TURN + EncoderConstants::HALF_TURN/pi*atan2(AP,CP));
 
 	SetSteerSetpoint(FLSetPoint, FRSetPoint, RLSetPoint, RRSetPoint);
 
@@ -311,12 +328,12 @@ void DriveTrain::Crab(float twist, float y, float x, bool operatorControl) {
 
 double DriveTrain::CorrectSteerSetpoint(double setpoint) {
 	if (setpoint < 0) {
-		return (setpoint + 5) ;
+		return setpoint + EncoderConstants::FULL_TURN;
 	}
-	else if (setpoint > 5) {
-		return (setpoint - 5);
+	else if (setpoint > EncoderConstants::FULL_TURN) {
+		return setpoint - EncoderConstants::FULL_TURN;
 	}
-	else if (setpoint == 5) {
+	else if (setpoint == EncoderConstants::FULL_TURN) {
 		return 0;
 	}
 	else {
@@ -325,199 +342,149 @@ double DriveTrain::CorrectSteerSetpoint(double setpoint) {
 }
 
 void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSetPoint, float RRSetPoint) {
-	//if(driveFront) {
 //////////////////////////////////
 //Front Left Wheel
 //////////////////////////////////
-		if(frontLeftSteer->GetPosition() > SOFTTURNLIMIT)
-		{
-			if (CorrectSteerSetpoint(FLSetPoint + FLOffset - frontLeftPos->GetAverageVoltage()) > 2.5)
-			{
-				frontLeft->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + FLOffset));
-				FLInv = 1;
-				SmartDashboard::PutNumber("FL Setpoint", CorrectSteerSetpoint(FLSetPoint + FLOffset));
-        	} else
-        	{
-        		frontLeft->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + FLOffset - 2.5));
-        		FLInv = -1;
-        		SmartDashboard::PutNumber("FL Setpoint", CorrectSteerSetpoint(FLSetPoint + FLOffset));
-        	}
-		} else if (frontLeftSteer->GetPosition() < -SOFTTURNLIMIT)
-		{
-			if (CorrectSteerSetpoint(FLSetPoint + FLOffset - frontLeftPos->GetAverageVoltage()) < 2.5)
-			{
-				frontLeft->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + FLOffset));
-				FLInv = 1;
-				SmartDashboard::PutNumber("FL Setpoint", CorrectSteerSetpoint(FLSetPoint + FLOffset));
-			} else
-			{
-				frontLeft->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + FLOffset - 2.5));
-				FLInv = -1;
-				SmartDashboard::PutNumber("FL Setpoint", CorrectSteerSetpoint(FLSetPoint + FLOffset));
-			}
-		} else {
-			//Default rotation logic
-			if(fabs(FLSetPoint + FLOffset - frontLeftPos->GetAverageVoltage()) < 1.25 || fabs(FLSetPoint + FLOffset - frontLeftPos->GetAverageVoltage()) > 3.75)
-			{
-				frontLeft->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + FLOffset));
-				FLInv = 1;
-				SmartDashboard::PutNumber("FL Setpoint", CorrectSteerSetpoint(FLSetPoint + FLOffset));
-			}
-				else
-			{
-				frontLeft->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + FLOffset-2.5));
-				FLInv = -1;
-				SmartDashboard::PutNumber("FL Setpoint", CorrectSteerSetpoint(FLSetPoint + FLOffset));
-			}
+	if (frontLeftPos->GetTurns() > SOFTTURNLIMIT) {
+		if (CorrectSteerSetpoint(FLSetPoint + FLOffset - frontLeftPos->GetAngle()) > EncoderConstants::HALF_TURN) {
+			frontLeft->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + FLOffset));
+			FLInv = 1;
 		}
+		else {
+			frontLeft->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + FLOffset - EncoderConstants::HALF_TURN));
+			FLInv = -1;
+		}
+	}
+	else if (frontLeftPos->GetTurns() < -SOFTTURNLIMIT) {
+		if (CorrectSteerSetpoint(FLSetPoint + FLOffset - frontLeftPos->GetAngle()) < EncoderConstants::HALF_TURN) {
+			frontLeft->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + FLOffset));
+			FLInv = 1;
+		}
+		else {
+			frontLeft->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + FLOffset - EncoderConstants::HALF_TURN));
+			FLInv = -1;
+		}
+	}
+	else {
+		//Default rotation logic
+		if (fabs(FLSetPoint + FLOffset - frontLeftPos->GetAngle()) < EncoderConstants::QUARTER_TURN || fabs(FLSetPoint + FLOffset - frontLeftPos->GetAngle()) > EncoderConstants::THREEQUARTER_TURN) {
+			frontLeft->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + FLOffset));
+			FLInv = 1;
+		}
+		else {
+			frontLeft->SetSetpoint(CorrectSteerSetpoint(FLSetPoint + FLOffset-EncoderConstants::HALF_TURN));
+			FLInv = -1;
+		}
+	}
 //////////////////////////////////
 //Front Right Wheel
 //////////////////////////////////
-		
-		if(frontRightSteer->GetPosition() > SOFTTURNLIMIT)
-		{
-			if (CorrectSteerSetpoint(FRSetPoint + FROffset - frontRightPos->GetAverageVoltage()) > 2.5)
-			{
-				frontRight->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + FROffset));
-				FRInv = 1;
-				SmartDashboard::PutNumber("FR Setpoint", CorrectSteerSetpoint(FRSetPoint + FROffset));
-			} else
-			{
-				frontRight->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + FROffset - 2.5));
-				FRInv = -1;
-				SmartDashboard::PutNumber("FR Setpoint", CorrectSteerSetpoint(FRSetPoint + FROffset));
-			}
-		} else if (frontRightSteer->GetPosition() < -SOFTTURNLIMIT)
-		{
-			if (CorrectSteerSetpoint(FRSetPoint + FROffset - frontRightPos->GetAverageVoltage()) < 2.5)
-			{
-				frontRight->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + FROffset));
-				FRInv = 1;
-				SmartDashboard::PutNumber("FR Setpoint", CorrectSteerSetpoint(FRSetPoint + FROffset));
-			} else
-			{
-
-				frontRight->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + FROffset - 2.5));
-				FRInv = -1;
-				SmartDashboard::PutNumber("FR Setpoint", CorrectSteerSetpoint(FRSetPoint + FROffset));
-			}
-
-		} else
-		{
-			//default rotation logic
-			if(fabs(FRSetPoint + FROffset - frontRightPos->GetAverageVoltage()) < 1.25 || fabs(FRSetPoint + FROffset - frontRightPos->GetAverageVoltage()) > 3.75)
-			{
-				frontRight->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + FROffset));
-				FRInv = 1;
-				SmartDashboard::PutNumber("FR Setpoint", CorrectSteerSetpoint(FRSetPoint + FROffset));
-			}
-				else
-			{
-				frontRight->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + FROffset-2.5));
-				FRInv = -1;
-				SmartDashboard::PutNumber("FR Setpoint", CorrectSteerSetpoint(FRSetPoint + FROffset));
-			}
+	if (frontRightPos->GetTurns() > SOFTTURNLIMIT) {
+		if (CorrectSteerSetpoint(FRSetPoint + FROffset - frontRightPos->GetAngle()) > EncoderConstants::HALF_TURN) {
+			frontRight->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + FROffset));
+			FRInv = 1;
 		}
+		else {
+			frontRight->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + FROffset - EncoderConstants::HALF_TURN));
+			FRInv = -1;
+		}
+	}
+	else if (frontRightPos->GetTurns() < -SOFTTURNLIMIT) {
+		if (CorrectSteerSetpoint(FRSetPoint + FROffset - frontRightPos->GetAngle()) < EncoderConstants::HALF_TURN) {
+			frontRight->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + FROffset));
+			FRInv = 1;
+		}
+		else {
+			frontRight->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + FROffset - EncoderConstants::HALF_TURN));
+			FRInv = -1;
+		}
+	}
+	else {
+		//default rotation logic
+		if(fabs(FRSetPoint + FROffset - frontRightPos->GetAngle()) < EncoderConstants::QUARTER_TURN || fabs(FRSetPoint + FROffset - frontRightPos->GetAngle()) > EncoderConstants::THREEQUARTER_TURN) {
+			frontRight->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + FROffset));
+			FRInv = 1;
+		}
+		else {
+			frontRight->SetSetpoint(CorrectSteerSetpoint(FRSetPoint + FROffset-EncoderConstants::HALF_TURN));
+			FRInv = -1;
+		}
+	}
 //////////////////////////////////
 //Rear Left Wheel
 //////////////////////////////////
-		
-		if(rearLeftSteer->GetPosition() > SOFTTURNLIMIT){
-			if (CorrectSteerSetpoint(RLSetPoint + RLOffset - rearLeftPos->GetAverageVoltage()) > 2.5)
-			{
-				rearLeft->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + RLOffset));
-				RLInv = 1;
-				SmartDashboard::PutNumber("RL Setpoint", CorrectSteerSetpoint(RLSetPoint + RLOffset));
-			} else
-			{
-
-				rearLeft->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + RLOffset - 2.5));
-				RLInv = -1;
-				SmartDashboard::PutNumber("RL Setpoint", CorrectSteerSetpoint(RLSetPoint + RLOffset));
-			}
-		} else if (rearLeftSteer->GetPosition() < -SOFTTURNLIMIT){
-			if (CorrectSteerSetpoint(RLSetPoint + RLOffset - rearLeftPos->GetAverageVoltage()) < 2.5)
-			{
-				rearLeft->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + RLOffset));
-				RLInv = 1;
-				SmartDashboard::PutNumber("RL Setpoint", CorrectSteerSetpoint(RLSetPoint + RLOffset));
-			} else
-			{
-
-				rearLeft->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + RLOffset - 2.5));
-				RLInv = -1;
-				SmartDashboard::PutNumber("RL Setpoint", CorrectSteerSetpoint(RLSetPoint + RLOffset));
-			}
-		} else {
-			//default rotation logic
-			if(fabs(RLSetPoint + RLOffset - rearLeftPos->GetAverageVoltage()) < 1.25 || fabs(RLSetPoint + RLOffset - rearLeftPos->GetAverageVoltage()) > 3.75)
-			{
-				rearLeft->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + RLOffset));
-				RLInv = 1;
-				SmartDashboard::PutNumber("RL Setpoint", CorrectSteerSetpoint(RLSetPoint + RLOffset));
-			}
-
-				else
-			{
-				rearLeft->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + RLOffset-2.5));
-				RLInv = -1;
-				SmartDashboard::PutNumber("RL Setpoint", CorrectSteerSetpoint(RLSetPoint + RLOffset));
-			}
+	if (rearLeftPos->GetTurns() > SOFTTURNLIMIT) {
+		if (CorrectSteerSetpoint(RLSetPoint + RLOffset - rearLeftPos->GetAngle()) > EncoderConstants::HALF_TURN) {
+			rearLeft->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + RLOffset));
+			RLInv = 1;
 		}
-		
+		else {
+			rearLeft->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + RLOffset - EncoderConstants::HALF_TURN));
+			RLInv = -1;
+		}
+	}
+	else if (rearLeftPos->GetTurns() < -SOFTTURNLIMIT) {
+		if (CorrectSteerSetpoint(RLSetPoint + RLOffset - rearLeftPos->GetAngle()) < EncoderConstants::HALF_TURN) {
+			rearLeft->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + RLOffset));
+			RLInv = 1;
+		}
+		else {
+			rearLeft->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + RLOffset - EncoderConstants::HALF_TURN));
+			RLInv = -1;
+		}
+	}
+	else {
+		//default rotation logic
+		if(fabs(RLSetPoint + RLOffset - rearLeftPos->GetAngle()) < EncoderConstants::QUARTER_TURN || fabs(RLSetPoint + RLOffset - rearLeftPos->GetAngle()) > EncoderConstants::THREEQUARTER_TURN) {
+			rearLeft->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + RLOffset));
+			RLInv = 1;
+		}
+		else {
+			rearLeft->SetSetpoint(CorrectSteerSetpoint(RLSetPoint + RLOffset-EncoderConstants::HALF_TURN));
+			RLInv = -1;
+		}
+	}
 //////////////////////////////////
 //Rear Right Wheel
 //////////////////////////////////
-		if(rearRightSteer->GetPosition() > SOFTTURNLIMIT){
-			if (CorrectSteerSetpoint(RRSetPoint + RROffset - rearRightPos->GetAverageVoltage()) > 2.5)
-			{
-				rearRight->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + RROffset));
-				RRInv = 1;
-				SmartDashboard::PutNumber("RR Setpoint", CorrectSteerSetpoint(RRSetPoint + RROffset));
-			} else
-			{
-
-				rearRight->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + RROffset - 2.5));
-				RRInv = -1;
-				SmartDashboard::PutNumber("RR Setpoint", CorrectSteerSetpoint(RRSetPoint + RROffset));
-			}
-		} else if (rearRightSteer->GetPosition() < -SOFTTURNLIMIT){
-			if (CorrectSteerSetpoint(RRSetPoint + RROffset - rearRightPos->GetAverageVoltage()) < 2.5)
-			{
-				rearRight->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + RROffset));
-				RRInv = 1;
-				SmartDashboard::PutNumber("RR Setpoint", CorrectSteerSetpoint(RRSetPoint + RROffset));
-			} else
-			{
-
-				rearRight->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + RROffset - 2.5));
-				RRInv = -1;
-				SmartDashboard::PutNumber("RR Setpoint", CorrectSteerSetpoint(RRSetPoint + RROffset));
-			}
-		} else {
-			//default rotation logic
-			if(fabs(RRSetPoint + RROffset - rearRightPos->GetAverageVoltage()) < 1.25 || fabs(RRSetPoint + RROffset - rearRightPos->GetAverageVoltage()) > 3.75)
-			{
-				rearRight->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + RROffset));
-				RRInv = 1;
-				SmartDashboard::PutNumber("RR Setpoint", CorrectSteerSetpoint(RRSetPoint + RROffset));
-			}
-				else
-			{
-				rearRight->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + RROffset-2.5));
-				RRInv = -1;
-				SmartDashboard::PutNumber("RR Setpoint", CorrectSteerSetpoint(RRSetPoint + RROffset));
-			}
+	if (rearRightPos->GetTurns() > SOFTTURNLIMIT) {
+		if (CorrectSteerSetpoint(RRSetPoint + RROffset - rearRightPos->GetAngle()) > EncoderConstants::HALF_TURN) {
+			rearRight->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + RROffset));
+			RRInv = 1;
 		}
-	
+		else {
+			rearRight->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + RROffset - EncoderConstants::HALF_TURN));
+			RRInv = -1;
+		}
+	}
+	else if (rearRightPos->GetTurns() < -SOFTTURNLIMIT) {
+		if (CorrectSteerSetpoint(RRSetPoint + RROffset - rearRightPos->GetAngle()) < EncoderConstants::HALF_TURN) {
+			rearRight->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + RROffset));
+			RRInv = 1;
+		}
+		else {
+			rearRight->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + RROffset - EncoderConstants::HALF_TURN));
+			RRInv = -1;
+		}
+	}
+	else {
+		//default rotation logic
+		if (fabs(RRSetPoint + RROffset - rearRightPos->GetAngle()) < EncoderConstants::QUARTER_TURN || fabs(RRSetPoint + RROffset - rearRightPos->GetAngle()) > EncoderConstants::THREEQUARTER_TURN) {
+			rearRight->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + RROffset));
+			RRInv = 1;
+		}
+		else {
+			rearRight->SetSetpoint(CorrectSteerSetpoint(RRSetPoint + RROffset-EncoderConstants::HALF_TURN));
+			RRInv = -1;
+		}
+	}
 }
 
 void DriveTrain::SetDriveSpeed(float FLSpeed, float FRSpeed, float RLSpeed, float RRSpeed) {
-
-		frontLeftDrive->Set(FLSpeed*FLInv);
-		frontRightDrive->Set(FRSpeed*FRInv);
-		rearLeftDrive->Set(RLSpeed*RLInv);
-		rearRightDrive->Set(RRSpeed*RRInv);
+	frontLeftDrive->Set(FLSpeed*FLInv);
+	frontRightDrive->Set(FRSpeed*FRInv);
+	rearLeftDrive->Set(RLSpeed*RLInv);
+	rearRightDrive->Set(RRSpeed*RRInv);
 }
 
 void DriveTrain::Lock() {
@@ -529,7 +496,7 @@ void DriveTrain::SideLock() {
 	SetSteerSetpoint(2.0, 0.75, 3.25, 4.5);
 	SetDriveSpeed(0,0,0,0);
 }
-
+/*
 bool DriveTrain::ResetTurns() {
 	frontRight->Enable();
 	rearRight->Enable();
@@ -542,7 +509,7 @@ bool DriveTrain::ResetTurns() {
 	robotangle = 0;
 	return true;
 }
-
+*/
 bool DriveTrain::GetDriveBackFlag() {
 	return DriveBackFlag;
 }
@@ -579,12 +546,12 @@ void DriveTrain::zeroSteeringEncoders() {
 
 }
 
-void DriveTrain::setWheelOffsets(){
+void DriveTrain::setWheelOffsets() {
 	// Get the current steering positions from the drive train.
-	auto FLPosition = Robot::driveTrain->frontLeftPos->GetAverageVoltage();
-	auto FRPosition = Robot::driveTrain->frontRightPos->GetAverageVoltage();
-	auto RLPosition = Robot::driveTrain->rearLeftPos->GetAverageVoltage();
-	auto RRPosition = Robot::driveTrain->rearRightPos->GetAverageVoltage();
+	auto FLPosition = Robot::driveTrain->frontLeftPos->GetRawAngle();
+	auto FRPosition = Robot::driveTrain->frontRightPos->GetRawAngle();
+	auto RLPosition = Robot::driveTrain->rearLeftPos->GetRawAngle();
+	auto RRPosition = Robot::driveTrain->rearRightPos->GetRawAngle();
 
 	LogSettings(FLPosition, FRPosition, RLPosition, RRPosition);
 
@@ -620,4 +587,32 @@ void DriveTrain::LogSettings(double fl, double fr, double rl, double rr) {
 	char sz[256];
 	sprintf(sz, "Wheel Positions: FL %f, FR %f, RL %f, RR %f", fl, fr, rl, rr);
 	LOG(sz);
+}
+
+void DriveTrain::Dashboard() {
+	SmartDashboard::PutNumber("Steering Motor Encoder FR", frontRightPos->PIDGet());
+	SmartDashboard::PutNumber("Steering Motor Encoder FL", frontLeftPos->PIDGet());
+	SmartDashboard::PutNumber("Steering Motor Encoder RR", rearRightPos->PIDGet());
+	SmartDashboard::PutNumber("Steering Motor Encoder RL", rearLeftPos->PIDGet());
+
+	SmartDashboard::PutNumber("Steering Motor Turns FR", frontRightPos->GetTurns() - FROffset); // /5.0
+	SmartDashboard::PutNumber("Steering Motor Turns FL", frontLeftPos->GetTurns() - FLOffset); // /5.0
+	SmartDashboard::PutNumber("Steering Motor Turns RR", rearRightPos->GetTurns() - RROffset); // /5.0
+	SmartDashboard::PutNumber("Steering Motor Turns RL", rearLeftPos->GetTurns() - RLOffset); // /5.0
+
+	SmartDashboard::PutNumber("FL Setpoint", frontLeft->GetSetpoint());
+	SmartDashboard::PutNumber("FR Setpoint", frontRight->GetSetpoint());
+	SmartDashboard::PutNumber("RL Setpoint", rearLeft->GetSetpoint());
+	SmartDashboard::PutNumber("RR Setpoint", rearRight->GetSetpoint());
+}
+
+void DriveTrain::CrabInit() {
+	frontLeft->Enable();
+	frontRight->Enable();
+	rearLeft->Enable();
+	rearRight->Enable();
+	frontLeftSteer->SetControlMode(CANSpeedController::kPercentVbus);
+	frontRightSteer->SetControlMode(CANSpeedController::kPercentVbus);
+	rearLeftSteer->SetControlMode(CANSpeedController::kPercentVbus);
+	rearRightSteer->SetControlMode(CANSpeedController::kPercentVbus);
 }

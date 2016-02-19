@@ -1,5 +1,4 @@
-#ifndef DRIVETRAIN_H
-#define DRIVETRAIN_H
+#pragma once
 
 #include <WPILib.h>
 #include <math.h>
@@ -149,14 +148,14 @@ public:
 	void SetOffsets(double FLOff, double FROff, double RLOff, double RROff); //sets wheels to correct positions
 	void InitDefaultCommand(); //sets default command
 	void Crab(float twist, float y, float x, bool operatorControl); //default driving command
-	bool ResetTurns();
+	//bool ResetTurns();
 	void Lock();
 	void SideLock(); //locks steering
 	bool GetDriveBackFlag();
 	void SetDriveBackFlag(bool flag);
 	bool unwind();//float y, float x); //unwinds all wheels
 	void doneunwind(); //called when unwinding is finished
-	bool unwindwheel(AnalogChannelVolt*, PIDController*, double offset, bool output); //unwinds one wheel to fix wires (returns false if not done unwinding)
+	//bool unwindwheel(AnalogChannelVolt*, PIDController*, double offset, bool output); //unwinds one wheel to fix wires (returns false if not done unwinding)
 	void GyroCrab(float desiredangle, float y, float x, bool operatorControl); //drive using gyro values
 	void FieldCentricCrab(float twist, float y, float x, bool operatorControl); //drive at 90 degree angle to field
 	void updateDistanceEncoders(); //updates the values of drive train variables with distance encoder values
@@ -166,6 +165,6 @@ public:
 	void setWheelOffsets();
 	void loadWheelOffsets();
 	void LogSettings(double fl, double fr, double rl, double rr);
+	void Dashboard();
+	void CrabInit();
 };
-
-#endif

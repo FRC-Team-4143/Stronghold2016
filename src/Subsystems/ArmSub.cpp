@@ -19,7 +19,7 @@
  }
  void ArmSub::armDown() {
 	 double Position = ArmSub::armMotor->GetPosition();
-	 Position -= 50;
+	 Position -= 0.5;
 	 ArmSub::armMotor->Set(Position);
  }
  void ArmSub::stop() {
@@ -27,6 +27,6 @@
  }
  void ArmSub::armUp() {
 	 double Position = ArmSub::armMotor->GetPosition();
-	 Position += 50;
+	 Position += 0.5;
 	 ArmSub::armMotor->Set(Position);
  }

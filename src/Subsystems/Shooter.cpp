@@ -65,8 +65,28 @@ void Shooter::feed() {
 	feeder->Set(-1);
 }
 
+void Shooter::deFeed(){
+	feeder->Set(1);
+}
+
 void Shooter::stopFeed(){
 	feeder->Set(0);
+}
+
+void Shooter::shootDefault(float right, float left){
+	if (right > 0.1){
+		shootFront();
+		shootBack();
+	} else {
+		stopFront();
+		stopBack();
+	}
+
+	if (left > 0.1){
+		feed();
+	} else {
+		stopFeed();
+	}
 }
 
 double Shooter::getVelocity(){

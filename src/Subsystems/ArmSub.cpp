@@ -11,6 +11,7 @@
  	armMotor->SetD(0.05);
     armMotor->SetF(0.0);
  	armMotor->Enable();
+ 	armMotor->ConfigPeakOutputVoltage(6.0,-6.0);
  }
 
  void ArmSub::InitDefaultCommand() {

@@ -12,8 +12,6 @@ private:
 	CANTalon* rightFront;
 	CANTalon* leftRear;
 
-	Timer* timer;
-
 	SpeedController* feeder;
 public:
 	Shooter();
@@ -23,7 +21,9 @@ public:
 	void stopFront();
 	void stopBack();
 	void feed();
+	void deFeed();
 	void stopFeed();
+	void shootDefault(float right, float left);
 	double getVelocity();
 };
 

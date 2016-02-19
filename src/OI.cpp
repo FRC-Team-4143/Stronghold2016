@@ -1,11 +1,8 @@
-#include <Commands/Feed.h>
 #include <Commands/SetWheelOffsets.h>
 #include "OI.h"
 
 #include "SmartDashboard/SmartDashboard.h"
 #include "Commands/AutonomousCommand.h"
-#include "Commands/Shoot.h"
-#include "Commands/PrepareShoot.h"
 #include "Commands/ArmUp.h"
 #include "Commands/ArmDown.h"
 #include "Commands/UseCamera.h"
@@ -36,9 +33,6 @@ const float JOYSTICK_DEAD_ZONE = 0.1;
 
 OI::OI() {
 	driverJoystick = new Joystick(0);
-	shoot = new Shoot();
-	prepareShoot = new PrepareShoot();
-	feed = new Feed();
 	armUp = new ArmUp();
 	armDown = new ArmDown();
 	useCamera = new UseCamera();
@@ -49,10 +43,6 @@ OI::OI() {
 	turnFrontLeftSteer = new RunMotor(RobotMap::driveTrainFrontLeftSteer);
 	turnRearRightSteer = new RunMotor(RobotMap::driveTrainRearRightSteer);
 	turnRearLeftSteer = new RunMotor(RobotMap::driveTrainRearLeftSteer);
-
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(shoot);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhileHeld(prepareShoot);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhileHeld(feed);
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhileHeld(armUp);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhileHeld(armDown);
@@ -69,6 +59,16 @@ OI::OI() {
     SmartDashboard::PutData("Turn Front Right Steering Motor", turnFrontRightSteer);
     SmartDashboard::PutData("Turn Rear Left Steering Motor", turnRearLeftSteer);
     SmartDashboard::PutData("Turn Rear Right Steering Motor", turnRearRightSteer);
+}
+
+float OI::GetRightTrigger() {
+	auto value = driverJoystick->GetRawAxis(JOYSTICK_RTRIG_AXIS);
+	return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : value;
+}
+
+float OI::GetLeftTrigger() {
+	auto value = driverJoystick->GetRawAxis(JOYSTICK_LTRIG_AXIS);
+	return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : value;
 }
 
 float OI::GetJoystickX() {

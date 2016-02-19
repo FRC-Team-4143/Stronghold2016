@@ -9,14 +9,13 @@ private:
 	Joystick* pickerJoystick;
 public:
 	OI();
+	float GetRightTrigger();
+	float GetLeftTrigger();
 	float GetJoystickX();
 	float GetJoystickY();
 	float GetJoystickZ();
 	bool GetButtonStart();
 
-	Command* shoot;
-	Command* prepareShoot;
-	Command* feed;
 	Command* armUp;
 	Command* armDown;
 	Command* useCamera;

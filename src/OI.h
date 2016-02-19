@@ -19,8 +19,6 @@ public:
 	Command* armUp;
 	Command* armDown;
 	Command* useCamera;
-	Command* pneumaticIn;
-	Command* pneumaticOut;
 	Command* unwindWheels;
 	Command* turnFrontRightSteer;
 	Command* turnFrontLeftSteer;

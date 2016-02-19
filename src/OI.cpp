@@ -6,8 +6,6 @@
 #include "Commands/ArmUp.h"
 #include "Commands/ArmDown.h"
 #include "Commands/UseCamera.h"
-#include "Commands/PneumaticIn.h"
-#include "Commands/PneumaticOut.h"
 #include "Commands/UnwindWheels.h"
 #include "Commands/RunMotor.h"
 #include "Commands/SetWheelOffsets.h"
@@ -36,8 +34,6 @@ OI::OI() {
 	armUp = new ArmUp();
 	armDown = new ArmDown();
 	useCamera = new UseCamera();
-	pneumaticIn = new PneumaticIn();
-	pneumaticOut = new PneumaticOut();
 	unwindWheels = new UnwindWheels();
 	turnFrontRightSteer = new RunMotor(RobotMap::driveTrainFrontRightSteer);
 	turnFrontLeftSteer = new RunMotor(RobotMap::driveTrainFrontLeftSteer);
@@ -46,9 +42,6 @@ OI::OI() {
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhileHeld(armUp);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhileHeld(armDown);
-
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhileHeld(pneumaticIn);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_B))->WhileHeld(pneumaticOut);
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhileHeld(unwindWheels);
 

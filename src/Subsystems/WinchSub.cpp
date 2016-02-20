@@ -36,3 +36,7 @@ void WinchSub::disablePositionControl(){
 void WinchSub::readPos(){
 	SmartDashboard::PutNumber("Winch Position", motor->GetPosition());
 }
+
+void WinchSub::reset(){
+	motor->SetPosition(0.0);
+}

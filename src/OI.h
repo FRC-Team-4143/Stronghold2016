@@ -26,6 +26,7 @@ public:
 	Command* winchSet1;
 	Command* winchSet2;
 	Command* winchSet3;
+	Command* resetWinch;
 
 	Joystick* GetDriverJoystick() { return driverJoystick; }
 };

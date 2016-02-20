@@ -12,9 +12,9 @@ void SetWinchPosition::Initialize()
 {
 	//Robot::winchSub->setPos(pos);
 
-if (pos == 1) Robot::winchSub->setPos(SmartDashboard::GetNumber("Winch pos 1", 0.0));
-if (pos == 2) Robot::winchSub->setPos(SmartDashboard::GetNumber("Winch pos 2", 0.0));
-if (pos == 3) Robot::winchSub->setPos(SmartDashboard::GetNumber("Winch pos 3", 0.0));
+if (pos == 0.0) Robot::winchSub->setPos(0.0);
+if (pos == 2.0) Robot::winchSub->setPos(SmartDashboard::GetNumber("Winch pos 2", 0.0));
+if (pos == 3.0) Robot::winchSub->setPos(SmartDashboard::GetNumber("Winch pos 3", 0.0));
 }
 
 // Called repeatedly when this Command is scheduled to run

@@ -15,6 +15,7 @@ public:
 	void setPos(double pos);
 	void readPos();
 	void disablePositionControl();
+	void reset();
 };
 
 #endif

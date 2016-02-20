@@ -24,6 +24,7 @@
  */
 class RobotMap {
 public:
+	const static bool SpeedControl;
 
 	static PIDController*     driveTrainFrontLeft;
 	static CANTalon*   driveTrainFrontLeftDrive;

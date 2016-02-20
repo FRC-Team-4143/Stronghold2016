@@ -16,6 +16,8 @@
 const float TWISTSCALE = .5;
 
 const float DEAD_ZONE = 0.2;
+
+const float driveScale = 950;
 //const double AVERAGE_VOLTAGE_BASE = EncoderConstants::HALF_TURN;
 
 //#define GYROP  .05
@@ -481,10 +483,18 @@ void DriveTrain::SetSteerSetpoint(float FLSetPoint, float FRSetPoint, float RLSe
 }
 
 void DriveTrain::SetDriveSpeed(float FLSpeed, float FRSpeed, float RLSpeed, float RRSpeed) {
-	frontLeftDrive->Set(FLSpeed*FLInv);
-	frontRightDrive->Set(FRSpeed*FRInv);
-	rearLeftDrive->Set(RLSpeed*RLInv);
-	rearRightDrive->Set(RRSpeed*RRInv);
+	if (RobotMap::SpeedControl){
+		frontLeftDrive->Set(FLSpeed*FLInv*driveScale);
+		frontRightDrive->Set(FRSpeed*FRInv*driveScale);
+		rearLeftDrive->Set(RLSpeed*RLInv*driveScale);
+		rearRightDrive->Set(RRSpeed*RRInv*driveScale);
+	} else {
+		frontLeftDrive->Set(FLSpeed*FLInv);
+		frontRightDrive->Set(FRSpeed*FRInv);
+		rearLeftDrive->Set(RLSpeed*RLInv);
+		rearRightDrive->Set(RRSpeed*RRInv);
+	}
+
 }
 
 void DriveTrain::Lock() {

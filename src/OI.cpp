@@ -40,7 +40,7 @@ OI::OI() {
 	turnFrontLeftSteer = new RunMotor(RobotMap::driveTrainFrontLeftSteer);
 	turnRearRightSteer = new RunMotor(RobotMap::driveTrainRearRightSteer);
 	turnRearLeftSteer = new RunMotor(RobotMap::driveTrainRearLeftSteer);
-	winchSet1 = new SetWinchPosition(1.0);
+	winchSet1 = new SetWinchPosition(0.0);
 	winchSet2 = new SetWinchPosition(2.0);
 	winchSet3 = new SetWinchPosition(3.0);
 
@@ -57,11 +57,12 @@ OI::OI() {
     SmartDashboard::PutData("Turn Rear Left Steering Motor", turnRearLeftSteer);
     SmartDashboard::PutData("Turn Rear Right Steering Motor", turnRearRightSteer);
 
-    SmartDashboard::PutData("Set Winch 1", winchSet1);
+    SmartDashboard::PutData("Default Winch Position", winchSet1);
     SmartDashboard::PutData("Set Winch 2", winchSet2);
     SmartDashboard::PutData("Set Winch 3", winchSet3);
+    SmartDashboard::PutData("Reset Winch", resetWinch);
 
-    SmartDashboard::PutNumber("Winch pos 1", 0.0);
+    SmartDashboard::PutNumber("Starting Position", 0.0);
     SmartDashboard::PutNumber("Winch pos 2", 0.0);
     SmartDashboard::PutNumber("Winch pos 3", 0.0);
     SmartDashboard::PutNumber("Arm pos 1", 0.0);

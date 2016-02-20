@@ -12,7 +12,7 @@
 #ifndef ROBOTMAP_H
 #define ROBOTMAP_H
 #include "WPILib.h"
-#include "Modules/AHRS.h"
+#include <AHRS.h>
 #include "Modules/AnalogChannelVolt.h"
 #include "Modules/Logger.h"
 

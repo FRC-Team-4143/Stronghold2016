@@ -5,6 +5,8 @@
 #include "Commands/AutonomousCommand.h"
 #include "Commands/ArmUp.h"
 #include "Commands/ArmDown.h"
+#include "Commands/BasicCameraDisableCmd.h"
+#include "Commands/BasicCameraEnableCmd.h"
 #include "Commands/UseCamera.h"
 #include "Commands/UnwindWheels.h"
 #include "Commands/RunMotor.h"
@@ -47,12 +49,18 @@ OI::OI() {
 	winchSet3 = new SetWinchPosition(2.0);
 	resetWinch = new ResetWinch();
 
+	auto cameraEnableCmd = new BasicCameraEnableCmd(Robot::basicCameraSub);
+	auto cameraDisableCmd = new BasicCameraDisableCmd(Robot::basicCameraSub);
+
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhileHeld(armUp);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhileHeld(armDown);
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhileHeld(unwindWheels);
 
-    SmartDashboard::PutData("Camera", useCamera);
+	SmartDashboard::PutData("Camera On", cameraEnableCmd);
+	SmartDashboard::PutData("Camera Off", cameraDisableCmd);
+
+	SmartDashboard::PutData("Camera", useCamera);
     SmartDashboard::PutData("SetWheelOffsets", new SetWheelOffsets());
 
     SmartDashboard::PutData("Turn Front Left Steering Motor", turnFrontLeftSteer);

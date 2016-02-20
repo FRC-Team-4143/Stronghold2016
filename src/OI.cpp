@@ -38,7 +38,7 @@ OI::OI() {
 	driverJoystick = new Joystick(0);
 	armUp = new ArmUp();
 	armDown = new ArmDown();
-	useCamera = new UseCamera();
+	//useCamera = new UseCamera();
 	unwindWheels = new UnwindWheels();
 	turnFrontRightSteer = new RunMotor(RobotMap::driveTrainFrontRightSteer);
 	turnFrontLeftSteer = new RunMotor(RobotMap::driveTrainFrontLeftSteer);
@@ -60,7 +60,7 @@ OI::OI() {
 	SmartDashboard::PutData("Camera On", cameraEnableCmd);
 	SmartDashboard::PutData("Camera Off", cameraDisableCmd);
 
-	SmartDashboard::PutData("Camera", useCamera);
+	//SmartDashboard::PutData("Camera", useCamera);
     SmartDashboard::PutData("SetWheelOffsets", new SetWheelOffsets());
 
     SmartDashboard::PutData("Turn Front Left Steering Motor", turnFrontLeftSteer);

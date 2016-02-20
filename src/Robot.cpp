@@ -8,6 +8,7 @@ ArmSub* Robot::armSub = nullptr;
 GyroSub* Robot::gyroSub = nullptr;
 DriveTrain* Robot::driveTrain = nullptr;
 CameraSub* Robot::cameraSub = nullptr;
+std::shared_ptr<BasicCameraSub> Robot::basicCameraSub;
 WinchSub* Robot::winchSub = nullptr;
 
 void Robot::RobotInit() {
@@ -19,6 +20,7 @@ void Robot::RobotInit() {
     shooter = new Shooter();
     armSub = new ArmSub();
     cameraSub = new CameraSub();
+    basicCameraSub.reset(new BasicCameraSub("cam0"));
     winchSub = new WinchSub();
 	oi = new OI();
 

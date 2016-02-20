@@ -1,14 +1,12 @@
-#ifndef Shoot_H
-#define Shoot_H
+#ifndef Wait_H
+#define Wait_H
 
 #include "WPILib.h"
 
-class Shoot: public Command
+class Wait: public Command
 {
-private:
-	bool stop;
 public:
-	Shoot(bool stop);
+	Wait(double time);
 	void Initialize();
 	void Execute();
 	bool IsFinished();

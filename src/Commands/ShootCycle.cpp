@@ -5,7 +5,8 @@
 ShootCycle::ShootCycle()
 {
 	AddSequential(new SetWinchPosition(0.5, false));
-	//AddSequential(new Shoot(0.0, 0.0));
+	AddSequential(new Shoot(false));
+
 
 
 	// Add Commands here:

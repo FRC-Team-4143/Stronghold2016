@@ -1,44 +1,40 @@
-#include "Shoot.h"
+#include "Wait.h"
 #include "../Robot.h"
 
-Shoot::Shoot(bool stop)
+Wait::Wait(double time)
 {
-	Shoot::stop = stop;
+	SetTimeout(time);
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);
 }
 
 // Called just before this Command runs the first time
-void Shoot::Initialize()
+void Wait::Initialize()
 {
-	Robot::shooter->shootFront();
-	Robot::shooter->shootBack();
+
 }
 
 // Called repeatedly when this Command is scheduled to run
-void Shoot::Execute()
+void Wait::Execute()
 {
 
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool Shoot::IsFinished()
+bool Wait::IsFinished()
 {
-	return true;
+	return IsTimedOut();
 }
 
 // Called once after isFinished returns true
-void Shoot::End()
+void Wait::End()
 {
-	if (stop){
-		Robot::shooter->stopFront();
-		Robot::shooter->stopBack();
-	}
+
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void Shoot::Interrupted()
+void Wait::Interrupted()
 {
-	End();
+
 }

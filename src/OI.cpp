@@ -14,6 +14,7 @@
 #include "Commands/SetWinchPosition.h"
 #include "Commands/ResetWinch.h"
 #include "Commands/UpdatePositions.h"
+#include "Commands/ShootCycle.h"
 
 const uint32_t JOYSTICK_LX_AXIS    = 0;
 const uint32_t JOYSTICK_LY_AXIS    = 1;
@@ -84,6 +85,8 @@ OI::OI() {
 
     SmartDashboard::PutNumber("Arm pos 1", 0.0);
     SmartDashboard::PutNumber("Arm pos 2", 0.0);
+
+    SmartDashboard::PutData("Shoot Wombo Combo",new ShootCycle());
 
 }
 

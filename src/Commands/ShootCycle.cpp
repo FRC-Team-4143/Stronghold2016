@@ -1,11 +1,18 @@
 #include "ShootCycle.h"
 #include "SetWinchPosition.h"
 #include "Shoot.h"
+#include "Feed.h"
+#include "DisableWinchControl.h"
+#include "StopShoot.h"
 
 ShootCycle::ShootCycle()
 {
 	AddSequential(new SetWinchPosition(0.5, false));
-	AddSequential(new Shoot(false));
+	AddSequential(new Shoot(false),1);
+	AddSequential(new Feed(1));
+	AddSequential(new DisableWinchControl());
+	AddSequential(new StopShoot());
+
 
 
 

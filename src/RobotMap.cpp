@@ -37,6 +37,8 @@ CANTalon* RobotMap::armMotor;
 
 CANTalon* RobotMap::winchMotor;
 
+DigitalInput* RobotMap::test;
+
 #ifdef USE_NAVX
 KauaiNavX::AHRS* RobotMap::imu = nullptr;
 #else
@@ -182,4 +184,5 @@ void RobotMap::init() {
 
     winchMotor = new CANTalon(5);
 
+    test = new DigitalInput(0);
 }

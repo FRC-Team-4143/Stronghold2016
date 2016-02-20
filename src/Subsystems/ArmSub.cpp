@@ -28,3 +28,7 @@
  void ArmSub::armUp() {
 	 ArmSub::armMotor->Set((SmartDashboard::GetNumber("Arm pos 2", 0.0)));
  }
+
+ void ArmSub::readPos(){
+	 SmartDashboard::PutNumber("Arm Position", armMotor->GetPosition());
+ }

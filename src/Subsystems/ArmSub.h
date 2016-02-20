@@ -14,6 +14,7 @@ public:
 	void armDown();
 	void stop();
 	void armUp();
+	void readPos();
 };
 
 #endif

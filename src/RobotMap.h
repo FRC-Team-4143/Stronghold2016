@@ -65,6 +65,8 @@ public:
 
 	static CANTalon* winchMotor;
 
+	static DigitalInput* test;
+
 	static void init();
 };
 #endif

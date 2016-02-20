@@ -10,6 +10,8 @@
 #include "Commands/RunMotor.h"
 #include "Commands/SetWheelOffsets.h"
 #include "Commands/SetWinchPosition.h"
+#include "Commands/ResetWinch.h"
+#include "Commands/UpdatePositions.h"
 
 const uint32_t JOYSTICK_LX_AXIS    = 0;
 const uint32_t JOYSTICK_LY_AXIS    = 1;
@@ -41,8 +43,9 @@ OI::OI() {
 	turnRearRightSteer = new RunMotor(RobotMap::driveTrainRearRightSteer);
 	turnRearLeftSteer = new RunMotor(RobotMap::driveTrainRearLeftSteer);
 	winchSet1 = new SetWinchPosition(0.0);
-	winchSet2 = new SetWinchPosition(2.0);
-	winchSet3 = new SetWinchPosition(3.0);
+	winchSet2 = new SetWinchPosition(1.0);
+	winchSet3 = new SetWinchPosition(2.0);
+	resetWinch = new ResetWinch();
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhileHeld(armUp);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhileHeld(armDown);
@@ -57,16 +60,20 @@ OI::OI() {
     SmartDashboard::PutData("Turn Rear Left Steering Motor", turnRearLeftSteer);
     SmartDashboard::PutData("Turn Rear Right Steering Motor", turnRearRightSteer);
 
-    SmartDashboard::PutData("Default Winch Position", winchSet1);
-    SmartDashboard::PutData("Set Winch 2", winchSet2);
-    SmartDashboard::PutData("Set Winch 3", winchSet3);
+    SmartDashboard::PutData("Set Default Winch Position", winchSet1);
+    SmartDashboard::PutData("Set Hight Shot Winch Position", winchSet2);
+    SmartDashboard::PutData("Set Low Shot Winch Position", winchSet3);
     SmartDashboard::PutData("Reset Winch", resetWinch);
 
+    SmartDashboard::PutData("Update Positions", new UpdatePositions());
+
     SmartDashboard::PutNumber("Starting Position", 0.0);
-    SmartDashboard::PutNumber("Winch pos 2", 0.0);
-    SmartDashboard::PutNumber("Winch pos 3", 0.0);
+    SmartDashboard::PutNumber("High Shot Position", 0.0);
+    SmartDashboard::PutNumber("Low Shot Position", 0.0);
+
     SmartDashboard::PutNumber("Arm pos 1", 0.0);
     SmartDashboard::PutNumber("Arm pos 2", 0.0);
+
 }
 
 float OI::GetRightTrigger() {

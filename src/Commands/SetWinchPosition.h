@@ -7,8 +7,9 @@ class SetWinchPosition: public Command
 {
 private:
 	double pos;
+	bool disable;
 public:
-	SetWinchPosition(double pos);
+	SetWinchPosition(double pos, bool disable);
 	void Initialize();
 	void Execute();
 	bool IsFinished();

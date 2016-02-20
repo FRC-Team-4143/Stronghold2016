@@ -44,9 +44,9 @@ OI::OI() {
 	turnFrontLeftSteer = new RunMotor(RobotMap::driveTrainFrontLeftSteer);
 	turnRearRightSteer = new RunMotor(RobotMap::driveTrainRearRightSteer);
 	turnRearLeftSteer = new RunMotor(RobotMap::driveTrainRearLeftSteer);
-	winchSet1 = new SetWinchPosition(0.0);
-	winchSet2 = new SetWinchPosition(1.0);
-	winchSet3 = new SetWinchPosition(2.0);
+	winchSet1 = new SetWinchPosition(0.0, true); //starting
+	winchSet2 = new SetWinchPosition(0.1, true);
+	winchSet3 = new SetWinchPosition(0.5, true);
 	resetWinch = new ResetWinch();
 
 	auto cameraEnableCmd = new BasicCameraEnableCmd(Robot::basicCameraSub);
@@ -54,6 +54,9 @@ OI::OI() {
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhileHeld(armUp);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhileHeld(armDown);
+
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_B))->WhenPressed(winchSet2);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhenPressed(winchSet3);
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhileHeld(unwindWheels);
 

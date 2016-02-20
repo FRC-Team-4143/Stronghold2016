@@ -25,7 +25,7 @@ void WinchSub::InitDefaultCommand()
 
 void WinchSub::setPos(double pos){
 	motor->SetControlMode(CANSpeedController::kPosition);
-	motor->SetPosition(pos);
+	motor->SetSetpoint(pos);
 
 }
 

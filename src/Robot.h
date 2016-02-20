@@ -36,6 +36,6 @@ public:
 	virtual void TeleopInit();
 	virtual void TeleopPeriodic();
 	virtual void TestPeriodic();
-	void cameraInit();
+	//void cameraInit();
 };
 #endif

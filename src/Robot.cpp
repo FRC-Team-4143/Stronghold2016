@@ -19,7 +19,7 @@ void Robot::RobotInit() {
 	driveTrain = new DriveTrain();
     shooter = new Shooter();
     armSub = new ArmSub();
-    cameraSub = new CameraSub();
+    //cameraSub = new CameraSub();
     basicCameraSub.reset(new BasicCameraSub("cam0"));
     winchSub = new WinchSub();
 	oi = new OI();

@@ -13,6 +13,7 @@
 #include "Subsystems/Shooter.h"
 #include "Subsystems/CameraSub.h"
 #include "Subsystems/WinchSub.h"
+#include "Subsystems/VisionBridgeSub.h"
 #include "Commands/AutonomousCommand.h"
 
 class Robot : public IterativeRobot {
@@ -26,6 +27,7 @@ public:
 	static CameraSub* cameraSub;
 	static std::shared_ptr<BasicCameraSub> basicCameraSub;
 	static WinchSub* winchSub;
+	static VisionBridgeSub* visionBridge;
 	LiveWindow *lw = LiveWindow::GetInstance();
 
 	virtual void RobotInit();

@@ -102,4 +102,5 @@ void VisionBridgeSub::ParsePacket(std::string packet) {
 void VisionBridgeSub::SetPosition(double position) {
 	std::unique_lock<std::recursive_mutex> lock(_mutex);
 	_position = position;
+	std::cout << GetName() << position << std::endl;
 }

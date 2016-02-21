@@ -10,6 +10,7 @@ DriveTrain* Robot::driveTrain = nullptr;
 CameraSub* Robot::cameraSub = nullptr;
 std::shared_ptr<BasicCameraSub> Robot::basicCameraSub;
 WinchSub* Robot::winchSub = nullptr;
+VisionBridgeSub* Robot::visionBridge = nullptr;
 
 void Robot::RobotInit() {
 
@@ -23,6 +24,7 @@ void Robot::RobotInit() {
     basicCameraSub.reset(new BasicCameraSub("cam0"));
     winchSub = new WinchSub();
 	oi = new OI();
+	visionBridge = new VisionBridgeSub();
 
 	driveTrain->SetWheelbase(24, 21.5, 24);
 	driveTrain->loadWheelOffsets();

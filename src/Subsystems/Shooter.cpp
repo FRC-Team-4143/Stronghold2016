@@ -3,14 +3,14 @@
 #include "CANTalon.h"
 #include "../Commands/ShootDefault.h"
 
-const int RPM = 6000;
+const int RPM = 7000;
 
 Shooter::Shooter() : Subsystem("Shooter") {
 	leftFront = RobotMap::leftFront;
 	rightRear = RobotMap::rightRear;
 	rightFront = RobotMap::rightFront;
 	leftRear = RobotMap::leftRear;
-/*
+
 	leftFront->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
 	leftFront->SetControlMode(CANSpeedController::kSpeed);
 	leftFront->ConfigNominalOutputVoltage(0.0, 0.0);
@@ -30,7 +30,7 @@ Shooter::Shooter() : Subsystem("Shooter") {
 	rightFront->SetI(0.0);
 	rightFront->SetD(0.0);
 	rightFront->SetF(0.03);
-*/
+
 	feeder = RobotMap::feeder;
 }
 
@@ -39,14 +39,14 @@ SetDefaultCommand(new ShootDefault());
 }
 void Shooter::shootFront() {
 
-	leftFront->Set(1);
-	rightFront->Set(-1);
-	/*
+	//leftFront->Set(1);
+	//rightFront->Set(-1);
+
 	leftFront->SetControlMode(CANSpeedController::kSpeed);
 	leftFront->Set(RPM);
 	rightFront->SetControlMode(CANSpeedController::kSpeed);
 	rightFront->Set(-RPM);
-	*/
+
 }
 
 void Shooter::shootBack(){

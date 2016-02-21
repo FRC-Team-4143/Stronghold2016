@@ -17,6 +17,7 @@ public:
 
 	Command* armUp;
 	Command* armDown;
+	Command* stowArm;
 	Command* useCamera;
 	Command* unwindWheels;
 	Command* turnFrontRightSteer;

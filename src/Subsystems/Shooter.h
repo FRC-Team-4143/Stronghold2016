@@ -13,6 +13,7 @@ private:
 	CANTalon* leftRear;
 
 	SpeedController* feeder;
+	AnalogInput* feederSensor;
 public:
 	Shooter();
 	void InitDefaultCommand();

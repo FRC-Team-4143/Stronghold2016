@@ -15,6 +15,8 @@ public:
 	void stop();
 	void armUp();
 	void readPos();
+	void reset();
+	void stowArm();
 };
 
 #endif

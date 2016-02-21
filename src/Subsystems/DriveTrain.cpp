@@ -605,10 +605,10 @@ void DriveTrain::Dashboard() {
 	SmartDashboard::PutNumber("Steering Motor Encoder RR", rearRightPos->PIDGet());
 	SmartDashboard::PutNumber("Steering Motor Encoder RL", rearLeftPos->PIDGet());
 
-	SmartDashboard::PutNumber("Steering Motor Turns FR", frontRightPos->GetTurns() - FROffset); // /5.0
-	SmartDashboard::PutNumber("Steering Motor Turns FL", frontLeftPos->GetTurns() - FLOffset); // /5.0
-	SmartDashboard::PutNumber("Steering Motor Turns RR", rearRightPos->GetTurns() - RROffset); // /5.0
-	SmartDashboard::PutNumber("Steering Motor Turns RL", rearLeftPos->GetTurns() - RLOffset); // /5.0
+	SmartDashboard::PutNumber("Steering Motor Turns FR", frontRightSteer->GetPosition() - FROffset / EncoderConstants::FULL_TURN); // /5.0
+	SmartDashboard::PutNumber("Steering Motor Turns FL", frontLeftSteer->GetPosition() - FLOffset / EncoderConstants::FULL_TURN); // /5.0
+	SmartDashboard::PutNumber("Steering Motor Turns RR", rearRightSteer->GetPosition() - RROffset / EncoderConstants::FULL_TURN); // /5.0
+	SmartDashboard::PutNumber("Steering Motor Turns RL", rearLeftSteer->GetPosition() - RLOffset / EncoderConstants::FULL_TURN); // /5.0
 
 	SmartDashboard::PutNumber("FL Setpoint", frontLeft->GetSetpoint());
 	SmartDashboard::PutNumber("FR Setpoint", frontRight->GetSetpoint());

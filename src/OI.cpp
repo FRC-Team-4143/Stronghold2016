@@ -15,6 +15,8 @@
 #include "Commands/ResetWinch.h"
 #include "Commands/UpdatePositions.h"
 #include "Commands/ShootCycle.h"
+#include "Commands/ResetArm.h"
+#include "Commands/StowArm.h"
 
 const uint32_t JOYSTICK_LX_AXIS    = 0;
 const uint32_t JOYSTICK_LY_AXIS    = 1;
@@ -39,6 +41,7 @@ OI::OI() {
 	driverJoystick = new Joystick(0);
 	armUp = new ArmUp();
 	armDown = new ArmDown();
+	stowArm = new StowArm();
 	//useCamera = new UseCamera();
 	unwindWheels = new UnwindWheels();
 	turnFrontRightSteer = new RunMotor(RobotMap::driveTrainFrontRightSteer);
@@ -60,6 +63,8 @@ OI::OI() {
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhenPressed(winchSet3);
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhileHeld(unwindWheels);
+
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(stowArm);
 
 	SmartDashboard::PutData("Camera On", cameraEnableCmd);
 	SmartDashboard::PutData("Camera Off", cameraDisableCmd);
@@ -85,6 +90,7 @@ OI::OI() {
 
     SmartDashboard::PutNumber("Arm pos 1", 0.0);
     SmartDashboard::PutNumber("Arm pos 2", 0.0);
+    SmartDashboard::PutData("Reset Arm", new ResetArm());
 
     SmartDashboard::PutData("Shoot Wombo Combo",new ShootCycle());
 

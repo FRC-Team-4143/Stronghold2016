@@ -49,7 +49,8 @@ void BasicCameraSub::_InitializeCamera() {
 		m_image = imaqCreateImage(IMAQ_IMAGE_RGB, 0);
 		m_camera.SetFPS(30);
 		m_camera.SetSize(320, 240);
-		//m_camera.SetBrightness();
+		//m_camera.SetExposureManual(50);
+		//m_camera.SetBrightness(50);
 		m_camera.OpenCamera();
 		m_camera.StartCapture();
 		m_initialized = true;

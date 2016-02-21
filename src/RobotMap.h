@@ -59,13 +59,15 @@ public:
 	static CANTalon* rightFront;
 	static CANTalon* leftRear;
 	static SpeedController* feeder;
-
+	static AnalogInput* feederSensor;
 
 	static CANTalon* armMotor;
 
 	static CANTalon* winchMotor;
+	static AnalogInput* winchPot;
+	static PIDController* shooterWinch;
 
-	static DigitalInput* test;
+	static DigitalInput* testDigital;
 
 	static void init();
 };

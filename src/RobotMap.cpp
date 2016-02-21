@@ -36,8 +36,11 @@ SpeedController* RobotMap::feeder;
 CANTalon* RobotMap::armMotor;
 
 CANTalon* RobotMap::winchMotor;
+AnalogInput* RobotMap::winchPot;
+PIDController* RobotMap::shooterWinch;
 
-DigitalInput* RobotMap::test;
+DigitalInput* RobotMap::testDigital;
+AnalogInput* RobotMap::feederSensor;
 
 #ifdef USE_NAVX
 KauaiNavX::AHRS* RobotMap::imu = nullptr;
@@ -66,7 +69,7 @@ AHRS* RobotMap::imu = nullptr;
 #define FLS 2
 
 #define FRD 11
-#define FRP 1
+#define FRP 5
 #define FRS 1
 
 #define RLD 14
@@ -74,7 +77,7 @@ AHRS* RobotMap::imu = nullptr;
 #define RLS 4
 
 #define RRD 13
-#define RRP 0
+#define RRP 4
 #define RRS 3
 
 void RobotMap::init() {
@@ -178,11 +181,17 @@ void RobotMap::init() {
     leftFront = new CANTalon(7);
     rightFront = new CANTalon(8);
     leftRear = new CANTalon(10);
-    feeder = new Talon(4);
+    feeder = new Talon(0);
     
     armMotor = new CANTalon(6);
 
     winchMotor = new CANTalon(5);
+    winchPot = new AnalogInput(1);
+    shooterWinch = new PIDController(0.8, 0.0, 0.05, 0.0, winchPot, winchMotor);
 
-    test = new DigitalInput(0);
+    testDigital = new DigitalInput(0);
+    feederSensor = new AnalogInput(0);
+    feederSensor->SetAverageBits(2);
+    feederSensor->SetOversampleBits(4);
+    feederSensor->SetSampleRate(1000);
 }

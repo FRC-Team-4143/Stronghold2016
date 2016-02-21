@@ -8,7 +8,8 @@ class WinchSub: public Subsystem
 {
 private:
 	CANTalon* motor;
-
+	AnalogInput* shooterSensor;
+	PIDController* shooter;
 public:
 	WinchSub();
 	void InitDefaultCommand();

@@ -1,9 +1,7 @@
-#include "UpdatePositions.h"
+#include "ResetArm.h"
 #include "../Robot.h"
-#include "../RobotMap.h"
-#include "SmartDashboard/SmartDashboard.h"
 
-UpdatePositions::UpdatePositions()
+ResetArm::ResetArm()
 {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);
@@ -11,34 +9,32 @@ UpdatePositions::UpdatePositions()
 }
 
 // Called just before this Command runs the first time
-void UpdatePositions::Initialize()
+void ResetArm::Initialize()
 {
-
+	Robot::armSub->reset();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void UpdatePositions::Execute()
+void ResetArm::Execute()
 {
-	Robot::armSub->readPos();
-	Robot::winchSub->readPos();
-	SmartDashboard::PutNumber("feeder sensor", RobotMap::feederSensor->GetAverageVoltage());
+
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool UpdatePositions::IsFinished()
+bool ResetArm::IsFinished()
 {
-	return false;
+	return true;
 }
 
 // Called once after isFinished returns true
-void UpdatePositions::End()
+void ResetArm::End()
 {
 
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void UpdatePositions::Interrupted()
+void ResetArm::Interrupted()
 {
 
 }

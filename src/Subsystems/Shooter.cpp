@@ -11,6 +11,9 @@ Shooter::Shooter() : Subsystem("Shooter") {
 	rightFront = RobotMap::rightFront;
 	leftRear = RobotMap::leftRear;
 
+	feeder = RobotMap::feeder;
+	feederSensor = RobotMap::feederSensor;
+/*
 	leftFront->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
 	leftFront->SetControlMode(CANSpeedController::kSpeed);
 	leftFront->ConfigNominalOutputVoltage(0.0, 0.0);
@@ -30,8 +33,7 @@ Shooter::Shooter() : Subsystem("Shooter") {
 	rightFront->SetI(0.0);
 	rightFront->SetD(0.0);
 	rightFront->SetF(0.03);
-
-	feeder = RobotMap::feeder;
+*/
 }
 
 void Shooter::InitDefaultCommand() {
@@ -39,14 +41,14 @@ SetDefaultCommand(new ShootDefault());
 }
 void Shooter::shootFront() {
 
-	//leftFront->Set(1);
-	//rightFront->Set(-1);
-
+	leftFront->Set(1);
+	rightFront->Set(-1);
+/*
 	leftFront->SetControlMode(CANSpeedController::kSpeed);
 	leftFront->Set(RPM);
 	rightFront->SetControlMode(CANSpeedController::kSpeed);
 	rightFront->Set(-RPM);
-
+*/
 }
 
 void Shooter::shootBack(){
@@ -87,7 +89,7 @@ void Shooter::shootDefault(float right, float left){
 		stopBack();
 	}
 
-	if (left > 0.1){
+	if ((left > 0.1 && feederSensor->GetAverageVoltage() > 4.0) || (left > 0.1 && right > 0.1)){
 		feed();
 	} else {
 		stopFeed();

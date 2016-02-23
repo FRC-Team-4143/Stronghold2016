@@ -2,22 +2,28 @@
 #include "../RobotMap.h"
 #include "SmartDashboard/SmartDashboard.h"
 
+const bool angleSensor = 0;
+
+
 WinchSub::WinchSub() :
 		Subsystem("ExampleSubsystem")
 {
 	motor = RobotMap::winchMotor;
 	shooterSensor = RobotMap::winchPot;
-	shooter = RobotMap::shooterWinch;
-
-	motor->SetControlMode(CANSpeedController::kPosition);
-	motor->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
-	motor->SetP(0.8);
-	motor->SetI(0.0);
-	motor->SetD(0.05);
-	motor->SetF(0.0);
-	motor->Enable();
-	motor->ConfigPeakOutputVoltage(6.0,-6.0);
-
+	if (angleSensor){
+		shooter = RobotMap::shooterWinch;
+		shooter->Enable();
+	} else {
+		motor->SetControlMode(CANSpeedController::kPosition);
+		motor->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
+		//motor->SetSensorDirection(true);
+		motor->SetP(0.8);
+		motor->SetI(0.0);
+		motor->SetD(0.05);
+		motor->SetF(0.0);
+		motor->Enable();
+		motor->ConfigPeakOutputVoltage(6.0,-6.0);
+	}
 }
 
 void WinchSub::InitDefaultCommand()

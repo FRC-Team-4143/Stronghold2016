@@ -17,6 +17,7 @@
 #include "Commands/ShootCycle.h"
 #include "Commands/ResetArm.h"
 #include "Commands/StowArm.h"
+#include "Commands/DeFeed.h"
 
 const uint32_t JOYSTICK_LX_AXIS    = 0;
 const uint32_t JOYSTICK_LY_AXIS    = 1;
@@ -37,6 +38,9 @@ const uint32_t JOYSTICK_BUTTON_LEFT  = 9;
 const uint32_t JOYSTICK_BUTTON_RIGHT = 10;
 const float JOYSTICK_DEAD_ZONE = 0.1;
 
+const double lowGoal = 3.6;
+const double highGoal = 3.95;
+
 OI::OI() {
 	driverJoystick = new Joystick(0);
 	armUp = new ArmUp();
@@ -50,21 +54,26 @@ OI::OI() {
 	turnRearLeftSteer = new RunMotor(RobotMap::driveTrainRearLeftSteer);
 	winchSet1 = new SetWinchPosition(0.0, true); //starting
 	winchSet2 = new SetWinchPosition(0.1, true);
-	winchSet3 = new SetWinchPosition(0.5, true);
+	winchSet3 = new SetWinchPosition(0.6, true);
+
+	//winchSet2 = new SetWinchPosition(lowGoal, true);
+	//winchSet3 = new SetWinchPosition(highGoal, true);
 	resetWinch = new ResetWinch();
+	deFeed = new DeFeed();
 
 	auto cameraEnableCmd = new BasicCameraEnableCmd(Robot::basicCameraSub);
 	auto cameraDisableCmd = new BasicCameraDisableCmd(Robot::basicCameraSub);
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhileHeld(armUp);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhileHeld(armDown);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(stowArm);
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_B))->WhenPressed(winchSet2);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhenPressed(winchSet3);
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhileHeld(unwindWheels);
 
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(stowArm);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhileHeld(deFeed);
 
 	SmartDashboard::PutData("Camera On", cameraEnableCmd);
 	SmartDashboard::PutData("Camera Off", cameraDisableCmd);

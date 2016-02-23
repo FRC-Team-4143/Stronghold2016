@@ -1,7 +1,7 @@
  #include "RobotMap.h"
 #include "LiveWindow/LiveWindow.h"
 
-const bool RobotMap::SpeedControl = 1;
+const bool RobotMap::SpeedControl = 0;
 
 PIDController*     RobotMap::driveTrainFrontLeft = nullptr;
 CANTalon*   RobotMap::driveTrainFrontLeftDrive = nullptr;

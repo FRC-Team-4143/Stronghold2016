@@ -19,6 +19,7 @@
 #include "Commands/StowArm.h"
 #include "Commands/DeFeed.h"
 #include "Commands/ArcadeDriveMode.h"
+#include "Commands/Climb.h"
 
 const uint32_t JOYSTICK_LX_AXIS    = 0;
 const uint32_t JOYSTICK_LY_AXIS    = 1;
@@ -62,6 +63,7 @@ OI::OI() {
 	resetWinch = new ResetWinch();
 	deFeed = new DeFeed();
 	arcade = new ArcadeDriveMode();
+	climb = new Climb();
 
 	auto cameraEnableCmd = new BasicCameraEnableCmd(Robot::basicCameraSub);
 	auto cameraDisableCmd = new BasicCameraDisableCmd(Robot::basicCameraSub);
@@ -75,7 +77,7 @@ OI::OI() {
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhileHeld(unwindWheels);
 
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhileHeld(arcade);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhileHeld(climb);
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhileHeld(deFeed);
 

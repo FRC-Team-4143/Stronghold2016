@@ -30,6 +30,7 @@ public:
 	Command* resetWinch;
 	Command* deFeed;
 	Command* arcade;
+	Command* climb;
 
 	Joystick* GetDriverJoystick() { return driverJoystick; }
 };

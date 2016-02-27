@@ -19,6 +19,8 @@ public:
 	void readPos();
 	void disablePositionControl();
 	void reset();
+	void climb();
+	void stopClimb();
 };
 
 #endif

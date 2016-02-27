@@ -55,3 +55,12 @@ void WinchSub::readPos(){
 void WinchSub::reset(){
 	motor->SetPosition(0.0);
 }
+
+void WinchSub::climb(){
+	motor->SetControlMode(CANSpeedController::kPercentVbus);
+	motor->Set(1);
+}
+
+void WinchSub::stopClimb(){
+	motor->Set(0);
+}

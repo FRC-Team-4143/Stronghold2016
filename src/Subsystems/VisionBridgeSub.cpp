@@ -62,18 +62,20 @@ void VisionBridgeSub::Listen() {
 	std::cout << GetName() << " Starting UDP listener on port " << _listeningPort << std::endl;
 
 	// Create a UDP socket.
-	if ((sockListener = socket(AF_INET, SOCK_DGRAM, 0)) == ERROR) {
-		perror("socket");
-		return;
-	}
+	sockListener = socket(AF_INET, SOCK_DGRAM, 0);
+	//if ((sockListener = socket(AF_INET, SOCK_DGRAM, 0)) == ERROR) {
+	//	perror("socket");
+	//	return;
+	//}
     std::cout << GetName() << " Created socket" << std::endl;
 
     // Bind socket to local address.
-	if (bind(sockListener, S_CAST(sockaddr*, S_CAST(void*, &serverAddr)), sockAddrSize) == ERROR) {
-		perror("bind");
-		close(sockListener);
-		return;
-	}
+    bind(sockListener, S_CAST(sockaddr*, S_CAST(void*, &serverAddr)), sockAddrSize);
+	//if (bind(sockListener, S_CAST(sockaddr*, S_CAST(void*, &serverAddr)), sockAddrSize) == ERROR) {
+	//	perror("bind");
+	//	close(sockListener);
+	//	return;
+	//}
 	std::cout << GetName() << " Bound socket" << std::endl;
 
 	for (;;) {

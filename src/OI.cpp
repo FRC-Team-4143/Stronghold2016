@@ -18,6 +18,7 @@
 #include "Commands/ResetArm.h"
 #include "Commands/StowArm.h"
 #include "Commands/DeFeed.h"
+#include "Commands/ArcadeDriveMode.h"
 
 const uint32_t JOYSTICK_LX_AXIS    = 0;
 const uint32_t JOYSTICK_LY_AXIS    = 1;
@@ -48,10 +49,10 @@ OI::OI() {
 	stowArm = new StowArm();
 	//useCamera = new UseCamera();
 	unwindWheels = new UnwindWheels();
-	turnFrontRightSteer = new RunMotor(RobotMap::driveTrainFrontRightSteer);
-	turnFrontLeftSteer = new RunMotor(RobotMap::driveTrainFrontLeftSteer);
-	turnRearRightSteer = new RunMotor(RobotMap::driveTrainRearRightSteer);
-	turnRearLeftSteer = new RunMotor(RobotMap::driveTrainRearLeftSteer);
+	//turnFrontRightSteer = new RunMotor(RobotMap::driveTrainFrontRightSteer);
+	//turnFrontLeftSteer = new RunMotor(RobotMap::driveTrainFrontLeftSteer);
+	//turnRearRightSteer = new RunMotor(RobotMap::driveTrainRearRightSteer);
+	//turnRearLeftSteer = new RunMotor(RobotMap::driveTrainRearLeftSteer);
 	winchSet1 = new SetWinchPosition(0.0, true); //starting
 	winchSet2 = new SetWinchPosition(0.1, true);
 	winchSet3 = new SetWinchPosition(0.6, true);
@@ -60,6 +61,7 @@ OI::OI() {
 	//winchSet3 = new SetWinchPosition(highGoal, true);
 	resetWinch = new ResetWinch();
 	deFeed = new DeFeed();
+	arcade = new ArcadeDriveMode();
 
 	auto cameraEnableCmd = new BasicCameraEnableCmd(Robot::basicCameraSub);
 	auto cameraDisableCmd = new BasicCameraDisableCmd(Robot::basicCameraSub);
@@ -73,6 +75,8 @@ OI::OI() {
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhileHeld(unwindWheels);
 
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhileHeld(arcade);
+
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhileHeld(deFeed);
 
 	SmartDashboard::PutData("Camera On", cameraEnableCmd);
@@ -81,10 +85,10 @@ OI::OI() {
 	//SmartDashboard::PutData("Camera", useCamera);
     SmartDashboard::PutData("SetWheelOffsets", new SetWheelOffsets());
 
-    SmartDashboard::PutData("Turn Front Left Steering Motor", turnFrontLeftSteer);
-    SmartDashboard::PutData("Turn Front Right Steering Motor", turnFrontRightSteer);
-    SmartDashboard::PutData("Turn Rear Left Steering Motor", turnRearLeftSteer);
-    SmartDashboard::PutData("Turn Rear Right Steering Motor", turnRearRightSteer);
+    //SmartDashboard::PutData("Turn Front Left Steering Motor", turnFrontLeftSteer);
+    //SmartDashboard::PutData("Turn Front Right Steering Motor", turnFrontRightSteer);
+    //SmartDashboard::PutData("Turn Rear Left Steering Motor", turnRearLeftSteer);
+    //SmartDashboard::PutData("Turn Rear Right Steering Motor", turnRearRightSteer);
 
     SmartDashboard::PutData("Set Default Winch Position", winchSet1);
     SmartDashboard::PutData("Set Hight Shot Winch Position", winchSet2);
@@ -101,7 +105,7 @@ OI::OI() {
     SmartDashboard::PutNumber("Arm pos 2", 0.0);
     SmartDashboard::PutData("Reset Arm", new ResetArm());
 
-    SmartDashboard::PutData("Shoot Wombo Combo",new ShootCycle());
+    SmartDashboard::PutData("Shoot Wombo Combo", new ShootCycle());
 
 }
 

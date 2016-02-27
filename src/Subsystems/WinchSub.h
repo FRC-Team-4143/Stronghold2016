@@ -11,6 +11,8 @@ private:
 	AnalogInput* shooterSensor;
 	PIDController* shooter;
 public:
+	bool shooterRaised;
+
 	WinchSub();
 	void InitDefaultCommand();
 	void setPos(double pos);

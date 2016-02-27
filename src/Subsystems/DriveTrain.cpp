@@ -626,3 +626,47 @@ void DriveTrain::CrabInit() {
 	rearLeftSteer->SetControlMode(CANSpeedController::kPercentVbus);
 	rearRightSteer->SetControlMode(CANSpeedController::kPercentVbus);
 }
+
+void DriveTrain::SetWheelsStraight(){
+	frontLeft->SetSetpoint(FLOffset);
+	frontRight->SetSetpoint(FROffset);
+	rearLeft->SetSetpoint(RLOffset);
+	rearRight->SetSetpoint(RROffset);
+}
+
+void DriveTrain::ArcadeDriveMode(float y, float x){
+	float leftMotorOutput;
+	float rightMotorOutput;
+
+	if (y > 0.0)
+	{
+		if (x > 0.0)
+		{
+			leftMotorOutput = y - x;
+			rightMotorOutput = std::max(y, x);
+		}
+		else
+		{
+			leftMotorOutput = std::max(y, -x);
+			rightMotorOutput = y + x;
+		}
+	}
+	else
+	{
+		if (x > 0.0)
+		{
+			leftMotorOutput = - std::max(-y, x);
+			rightMotorOutput = y + x;
+		}
+		else
+		{
+			leftMotorOutput = y - x;
+			rightMotorOutput = - std::max(-y, -x);
+		}
+	}
+
+	frontLeftDrive->Set(leftMotorOutput);
+	rearLeftDrive->Set(leftMotorOutput);
+	frontRightDrive->Set(rightMotorOutput);
+	rearRightDrive->Set(rightMotorOutput);
+}

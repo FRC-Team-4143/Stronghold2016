@@ -167,4 +167,6 @@ public:
 	void LogSettings(double fl, double fr, double rl, double rr);
 	void Dashboard();
 	void CrabInit();
+	void SetWheelsStraight();
+	void ArcadeDriveMode(float y, float x);
 };

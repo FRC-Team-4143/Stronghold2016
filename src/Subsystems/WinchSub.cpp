@@ -35,6 +35,11 @@ void WinchSub::InitDefaultCommand()
 void WinchSub::setPos(double pos){
 	motor->SetControlMode(CANSpeedController::kPosition);
 	motor->SetSetpoint(pos);
+	if (pos < 0.2){
+		shooterRaised = true;
+	} else {
+		shooterRaised = false;
+	}
 	//shooter->SetSetpoint(pos);
 }
 

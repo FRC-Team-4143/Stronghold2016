@@ -56,7 +56,7 @@ OI::OI() {
 	//turnRearLeftSteer = new RunMotor(RobotMap::driveTrainRearLeftSteer);
 	winchSet1 = new SetWinchPosition(0.0, true); //starting
 	winchSet2 = new SetWinchPosition(0.1, true);
-	winchSet3 = new SetWinchPosition(0.6, true);
+	winchSet3 = new SetWinchPosition(0.8, true);
 
 	//winchSet2 = new SetWinchPosition(lowGoal, true);
 	//winchSet3 = new SetWinchPosition(highGoal, true);

@@ -6,9 +6,9 @@
 
 class ArmSub: public Subsystem {
 private:
-	CANTalon* armMotor;
-
+	double offset;
 public:
+	CANTalon* armMotor;
 	ArmSub();
 	void InitDefaultCommand();
 	void armDown();
@@ -17,6 +17,7 @@ public:
 	void readPos();
 	void reset();
 	void stowArm();
+	void setOffset(double offset);
 };
 
 #endif

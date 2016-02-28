@@ -562,6 +562,7 @@ void DriveTrain::setWheelOffsets() {
 	auto FRPosition = Robot::driveTrain->frontRightPos->GetRawAngle();
 	auto RLPosition = Robot::driveTrain->rearLeftPos->GetRawAngle();
 	auto RRPosition = Robot::driveTrain->rearRightPos->GetRawAngle();
+	auto ArmPosition = Robot::armSub->armMotor->GetPosition();
 
 	LogSettings(FLPosition, FRPosition, RLPosition, RRPosition);
 
@@ -571,10 +572,13 @@ void DriveTrain::setWheelOffsets() {
 	prefs->PutDouble(Constants::FR_POS_NAME, FRPosition);
 	prefs->PutDouble(Constants::RL_POS_NAME, RLPosition);
 	prefs->PutDouble(Constants::RR_POS_NAME, RRPosition);
+	prefs->PutDouble(Constants::ARM_POSITION_NAME, ArmPosition);
+
 	prefs->Save();
 
 	// Set the drive train positions.
 	SetOffsets(FLPosition, FRPosition, RLPosition, RRPosition);
+	Robot::armSub->setOffset(ArmPosition);
 }
 
 void DriveTrain::loadWheelOffsets() {
@@ -586,11 +590,13 @@ void DriveTrain::loadWheelOffsets() {
 	auto FRPosition = prefs->GetDouble(Constants::FR_POS_NAME, Constants::FR_POS_DEFAULT);
 	auto RLPosition = prefs->GetDouble(Constants::RL_POS_NAME, Constants::RL_POS_DEFAULT);
 	auto RRPosition = prefs->GetDouble(Constants::RR_POS_NAME, Constants::RR_POS_DEFAULT);
+	auto ArmPosition = prefs->GetDouble(Constants::ARM_POSITION_NAME, Constants::ARM_POSITION_DEFAULT);
 
 	LogSettings(FLPosition, FRPosition, RLPosition, RRPosition);
 
 	// Set the drive train positions.
 	SetOffsets(FLPosition, FRPosition, RLPosition, RRPosition);
+	Robot::armSub->setOffset(ArmPosition);
 }
 
 void DriveTrain::LogSettings(double fl, double fr, double rl, double rr) {

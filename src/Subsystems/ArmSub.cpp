@@ -23,23 +23,27 @@
      // SetDefaultCommand(new MySpecialCommand());
  }
  void ArmSub::armDown() {
-	 armMotor->SetSetpoint(0.67);
+	 armMotor->SetSetpoint(0.67 + offset);
  }
  void ArmSub::stop() {
  	//ArmSub::armMotor->Set(0);
  }
  void ArmSub::armUp() {
-	 armMotor->SetSetpoint(0.43);
+	 armMotor->SetSetpoint(0.43 + offset);
  }
 
  void ArmSub::stowArm(){
-	 armMotor->SetSetpoint(0.0);
+	 armMotor->SetSetpoint(0.0 + offset);
  }
 
  void ArmSub::readPos(){
-	 SmartDashboard::PutNumber("Arm Position", armMotor->GetPosition());
+	 SmartDashboard::PutNumber("Arm Position", armMotor->GetPosition() - offset);
  }
 
  void ArmSub::reset(){
 	 armMotor->SetPosition(0.0);
+ }
+
+ void ArmSub::setOffset(double offset){
+	 ArmSub::offset = offset;
  }

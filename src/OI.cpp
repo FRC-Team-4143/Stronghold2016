@@ -20,6 +20,7 @@
 #include "Commands/DeFeed.h"
 #include "Commands/ArcadeDriveMode.h"
 #include "Commands/Climb.h"
+#include "Commands/ScriptValidate.h"
 
 const uint32_t JOYSTICK_LX_AXIS    = 0;
 const uint32_t JOYSTICK_LY_AXIS    = 1;
@@ -61,7 +62,7 @@ OI::OI() {
 	//winchSet2 = new SetWinchPosition(lowGoal, true);
 	//winchSet3 = new SetWinchPosition(highGoal, true);
 	resetWinch = new ResetWinch();
-	deFeed = new DeFeed();
+	deFeed = new DeFeed(1);
 	arcade = new ArcadeDriveMode();
 	climb = new Climb();
 
@@ -70,7 +71,7 @@ OI::OI() {
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhileHeld(armUp);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhileHeld(armDown);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(stowArm);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhenPressed(stowArm);
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_B))->WhenPressed(winchSet2);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhenPressed(winchSet3);
@@ -79,7 +80,7 @@ OI::OI() {
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhileHeld(climb);
 
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhileHeld(deFeed);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhenPressed(deFeed);
 
 	SmartDashboard::PutData("Camera On", cameraEnableCmd);
 	SmartDashboard::PutData("Camera Off", cameraDisableCmd);
@@ -105,9 +106,11 @@ OI::OI() {
 
     SmartDashboard::PutNumber("Arm pos 1", 0.0);
     SmartDashboard::PutNumber("Arm pos 2", 0.0);
-    SmartDashboard::PutData("Reset Arm", new ResetArm());
+    //SmartDashboard::PutData("Reset Arm", new ResetArm());
 
-    SmartDashboard::PutData("Shoot Wombo Combo", new ShootCycle());
+    SmartDashboard::PutData("Shoot Cycle", new ShootCycle());
+
+    SmartDashboard::PutData("Validate Script", new ScriptValidate());
 
 }
 

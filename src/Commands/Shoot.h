@@ -5,10 +5,8 @@
 
 class Shoot: public Command
 {
-private:
-	bool stop;
 public:
-	Shoot(bool stop);
+	Shoot(double timeout);
 	void Initialize();
 	void Execute();
 	bool IsFinished();

@@ -13,7 +13,7 @@
 #define SOFTTURNLIMIT 2
 #endif
 
-const float TWISTSCALE = .5;
+const float TWISTSCALE = 1;
 
 const float DEAD_ZONE = 0.2;
 

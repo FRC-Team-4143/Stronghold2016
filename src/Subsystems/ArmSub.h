@@ -18,6 +18,7 @@ public:
 	void reset();
 	void stowArm();
 	void setOffset(double offset);
+	void disablePositionControl();
 };
 
 #endif

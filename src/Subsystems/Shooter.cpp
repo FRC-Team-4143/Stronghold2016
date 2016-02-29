@@ -73,7 +73,9 @@ void Shooter::feed() {
 }
 
 void Shooter::deFeed(){
-	feeder->Set(1);
+	if (feederSensor->GetAverageVoltage() < 4.0){
+		feeder->Set(0.3);
+	}
 }
 
 void Shooter::stopFeed(){

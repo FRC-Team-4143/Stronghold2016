@@ -6,7 +6,7 @@
 class DeFeed: public Command
 {
 public:
-	DeFeed();
+	DeFeed(double timeout);
 	void Initialize();
 	void Execute();
 	bool IsFinished();

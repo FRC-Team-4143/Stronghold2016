@@ -1,11 +1,10 @@
 #include "Shoot.h"
 #include "../Robot.h"
 
-Shoot::Shoot(bool stop)
+Shoot::Shoot(double timeout)
 {
-	Shoot::stop = stop;
-	// Use Requires() here to declare subsystem dependencies
-	// eg. Requires(chassis);
+	Requires(Robot::shooter);
+	SetTimeout(timeout);
 }
 
 // Called just before this Command runs the first time
@@ -24,16 +23,12 @@ void Shoot::Execute()
 // Make this return true when this Command no longer needs to run execute()
 bool Shoot::IsFinished()
 {
-	return false;
+	return IsTimedOut();
 }
 
 // Called once after isFinished returns true
 void Shoot::End()
 {
-	if (stop){
-		Robot::shooter->stopFront();
-		Robot::shooter->stopBack();
-	}
 }
 
 // Called when another command which requires one or more of the same

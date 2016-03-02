@@ -55,9 +55,9 @@ OI::OI() {
 	//turnFrontLeftSteer = new RunMotor(RobotMap::driveTrainFrontLeftSteer);
 	//turnRearRightSteer = new RunMotor(RobotMap::driveTrainRearRightSteer);
 	//turnRearLeftSteer = new RunMotor(RobotMap::driveTrainRearLeftSteer);
-	winchSet1 = new SetWinchPosition(0.0, true); //starting
-	winchSet2 = new SetWinchPosition(0.1, true);
-	winchSet3 = new SetWinchPosition(0.8, true);
+	winchSet1 = new SetWinchPosition(0); //starting
+	winchSet2 = new SetWinchPosition(1); //0.1
+	winchSet3 = new SetWinchPosition(2); //0.8
 
 	//winchSet2 = new SetWinchPosition(lowGoal, true);
 	//winchSet3 = new SetWinchPosition(highGoal, true);
@@ -93,19 +93,10 @@ OI::OI() {
     //SmartDashboard::PutData("Turn Rear Left Steering Motor", turnRearLeftSteer);
     //SmartDashboard::PutData("Turn Rear Right Steering Motor", turnRearRightSteer);
 
-    SmartDashboard::PutData("Set Default Winch Position", winchSet1);
-    SmartDashboard::PutData("Set Hight Shot Winch Position", winchSet2);
-    SmartDashboard::PutData("Set Low Shot Winch Position", winchSet3);
     SmartDashboard::PutData("Reset Winch", resetWinch);
 
     SmartDashboard::PutData("Update Positions", new UpdatePositions());
 
-    SmartDashboard::PutNumber("Starting Position", 0.0);
-    SmartDashboard::PutNumber("High Shot Position", 0.0);
-    SmartDashboard::PutNumber("Low Shot Position", 0.0);
-
-    SmartDashboard::PutNumber("Arm pos 1", 0.0);
-    SmartDashboard::PutNumber("Arm pos 2", 0.0);
     //SmartDashboard::PutData("Reset Arm", new ResetArm());
 
     SmartDashboard::PutData("Shoot Cycle", new ShootCycle());

@@ -1,23 +1,26 @@
 #include <Commands/SetWinchPosition.h>
 #include "../Robot.h"
 
-SetWinchPosition::SetWinchPosition(double pos, bool disable)
+SetWinchPosition::SetWinchPosition(int pos)
 {
 	Requires(Robot::winchSub);
 	SetWinchPosition::pos = pos;
-	SetWinchPosition::disable = disable;
 	SetTimeout(0.5);
 }
 
 // Called just before this Command runs the first time
 void SetWinchPosition::Initialize()
 {
-	Robot::winchSub->setPos(pos);
-/*
-if (pos == 0.0) Robot::winchSub->setPos(SmartDashboard::GetNumber("Starting Position", 0.0));
-if (pos == 1.0) Robot::winchSub->setPos(SmartDashboard::GetNumber("High Shot Position", 0.0));
-if (pos == 2.0) Robot::winchSub->setPos(SmartDashboard::GetNumber("Low Shot Position", 0.0));
-*/
+	if (Robot::winchSub->angleSensor){
+		if (pos == 0) Robot::winchSub->setPos(2.55);
+		if (pos == 1) Robot::winchSub->setPos(2.626);
+		if (pos == 2) Robot::winchSub->setPos(2.974);
+	} else {
+		if (pos == 0) Robot::winchSub->setPos(0.0);
+		if (pos == 1) Robot::winchSub->setPos(0.1);
+		if (pos == 2) Robot::winchSub->setPos(0.8);
+	}
+
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -35,7 +38,7 @@ bool SetWinchPosition::IsFinished()
 // Called once after isFinished returns true
 void SetWinchPosition::End()
 {
-	if (disable) Robot::winchSub->disablePositionControl();
+	Robot::winchSub->disablePositionControl();
 }
 
 // Called when another command which requires one or more of the same

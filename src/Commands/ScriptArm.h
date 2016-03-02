@@ -1,14 +1,14 @@
-#ifndef SetWinchPosition_H
-#define SetWinchPosition_H
+#ifndef ScriptArm_H
+#define ScriptArm_H
 
 #include "WPILib.h"
 
-class SetWinchPosition: public Command
+class ScriptArm: public Command
 {
 private:
-	double pos;
+	int pos;
 public:
-	SetWinchPosition(int pos);
+	ScriptArm(int pos);
 	void Initialize();
 	void Execute();
 	bool IsFinished();

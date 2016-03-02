@@ -2,7 +2,7 @@
 #include "../RobotMap.h"
 #include "SmartDashboard/SmartDashboard.h"
 
-const bool angleSensor = 0;
+const bool WinchSub::angleSensor = 1;
 
 
 WinchSub::WinchSub() :
@@ -12,6 +12,7 @@ WinchSub::WinchSub() :
 	shooterSensor = RobotMap::winchPot;
 	if (angleSensor){
 		shooter = RobotMap::shooterWinch;
+		shooter->SetSetpoint(2.55);
 		shooter->Enable();
 	} else {
 		motor->SetControlMode(CANSpeedController::kPosition);
@@ -33,18 +34,28 @@ void WinchSub::InitDefaultCommand()
 }
 
 void WinchSub::setPos(double pos){
-	motor->SetControlMode(CANSpeedController::kPosition);
-	motor->SetSetpoint(pos);
+	if (angleSensor){
+		shooter->Enable();
+		shooter->SetSetpoint(pos);
+	} else {
+		motor->SetControlMode(CANSpeedController::kPosition);
+		motor->SetSetpoint(pos);
+	}
+
 	if (pos < 0.2){
 		shooterRaised = true;
 	} else {
 		shooterRaised = false;
 	}
-	//shooter->SetSetpoint(pos);
 }
 
 void WinchSub::disablePositionControl(){
-	motor->SetControlMode(CANSpeedController::kPercentVbus);
+	if (angleSensor){
+		shooter->Disable();
+	} else {
+		motor->SetControlMode(CANSpeedController::kPercentVbus);
+	}
+
 }
 
 void WinchSub::readPos(){

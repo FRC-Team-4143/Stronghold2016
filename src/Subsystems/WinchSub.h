@@ -12,6 +12,7 @@ private:
 	PIDController* shooter;
 public:
 	bool shooterRaised;
+	const static bool angleSensor;
 
 	WinchSub();
 	void InitDefaultCommand();

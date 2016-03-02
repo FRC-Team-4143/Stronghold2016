@@ -187,7 +187,8 @@ void RobotMap::init() {
 
     winchMotor = new CANTalon(5);
     winchPot = new AnalogInput(1);
-    shooterWinch = new PIDController(0.8, 0.0, 0.05, 0.0, winchPot, winchMotor);
+    shooterWinch = new PIDController(1.0, 0.0, 0.1, 0.0, winchPot, winchMotor);
+    shooterWinch->SetOutputRange(-1, 1);
 
     testDigital = new DigitalInput(0);
     feederSensor = new AnalogInput(0);

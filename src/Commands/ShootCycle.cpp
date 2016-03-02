@@ -8,7 +8,7 @@
 
 ShootCycle::ShootCycle()
 {
-	AddSequential(new SetWinchPosition(0.8, false));
+	AddSequential(new SetWinchPosition(2));
 	AddSequential(new DeFeed(1));
 	AddSequential(new Shoot(1),1);
 	AddSequential(new Feed(1));

@@ -6,6 +6,8 @@
 #include "Commands/ScriptSleep.h"
 #include "Commands/ShootCycle.h"
 #include "Commands/ScriptCommand.h"
+#include "Commands/ScriptArm.h"
+#include "Commands/SetWinchPosition.h"
 
 OI* Robot::oi;
 Shooter* Robot::shooter = nullptr;
@@ -115,6 +117,19 @@ void Robot::ScriptInit() {
 		fCreateCommand(command, 0);
 	}));
 
+	parser.AddCommand(CommandParseInfo("Arm", { "A", "a" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+		parameters.resize(1);
+		auto pos = parameters[0];
+		Command* command = new ScriptArm(pos);
+		fCreateCommand(command, 0);
+	}));
+
+	parser.AddCommand(CommandParseInfo("Winch", { "W", "w" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+		parameters.resize(1);
+		auto pos = parameters[0];
+		Command* command = new SetWinchPosition(pos);
+		fCreateCommand(command, 0);
+	}));
 	/*
 	parser.AddCommand(CommandParseInfo("DriveMouse", { "DM", "dm" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
 		parameters.resize(4);

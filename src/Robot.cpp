@@ -147,8 +147,8 @@ void Robot::ScriptInit() {
 			auto x = parameters[0];
 			auto y = parameters[1];
 			auto twist = parameters[2];
-			auto timeout = parameters[3];
-			Command* command = new DriveDistance(x, y, twist, timeout);
+			auto distance = parameters[3];
+			Command* command = new DriveDistance(x, y, twist, distance);
 			fCreateCommand(command, 0);
 		}));
 

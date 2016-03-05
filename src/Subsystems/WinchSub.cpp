@@ -12,7 +12,7 @@ WinchSub::WinchSub() :
 	shooterSensor = RobotMap::winchPot;
 	if (angleSensor){
 		shooter = RobotMap::shooterWinch;
-		shooter->SetSetpoint(2.55);
+		shooter->SetSetpoint(3.34);
 		shooter->Enable();
 	} else {
 		motor->SetControlMode(CANSpeedController::kPosition);

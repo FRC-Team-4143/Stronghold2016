@@ -529,10 +529,10 @@ void DriveTrain::SetDriveBackFlag(bool flag) {
 }
 
 void DriveTrain::updateDistanceEncoders() {
-	FLValue = frontLeftDrive->GetEncPosition();
-	FRValue = frontRightDrive->GetEncPosition();
-	RLValue = rearLeftDrive->GetEncPosition();
-	RRValue = rearRightDrive->GetEncPosition();
+	FLValue = frontLeftDrive->GetPosition();
+	FRValue = frontRightDrive->GetPosition();
+	RLValue = rearLeftDrive->GetPosition();
+	RRValue = rearRightDrive->GetPosition();
 }
 
 double DriveTrain::getDistanceEncodersValues() {

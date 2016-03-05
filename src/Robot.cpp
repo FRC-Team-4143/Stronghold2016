@@ -8,6 +8,7 @@
 #include "Commands/ScriptCommand.h"
 #include "Commands/ScriptArm.h"
 #include "Commands/SetWinchPosition.h"
+#include "Commands/ScriptGyroDrive.h"
 
 OI* Robot::oi;
 Shooter* Robot::shooter = nullptr;
@@ -130,6 +131,27 @@ void Robot::ScriptInit() {
 		Command* command = new SetWinchPosition(pos);
 		fCreateCommand(command, 0);
 	}));
+
+	parser.AddCommand(CommandParseInfo("DriveGyro", { "DG", "dg" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+		parameters.resize(4);
+		auto x = parameters[0];
+		auto y = parameters[1];
+		auto maxspeed = parameters[2];
+		auto timeout = parameters[3];
+		Command* command = new ScriptGyroDrive("DriveGyro", x, y, maxspeed, timeout);
+		fCreateCommand(command, 0);
+	}));
+
+	parser.AddCommand(CommandParseInfo("DriveDistance", { "DD", "dd" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+			parameters.resize(4);
+			auto x = parameters[0];
+			auto y = parameters[1];
+			auto twist = parameters[2];
+			auto timeout = parameters[3];
+			Command* command = new DriveDistance(x, y, twist, timeout);
+			fCreateCommand(command, 0);
+		}));
+
 	/*
 	parser.AddCommand(CommandParseInfo("DriveMouse", { "DM", "dm" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
 		parameters.resize(4);
@@ -162,15 +184,7 @@ void Robot::ScriptInit() {
 		fCreateCommand(command, 0);
 	}));
 
-	parser.AddCommand(CommandParseInfo("DriveGyro", { "DG", "dg" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
-		parameters.resize(4);
-		auto x = parameters[0];
-		auto y = parameters[1];
-		auto maxspeed = parameters[2];
-		auto timeout = parameters[3];
-		Command* command = new ScriptGyroDrive("DriveGyro", x, y, maxspeed, timeout);
-		fCreateCommand(command, 0);
-	}));
+
 	parser.AddCommand(CommandParseInfo("Elevate", { "E", "e" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
 		parameters.resize(2);
 		auto axis = parameters[0];

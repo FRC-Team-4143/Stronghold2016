@@ -1,12 +1,12 @@
 #include "DriveDistance.h"
 #include "Robot.h"
 
-DriveDistance::DriveDistance(float speed, float driveangle, float twistangle, float distance)
+DriveDistance::DriveDistance(float driveangle, float speed, float twistangle, float distance)
 {
 	Requires(Robot::driveTrain);
 
-	X=speed;
-	Y=driveangle;
+	X=driveangle;
+	Y=speed;
 	TwistAngle=twistangle;
 	Distance=distance;//*46.5;
 }

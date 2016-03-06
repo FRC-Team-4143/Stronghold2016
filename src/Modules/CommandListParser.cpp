@@ -88,17 +88,25 @@ std::vector<float> CommandListParser::_ParseParameterList(std::string s) {
 std::regex CommandListParser::_GetCommandListRx() {
 	if (_dirty) {
 		std::string s;
+		s += "^";
 		s += R"(\s*)"; // optional whitespace
 		s += _BuildModeRx(true); // Parallel vs. Sequential (optional, group 1)
+		s += R"(\s*)"; // optional whitespace
 		s += _BuildNameRx(true); // Command name (required, group 2)
-		s += _BuildParametersRx(true); // Parameters (required, group 3)
+		s += R"(\s*)"; // optional whitespace
+		s += _BuildParametersRx(true); // Parameters (optional, group 3)
 		s += "("; // Remainder (optional, group 4)
 		s += "(?:"; // open group
+		s += R"(\s+)"; // whitespace
 		s += _BuildModeRx(false); // Parallel vs. Sequential (optional)
+		s += R"(\s*)"; // optional whitespace
 		s += _BuildNameRx(false); // Command name (required)
-		s += _BuildParametersRx(false); // Parameters (required)
+		s += R"(\s*)"; // optional whitespace
+		s += _BuildParametersRx(false); // Parameters (optional)
 		s += ")*"; // close group, zero or more instances
 		s += ")"; // close capture group
+		s += R"(\s*)"; // optional whitespace
+		s += "$";
 		std::cout << "[DEBUG] Command List RegEx = " << s << std::endl;
 		_rxCommandList.assign(s);
 		_dirty = false;
@@ -184,7 +192,7 @@ std::string CommandListParser::_BuildModeRx(bool capturing) const {
 	s += capturing ? "(" : "(?:";
 	s += "P|Parallel|S|Sequential";
 	s += ")";
-	s += R"(\s*:\s*)"; // optional whitespace, colon, optional whitespace
+	s += R"(\s*:)"; // optional whitespace, colon
 	s += ")?"; // close group, zero or one instance
 	return s;
 }
@@ -201,15 +209,19 @@ std::string CommandListParser::_BuildNameRx(bool capturing) const {
 	std::string s;
 	s += capturing ? "(" : "(?:"; // open group
 	s += Join(names, "|"); // pipe-delimited names
-	s += R"()\s*)"; // close group, optional whitespace
+	s += ")"; // close group
 	return s;
 }
 
 std::string CommandListParser::_BuildParametersRx(bool capturing) const {
 	std::string s;
+	s += "(?:"; // open group A
+
 	s += R"(\(\s*)"; // open paren, optional whitespace
 
 	s += capturing ? "(" : "";
+
+	s += "(?:"; // open group B
 
 	s += "[-+]?"; // optional sign
 	s += "(?:";
@@ -219,7 +231,7 @@ std::string CommandListParser::_BuildParametersRx(bool capturing) const {
 	s += ")";
 	s += R"(\s*)"; // optional whitespace
 
-	s += "(?:"; // open group
+	s += "(?:"; // open group C
 	s += R"(,\s*)"; // comma, optional whitespace
 
 	s += "[-+]?"; // optional sign
@@ -230,11 +242,15 @@ std::string CommandListParser::_BuildParametersRx(bool capturing) const {
 	s += ")";
 	s += R"(\s*)"; // optional whitespace
 
-	s += ")*"; // close group, zero or more instances
+	s += ")*"; // close group C, zero or more instances
+
+	s += ")?"; // close group B, zero or one instances
 
 	s += capturing ? ")" : "";
 
-	s += R"(\)\s*)"; // close paren, optional whitespace
+	s += R"(\))"; // close paren
+
+	s += ")?"; // close group A, zero or one instances
 	return s;
 }
 

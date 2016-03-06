@@ -24,6 +24,8 @@ void UpdatePositions::Execute()
 	Robot::driveTrain->updateDistanceEncoders();
 	SmartDashboard::PutNumber("feeder sensor", RobotMap::feederSensor->GetAverageVoltage());
 	SmartDashboard::PutBoolean("Shooter Raised", Robot::winchSub->shooterRaised);
+	SmartDashboard::PutNumber("Gyro Yaw", RobotMap::imu->GetYaw());
+
 }
 
 // Make this return true when this Command no longer needs to run execute()

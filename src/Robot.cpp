@@ -9,6 +9,7 @@
 #include "Commands/ScriptArm.h"
 #include "Commands/SetWinchPosition.h"
 #include "Commands/ScriptGyroDrive.h"
+#include "Commands/ScriptCamDrive.h"
 
 OI* Robot::oi;
 Shooter* Robot::shooter = nullptr;
@@ -28,6 +29,10 @@ void Robot::RobotInit() {
 	ScriptInit();
 	SmartDashboard::PutString("ScriptCommand", "S(0.5)");
 	SmartDashboard::PutString("ScriptValid", "");
+
+	SmartDashboard::PutNumber("vision center", 0.0);
+	SmartDashboard::PutNumber("vision P", .003);
+	SmartDashboard::PutNumber("vision tol", 15);
 
 	gyroSub = new GyroSub();
 	driveTrain = new DriveTrain();
@@ -152,6 +157,15 @@ void Robot::ScriptInit() {
 			fCreateCommand(command, 0);
 		}));
 
+		parser.AddCommand(CommandParseInfo("DriveCam", { "DC", "dc" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+			parameters.resize(4);
+			auto x = parameters[0];
+			auto y = parameters[1];
+			auto maxspeed = parameters[2];
+			auto timeout = parameters[3];
+			Command* command = new ScriptCamDrive("DriveCam", x, y, maxspeed, timeout);
+			fCreateCommand(command, 0);
+		}));
 	/*
 	parser.AddCommand(CommandParseInfo("DriveMouse", { "DM", "dm" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
 		parameters.resize(4);
@@ -163,15 +177,7 @@ void Robot::ScriptInit() {
 		fCreateCommand(command, 0);
 	}));
 
-	parser.AddCommand(CommandParseInfo("DriveCam", { "DC", "dc" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
-		parameters.resize(4);
-		auto x = parameters[0];
-		auto y = parameters[1];
-		auto maxspeed = parameters[2];
-		auto timeout = parameters[3];
-		Command* command = new ScriptCamDrive("DriveCam", x, y, maxspeed, timeout);
-		fCreateCommand(command, 0);
-	}));
+
 
 	parser.AddCommand(CommandParseInfo("DriveDisplacement", { "DD", "dd" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
 		parameters.resize(4);

@@ -21,6 +21,7 @@
 #include "Commands/ArcadeDriveMode.h"
 #include "Commands/Climb.h"
 #include "Commands/ScriptValidate.h"
+#include "Commands/ZeroYaw.h"
 
 const uint32_t JOYSTICK_LX_AXIS    = 0;
 const uint32_t JOYSTICK_LY_AXIS    = 1;
@@ -87,6 +88,7 @@ OI::OI() {
 
 	//SmartDashboard::PutData("Camera", useCamera);
     SmartDashboard::PutData("SetWheelOffsets", new SetWheelOffsets());
+    SmartDashboard::PutData("Zero Yaw", new ZeroYaw());
 
     //SmartDashboard::PutData("Turn Front Left Steering Motor", turnFrontLeftSteer);
     //SmartDashboard::PutData("Turn Front Right Steering Motor", turnFrontRightSteer);

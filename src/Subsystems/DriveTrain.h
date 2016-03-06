@@ -169,4 +169,6 @@ public:
 	void CrabInit();
 	void SetWheelsStraight();
 	void ArcadeDriveMode(float y, float x);
+	void disableSpeedControl();
+	void enableSpeedControl();
 };

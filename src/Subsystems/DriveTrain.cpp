@@ -21,8 +21,8 @@ const float driveScale = 950;
 //const double AVERAGE_VOLTAGE_BASE = EncoderConstants::HALF_TURN;
 
 //#define GYROP  .05
-#define GYROP	.07
-#define GYROMAX  .65
+#define GYROP	.01
+#define GYROMAX  .5
 
 DriveTrain::DriveTrain(): Subsystem("DriveTrain") {
 	LOG("DriveTrain::DriveTrain");
@@ -197,6 +197,7 @@ void DriveTrain::FieldCentricCrab(float twist, float y, float x, bool operatorCo
 	STR = -y*sin(robotangle) + x*cos(robotangle);
 
 	Crab(twist, FWD, STR, operatorControl);
+
 }
 
 // attempts to keep robot square to the field as it drives
@@ -675,4 +676,20 @@ void DriveTrain::ArcadeDriveMode(float y, float x){
 	rearLeftDrive->Set(leftMotorOutput);
 	frontRightDrive->Set(rightMotorOutput);
 	rearRightDrive->Set(rightMotorOutput);
+}
+
+void DriveTrain::disableSpeedControl(){
+	frontLeftDrive->SetControlMode(CANSpeedController::kPercentVbus);
+	frontRightDrive->SetControlMode(CANSpeedController::kPercentVbus);
+	rearLeftDrive->SetControlMode(CANSpeedController::kPercentVbus);
+	rearRightDrive->SetControlMode(CANSpeedController::kPercentVbus);
+	RobotMap::SpeedControl = 0;
+}
+
+void DriveTrain::enableSpeedControl(){
+	frontLeftDrive->SetControlMode(CANSpeedController::kSpeed);
+	frontRightDrive->SetControlMode(CANSpeedController::kSpeed);
+	rearLeftDrive->SetControlMode(CANSpeedController::kSpeed);
+	rearRightDrive->SetControlMode(CANSpeedController::kSpeed);
+	RobotMap::SpeedControl = 1;
 }

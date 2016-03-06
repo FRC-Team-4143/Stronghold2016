@@ -31,6 +31,7 @@ public:
 	Command* deFeed;
 	Command* arcade;
 	Command* climb;
+	Command* cameraLineUp;
 
 	Joystick* GetDriverJoystick() { return driverJoystick; }
 };

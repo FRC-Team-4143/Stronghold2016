@@ -7,7 +7,6 @@
 #include "Commands/ArmDown.h"
 #include "Commands/BasicCameraDisableCmd.h"
 #include "Commands/BasicCameraEnableCmd.h"
-#include "Commands/UseCamera.h"
 #include "Commands/UnwindWheels.h"
 #include "Commands/RunMotor.h"
 #include "Commands/SetWheelOffsets.h"
@@ -22,6 +21,7 @@
 #include "Commands/Climb.h"
 #include "Commands/ScriptValidate.h"
 #include "Commands/ZeroYaw.h"
+#include "Commands/ScriptCamDrive.h"
 
 const uint32_t JOYSTICK_LX_AXIS    = 0;
 const uint32_t JOYSTICK_LY_AXIS    = 1;
@@ -42,30 +42,20 @@ const uint32_t JOYSTICK_BUTTON_LEFT  = 9;
 const uint32_t JOYSTICK_BUTTON_RIGHT = 10;
 const float JOYSTICK_DEAD_ZONE = 0.1;
 
-const double lowGoal = 3.6;
-const double highGoal = 3.95;
-
 OI::OI() {
 	driverJoystick = new Joystick(0);
 	armUp = new ArmUp();
 	armDown = new ArmDown();
 	stowArm = new StowArm();
-	//useCamera = new UseCamera();
 	unwindWheels = new UnwindWheels();
-	//turnFrontRightSteer = new RunMotor(RobotMap::driveTrainFrontRightSteer);
-	//turnFrontLeftSteer = new RunMotor(RobotMap::driveTrainFrontLeftSteer);
-	//turnRearRightSteer = new RunMotor(RobotMap::driveTrainRearRightSteer);
-	//turnRearLeftSteer = new RunMotor(RobotMap::driveTrainRearLeftSteer);
 	winchSet1 = new SetWinchPosition(0); //starting
-	winchSet2 = new SetWinchPosition(1); //0.1
-	winchSet3 = new SetWinchPosition(2); //0.8
-
-	//winchSet2 = new SetWinchPosition(lowGoal, true);
-	//winchSet3 = new SetWinchPosition(highGoal, true);
+	winchSet2 = new SetWinchPosition(1); //raised
+	winchSet3 = new SetWinchPosition(2); //lowered
 	resetWinch = new ResetWinch();
 	deFeed = new DeFeed(1);
 	arcade = new ArcadeDriveMode();
 	climb = new Climb();
+	cameraLineUp = new ScriptCamDrive("DriveCam", 0, 0, 0.35, 15);
 
 	auto cameraEnableCmd = new BasicCameraEnableCmd(Robot::basicCameraSub);
 	auto cameraDisableCmd = new BasicCameraDisableCmd(Robot::basicCameraSub);
@@ -79,9 +69,10 @@ OI::OI() {
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhileHeld(unwindWheels);
 
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhileHeld(climb);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhileHeld(arcade);
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhenPressed(deFeed);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RIGHT))->WhileHeld(cameraLineUp);
 
 	SmartDashboard::PutData("Camera On", cameraEnableCmd);
 	SmartDashboard::PutData("Camera Off", cameraDisableCmd);
@@ -98,7 +89,6 @@ OI::OI() {
     SmartDashboard::PutData("Reset Winch", resetWinch);
 
     SmartDashboard::PutData("Update Positions", new UpdatePositions());
-
     //SmartDashboard::PutData("Reset Arm", new ResetArm());
 
     SmartDashboard::PutData("Shoot Cycle", new ShootCycle());

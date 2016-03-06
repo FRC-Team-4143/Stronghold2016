@@ -25,6 +25,7 @@ void UpdatePositions::Execute()
 	SmartDashboard::PutNumber("feeder sensor", RobotMap::feederSensor->GetAverageVoltage());
 	SmartDashboard::PutBoolean("Shooter Raised", Robot::winchSub->shooterRaised);
 	SmartDashboard::PutNumber("Gyro Yaw", RobotMap::imu->GetYaw());
+	SmartDashboard::PutNumber("Vision Position", Robot::visionBridge->GetPosition());
 
 }
 

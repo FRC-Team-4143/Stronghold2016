@@ -7,6 +7,7 @@ BasicCameraEnableCmd::BasicCameraEnableCmd(std::shared_ptr<BasicCameraSub> camer
 	m_camera(camera)
 {
 	Requires(camera.get());
+	SetRunWhenDisabled(true);
 }
 
 // ==========================================================================

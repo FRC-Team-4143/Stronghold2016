@@ -32,6 +32,7 @@ CANTalon* RobotMap::rightRear;
 CANTalon* RobotMap::rightFront;
 CANTalon* RobotMap::leftRear;
 SpeedController* RobotMap::feeder;
+AnalogInput* RobotMap::feederSensor;
 
 CANTalon* RobotMap::armMotor;
 
@@ -39,8 +40,7 @@ CANTalon* RobotMap::winchMotor;
 AnalogInput* RobotMap::winchPot;
 PIDController* RobotMap::shooterWinch;
 
-DigitalInput* RobotMap::testDigital;
-AnalogInput* RobotMap::feederSensor;
+
 
 #ifdef USE_NAVX
 KauaiNavX::AHRS* RobotMap::imu = nullptr;
@@ -170,6 +170,10 @@ void RobotMap::init() {
     rightFront = new CANTalon(8);
     leftRear = new CANTalon(10);
     feeder = new Talon(0);
+    feederSensor = new AnalogInput(0);
+    feederSensor->SetAverageBits(2);
+    feederSensor->SetOversampleBits(4);
+    feederSensor->SetSampleRate(1000);
     
     armMotor = new CANTalon(6);
 
@@ -178,11 +182,7 @@ void RobotMap::init() {
     shooterWinch = new PIDController(1.0, 0.0, 0.1, 0.0, winchPot, winchMotor);
     shooterWinch->SetOutputRange(-1, 1);
 
-    testDigital = new DigitalInput(0);
-    feederSensor = new AnalogInput(0);
-    feederSensor->SetAverageBits(2);
-    feederSensor->SetOversampleBits(4);
-    feederSensor->SetSampleRate(1000);
+
 }
 
 

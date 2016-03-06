@@ -94,7 +94,7 @@ void VisionBridgeSub::Listen() {
 void VisionBridgeSub::ParsePacket(std::string packet) {
 	if (_debug) DebugOutput(packet);
 	try {
-		auto position = std::stof(packet);
+		auto position = std::stod(packet);
 		SetPosition(position);
 	}
 	catch (...) {

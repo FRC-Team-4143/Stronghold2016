@@ -11,7 +11,6 @@
 #include "Subsystems/ArmSub.h"
 #include "Subsystems/BasicCameraSub.h"
 #include "Subsystems/Shooter.h"
-#include "Subsystems/CameraSub.h"
 #include "Subsystems/WinchSub.h"
 #include "Subsystems/VisionBridgeSub.h"
 #include "Commands/AutonomousCommand.h"
@@ -24,7 +23,6 @@ public:
 	static ArmSub* armSub;
 	static GyroSub* gyroSub;
 	static Shooter* shooter;
-	static CameraSub* cameraSub;
 	static std::shared_ptr<BasicCameraSub> basicCameraSub;
 	static WinchSub* winchSub;
 	static VisionBridgeSub* visionBridge;

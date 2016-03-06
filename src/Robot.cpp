@@ -10,13 +10,13 @@
 #include "Commands/SetWinchPosition.h"
 #include "Commands/ScriptGyroDrive.h"
 #include "Commands/ScriptCamDrive.h"
+#include "Commands/UpdatePositions.h"
 
 OI* Robot::oi;
 Shooter* Robot::shooter = nullptr;
 ArmSub* Robot::armSub = nullptr;
 GyroSub* Robot::gyroSub = nullptr;
 DriveTrain* Robot::driveTrain = nullptr;
-CameraSub* Robot::cameraSub = nullptr;
 std::shared_ptr<BasicCameraSub> Robot::basicCameraSub;
 WinchSub* Robot::winchSub = nullptr;
 VisionBridgeSub* Robot::visionBridge = nullptr;
@@ -38,7 +38,6 @@ void Robot::RobotInit() {
 	driveTrain = new DriveTrain();
     shooter = new Shooter();
     armSub = new ArmSub();
-    //cameraSub = new CameraSub();
     basicCameraSub.reset(new BasicCameraSub("cam0"));
     winchSub = new WinchSub();
 	oi = new OI();
@@ -141,9 +140,9 @@ void Robot::ScriptInit() {
 		parameters.resize(4);
 		auto x = parameters[0];
 		auto y = parameters[1];
-		auto maxspeed = parameters[2];
+		auto desiredangle = parameters[2];
 		auto timeout = parameters[3];
-		Command* command = new ScriptGyroDrive("DriveGyro", x, y, maxspeed, timeout);
+		Command* command = new ScriptGyroDrive("DriveGyro", x, y, desiredangle, timeout);
 		fCreateCommand(command, 0);
 	}));
 

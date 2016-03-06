@@ -147,39 +147,6 @@ bool DriveTrain::unwind(){//float y, float x){
 	}
 	 */
  	return retval;
- 	/*
-	frontLeftSteer->SetSetpoint(0);
-	frontRightSteer->SetSetpoint(0);
-	rearLeftSteer->SetSetpoint(0);
-	rearRightSteer->SetSetpoint(0);
-
-	if (y > 0.1){
-		frontLeftDrive->Set(-1);
-		frontRightDrive->Set(-1);
-		rearLeftDrive->Set(-1);
-		rearRightDrive->Set(-1);
-	} else if (y < -0.1){
-		frontLeftDrive->Set(1);
-		frontRightDrive->Set(1);
-		rearLeftDrive->Set(1);
-		rearRightDrive->Set(1);
-	} else if (x > 0.1){
-		frontLeftDrive->Set(1);
-		frontRightDrive->Set(-1);
-		rearLeftDrive->Set(1);
-		rearRightDrive->Set(-1);
-	} else if (x < 0.1){
-		frontLeftDrive->Set(-1);
-		frontRightDrive->Set(1);
-		rearLeftDrive->Set(-1);
-		rearRightDrive->Set(1);
-	} else {
-		frontLeftDrive->Set(0);
-		frontRightDrive->Set(0);
-		rearLeftDrive->Set(0);
-		rearRightDrive->Set(0);
-	}
-	return false;*/
 }
 
 void DriveTrain::doneunwind(){
@@ -507,20 +474,7 @@ void DriveTrain::SideLock() {
 	SetSteerSetpoint(2.0, 0.75, 3.25, 4.5);
 	SetDriveSpeed(0,0,0,0);
 }
-/*
-bool DriveTrain::ResetTurns() {
-	frontRight->Enable();
-	rearRight->Enable();
-	frontLeft->Enable();
-	rearLeft->Enable();
-	frontRightPos->ResetTurns();;
-	frontLeftPos->ResetTurns();;
-	rearRightPos->ResetTurns();;
-	rearLeftPos->ResetTurns();;
-	robotangle = 0;
-	return true;
-}
-*/
+
 bool DriveTrain::GetDriveBackFlag() {
 	return DriveBackFlag;
 }
@@ -641,7 +595,7 @@ void DriveTrain::SetWheelsStraight(){
 	rearRight->SetSetpoint(RROffset);
 }
 
-void DriveTrain::ArcadeDriveMode(float y, float x){
+void DriveTrain::ArcadeDriveMode(float x, float y){
 	float leftMotorOutput;
 	float rightMotorOutput;
 
@@ -672,10 +626,7 @@ void DriveTrain::ArcadeDriveMode(float y, float x){
 		}
 	}
 
-	frontLeftDrive->Set(leftMotorOutput);
-	rearLeftDrive->Set(leftMotorOutput);
-	frontRightDrive->Set(rightMotorOutput);
-	rearRightDrive->Set(rightMotorOutput);
+	SetDriveSpeed(leftMotorOutput, rightMotorOutput, leftMotorOutput, rightMotorOutput);
 }
 
 void DriveTrain::disableSpeedControl(){

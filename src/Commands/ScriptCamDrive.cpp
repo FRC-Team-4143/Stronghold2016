@@ -33,8 +33,8 @@ void ScriptCamDrive::Execute()
 	_offset -= _center;
 	if(fabs(_offset) <= _tol)
 		_offset = 0;
-	Robot::driveTrain->GyroCrab(_angle, _x,
-			std::min(_maxspeed, std::max(-_maxspeed, (_offset) * _p)), false);
+	Robot::driveTrain->Crab(std::min(_maxspeed, std::max(-_maxspeed, (_offset) * _p)), _x,
+			_y, false);
 	if(fabs(_offset) <= _tol)
 		_time++;
 	else

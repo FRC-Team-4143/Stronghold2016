@@ -15,7 +15,7 @@ void ArcadeDriveMode::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void ArcadeDriveMode::Execute()
 {
-	Robot::driveTrain->ArcadeDriveMode(-Robot::oi->GetJoystickY(), Robot::oi->GetJoystickX());
+	Robot::driveTrain->ArcadeDriveMode(Robot::oi->GetJoystickY(), Robot::oi->GetJoystickX());
 }
 
 // Make this return true when this Command no longer needs to run execute()

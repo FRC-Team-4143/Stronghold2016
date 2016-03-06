@@ -67,7 +67,6 @@ public:
 	static AnalogInput* winchPot;
 	static PIDController* shooterWinch;
 
-	static DigitalInput* testDigital;
 
 	static void init();
 };

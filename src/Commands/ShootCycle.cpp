@@ -10,7 +10,7 @@ ShootCycle::ShootCycle()
 {
 	AddSequential(new SetWinchPosition(2));
 	AddSequential(new DeFeed(1));
-	AddSequential(new Shoot(1),1);
+	AddSequential(new Shoot(1));
 	AddSequential(new Feed(1));
 	AddSequential(new DisableWinchControl());
 	AddSequential(new StopShoot());

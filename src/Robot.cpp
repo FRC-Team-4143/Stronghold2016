@@ -10,7 +10,7 @@
 #include "Commands/SetWinchPosition.h"
 #include "Commands/ScriptGyroDrive.h"
 #include "Commands/ScriptCamDrive.h"
-#include "Commands/UpdatePositions.h"
+#include "Commands/ZeroYaw.h"
 
 OI* Robot::oi;
 Shooter* Robot::shooter = nullptr;
@@ -63,6 +63,7 @@ void Robot::DisabledPeriodic() {
 }
 
 void Robot::AutonomousInit() {
+	RobotMap::imu->ZeroYaw();
 	autonomousCommand = new ScriptCommand("ScriptCommand");
 	if (autonomousCommand != nullptr)
 		autonomousCommand->Start();
@@ -108,8 +109,7 @@ void Robot::ScriptInit() {
 	}));
 
 	parser.AddCommand(CommandParseInfo("Shoot", { "SH", "sh" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
-		parameters.resize(1);
-		auto timeout = parameters[0];
+		parameters.resize(0);
 		Command* command = new ShootCycle();
 		//if (0 == timeout) timeout = 4;
 		fCreateCommand(command, 0);

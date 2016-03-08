@@ -13,7 +13,7 @@
 #define SOFTTURNLIMIT 2
 #endif
 
-const float TWISTSCALE = 1;
+const float TWISTSCALE = 0.6;
 
 const float DEAD_ZONE = 0.2;
 
@@ -215,8 +215,8 @@ void DriveTrain::Crab(float twist, float y, float x, bool operatorControl) {
 
 	if (operatorControl) {
 		// scale for operator control
-		x *= 1.0;
-		y *= 1.0;
+		x *= 1;
+		y *= 1;
 		twist *= TWISTSCALE;
 	}
 	

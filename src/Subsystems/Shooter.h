@@ -13,8 +13,9 @@ private:
 	CANTalon* leftRear;
 
 	SpeedController* feeder;
-	AnalogInput* feederSensor;
+
 public:
+	AnalogInput* feederSensor;
 	Shooter();
 	void InitDefaultCommand();
 	void shootFront();

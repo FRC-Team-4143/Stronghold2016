@@ -9,6 +9,9 @@ ScriptCamDrive::ScriptCamDrive(const char* name, double x, double y, double maxs
 {
 	std::cout << GetName() << "::ctor(" << x << ", " << y << ", " << maxspeed << ", " << seconds << ")" << std::endl;
 	Requires(Robot::driveTrain);
+
+	pid = new PIDController(0, 0, 0, 0, &visionSource, &visionSink);
+
 }
 
 // Called just before this Command runs the first time
@@ -20,32 +23,43 @@ void ScriptCamDrive::Initialize()
 	_angle /= 90.;
 	_angle = floor(_angle + .5); // round
 	_angle *= 90.;
-	_p = SmartDashboard::GetNumber("vision P", .003);
+	_p = SmartDashboard::GetNumber("vision P", .3);
+	_i = SmartDashboard::GetNumber("vision I", .3);
+	_d = SmartDashboard::GetNumber("vision D", .3);
+	pid->SetPID(_p / 100, _i / 100, _d / 100);
 	_tol = SmartDashboard::GetNumber("vision tol", 15);
-	_center = SmartDashboard::GetNumber("vision center", 0.0);
+	_center = SmartDashboard::GetNumber("vision center", 25.0);
+	pid->SetAbsoluteTolerance(_tol);
+	pid->SetSetpoint(_center);
+	pid->Enable();
 	_time = 0;
+	Robot::driveTrain->enableSpeedControl();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void ScriptCamDrive::Execute()
 {
-	_offset = Robot::visionBridge->GetPosition();
-	_offset -= _center;
-	if(fabs(_offset) <= _tol)
-		_offset = 0;
-	Robot::driveTrain->Crab(std::min(_maxspeed, std::max(-_maxspeed, (_offset) * _p)), _x,
-			_y, false);
-	if(fabs(_offset) <= _tol)
-		_time++;
-	else
-		_time = 0;
+	//_offset = Robot::visionBridge->GetPosition();
+	//_offset -= _center;
+	//if(fabs(_offset) <= _tol)
+	//	_offset = 0;
+	double speed = -visionSink.value;
+	if (speed > 0) speed += 0.1;
+	else speed -= 0.1;
+	speed = std::min(_maxspeed, std::max(-_maxspeed, speed));
+	SmartDashboard::PutNumber("vision pid value", speed);
+	Robot::driveTrain->Crab(speed, _x, _y, false);
+	//if(fabs(_offset) <= _tol)
+	//	_time++;
+	//else
+	//	_time = 0;
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool ScriptCamDrive::IsFinished()
 {
-	if (_x == 0.0 && _time > TIME)    //fabs(_offset) <= _tol)
-		return true;
+	//if (_x == 0.0 && _time > TIME)    //fabs(_offset) <= _tol)
+	//	return true;
 	return IsTimedOut();
 }
 
@@ -54,6 +68,9 @@ void ScriptCamDrive::End()
 {
 	std::cout << GetName() << "::End" << std::endl;
 	Robot::driveTrain->Crab(0, 0, 0, false);
+	pid->Disable();
+	Robot::driveTrain->disableSpeedControl();
+	//delete pid;
 }
 
 // Called when another command which requires one or more of the same
@@ -62,4 +79,7 @@ void ScriptCamDrive::Interrupted()
 {
 	std::cout << GetName() << "::Interrupted" << std::endl;
 	Robot::driveTrain->Crab(0, 0, 0, false);
+	pid->Disable();
+	Robot::driveTrain->disableSpeedControl();
+	//delete pid;
 }

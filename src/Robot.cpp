@@ -11,6 +11,7 @@
 #include "Commands/ScriptGyroDrive.h"
 #include "Commands/ScriptCamDrive.h"
 #include "Commands/ZeroYaw.h"
+#include "Commands/Feed.h"
 
 OI* Robot::oi;
 Shooter* Robot::shooter = nullptr;
@@ -30,8 +31,10 @@ void Robot::RobotInit() {
 	SmartDashboard::PutString("ScriptCommand", "S(0.5)");
 	SmartDashboard::PutString("ScriptValid", "");
 
-	SmartDashboard::PutNumber("vision center", 0.0);
-	SmartDashboard::PutNumber("vision P", .003);
+	SmartDashboard::PutNumber("vision center", 20.0);
+	SmartDashboard::PutNumber("vision P", 0.2);
+	SmartDashboard::PutNumber("vision I", .005);
+	SmartDashboard::PutNumber("vision D", .05);
 	SmartDashboard::PutNumber("vision tol", 15);
 
 	gyroSub = new GyroSub();
@@ -163,6 +166,13 @@ void Robot::ScriptInit() {
 			auto maxspeed = parameters[2];
 			auto timeout = parameters[3];
 			Command* command = new ScriptCamDrive("DriveCam", x, y, maxspeed, timeout);
+			fCreateCommand(command, 0);
+		}));
+
+		parser.AddCommand(CommandParseInfo("Feed", { "F", "f" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+			parameters.resize(1);
+			auto timeout = parameters[0];
+			Command* command = new Feed(timeout);
 			fCreateCommand(command, 0);
 		}));
 	/*

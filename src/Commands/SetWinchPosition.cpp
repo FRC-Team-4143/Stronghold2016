@@ -12,8 +12,8 @@ SetWinchPosition::SetWinchPosition(int pos)
 void SetWinchPosition::Initialize()
 {
 	if (Robot::winchSub->angleSensor){
-		if (pos == 0) Robot::winchSub->setPos(2.85);
-		if (pos == 1) Robot::winchSub->setPos(3.14);
+		if (pos == 0) Robot::winchSub->setPos(2.8);
+		if (pos == 1) Robot::winchSub->setPos(2.8);
 		if (pos == 2) Robot::winchSub->setPos(3.44);
 	} else {
 		if (pos == 0) Robot::winchSub->setPos(0.0);

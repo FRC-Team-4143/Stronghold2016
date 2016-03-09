@@ -15,7 +15,7 @@
 
 const float TWISTSCALE = 0.6;
 
-const float DEAD_ZONE = 0.2;
+const float DEAD_ZONE = 0.1;
 
 const float driveScale = 950;
 //const double AVERAGE_VOLTAGE_BASE = EncoderConstants::HALF_TURN;
@@ -201,13 +201,13 @@ void DriveTrain::Crab(float twist, float y, float x, bool operatorControl) {
 	// and keeps the wheels pointed that direction
 	// this .1 should be kept the same as the deadzone in oi.cpp
 	if (operatorControl && x == 0.0 && y == 0.0 && twist == 0.0) {
-		/*if (fabs(lasty) > DEAD_ZONE || fabs(lastx) > DEAD_ZONE || fabs(lasttwist) > DEAD_ZONE) {
+		if (fabs(lasty) > DEAD_ZONE || fabs(lastx) > DEAD_ZONE || fabs(lasttwist) > DEAD_ZONE) {
 			y = std::min(std::max(lasty, -DEAD_ZONE), DEAD_ZONE);
 			x = std::min(std::max(lastx, -DEAD_ZONE), DEAD_ZONE);
 			twist = std::min(std::max(lasttwist, -DEAD_ZONE), DEAD_ZONE);
-		} else {*/
+		} else {
 			y = .05; // default wheel position
-		//}
+		}
 	}
 	lastx = x;
 	lasty = y;
@@ -217,7 +217,9 @@ void DriveTrain::Crab(float twist, float y, float x, bool operatorControl) {
 		// scale for operator control
 		x *= 1;
 		y *= 1;
-		twist *= TWISTSCALE;
+		float avg = (std::abs(x) + std::abs(y)) / 2;
+		float scale = 1 - avg/2;
+		twist *= scale;//TWISTSCALE;
 	}
 	
 	float FWD = y;

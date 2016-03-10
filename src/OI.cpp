@@ -23,6 +23,7 @@
 #include "Commands/ZeroYaw.h"
 #include "Commands/ScriptCamDrive.h"
 #include "Commands/GyroCrab.h"
+#include "Commands/ShootCycle.h"
 
 const uint32_t JOYSTICK_LX_AXIS    = 0;
 const uint32_t JOYSTICK_LY_AXIS    = 1;
@@ -58,6 +59,7 @@ OI::OI() {
 	climb = new Climb();
 	cameraLineUp = new ScriptCamDrive("DriveCam", 0, 0, 0.35, 15);
 	gyroCrab = new GyroCrab();
+	shootCycle = new ShootCycle();
 
 	auto cameraEnableCmd = new BasicCameraEnableCmd(Robot::basicCameraSub);
 	auto cameraDisableCmd = new BasicCameraDisableCmd(Robot::basicCameraSub);
@@ -74,7 +76,7 @@ OI::OI() {
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhileHeld(arcade);
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhenPressed(deFeed);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RIGHT))->WhileHeld(cameraLineUp);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RIGHT))->WhenPressed(shootCycle);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LEFT))->WhileHeld(gyroCrab);
 
 	SmartDashboard::PutData("Camera On", cameraEnableCmd);

@@ -13,8 +13,11 @@ Shooter::Shooter() : Subsystem("Shooter") {
 
 	feeder = RobotMap::feeder;
 	feederSensor = RobotMap::feederSensor;
+
+	leftFront->SetFeedbackDevice(CANTalon::CtreMagEncoder_Relative);
+	rightFront->SetFeedbackDevice(CANTalon::CtreMagEncoder_Relative);
 /*
-	leftFront->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
+
 	leftFront->SetControlMode(CANSpeedController::kSpeed);
 	leftFront->ConfigNominalOutputVoltage(0.0, 0.0);
 	leftFront->ConfigPeakOutputVoltage(12.0, -12.0);
@@ -24,7 +27,7 @@ Shooter::Shooter() : Subsystem("Shooter") {
 	leftFront->SetD(0.0);
 	leftFront->SetF(0.03);
 
-	rightFront->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
+
 	rightFront->SetControlMode(CANSpeedController::kSpeed);
 	rightFront->ConfigNominalOutputVoltage(0.0, 0.0);
 	rightFront->ConfigPeakOutputVoltage(12.0, -12.0);

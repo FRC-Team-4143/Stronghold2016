@@ -33,6 +33,7 @@ public:
 	Command* climb;
 	Command* cameraLineUp;
 	Command* gyroCrab;
+	Command* shootCycle;
 
 	Joystick* GetDriverJoystick() { return driverJoystick; }
 };

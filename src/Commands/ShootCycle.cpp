@@ -5,13 +5,17 @@
 #include "DeFeed.h"
 #include "DisableWinchControl.h"
 #include "StopShoot.h"
-
+#include "ScriptCamDrive.h"
+#include "DefeedShoot.h"
 ShootCycle::ShootCycle()
 {
-	AddSequential(new SetWinchPosition(2));
-	AddSequential(new DeFeed(1));
-	AddSequential(new Shoot(1.5));
-	AddSequential(new Feed(1));
+	AddParallel(new SetWinchPosition(2));
+	AddParallel(new DefeedShoot(2));
+	AddSequential(new ScriptCamDrive("DriveCam", 0, 0, 0.35, 2));
+
+	AddParallel(new Feed(1));
+	AddSequential(new ScriptCamDrive("DriveCam", 0, 0, 0.35, 1));
+
 	AddSequential(new DisableWinchControl());
 	AddSequential(new StopShoot());
 

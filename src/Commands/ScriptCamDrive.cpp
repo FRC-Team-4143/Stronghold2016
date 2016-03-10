@@ -44,8 +44,9 @@ void ScriptCamDrive::Execute()
 	//if(fabs(_offset) <= _tol)
 	//	_offset = 0;
 	double speed = -visionSink.value;
-	if (speed > 0) speed += 0.1;
-	else speed -= 0.1;
+	//if (speed > 0) speed += 0.1;
+	//else speed -= 0.1;
+	if (speed < 0.01 && speed > -0.01) speed = 0.01;
 	speed = std::min(_maxspeed, std::max(-_maxspeed, speed));
 	SmartDashboard::PutNumber("vision pid value", speed);
 	Robot::driveTrain->Crab(speed, _x, _y, false);

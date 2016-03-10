@@ -26,6 +26,8 @@ VisionBridgeSub::VisionBridgeSub(uint16_t listeningPort)
 	_debug(false),
 	_listeningThread(&VisionBridgeSub::Listen, this)
 {
+	zeroCounter = 0;
+	_position = 0;
 }
 
 void VisionBridgeSub::InitDefaultCommand() {
@@ -103,6 +105,15 @@ void VisionBridgeSub::ParsePacket(std::string packet) {
 
 void VisionBridgeSub::SetPosition(double position) {
 	std::unique_lock<std::recursive_mutex> lock(_mutex);
-	_position = position;
+	if (position != 0.0){
+		_position = position;
+		zeroCounter = 0;
+	} else {
+		zeroCounter++;
+		if (zeroCounter > 10){
+			_position = position;
+		}
+	}
+
 	std::cout << GetName() << position << std::endl;
 }

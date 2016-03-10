@@ -7,14 +7,15 @@
 
 class Shooter: public Subsystem {
 private:
-	CANTalon* leftFront;
-	CANTalon* rightRear;
-	CANTalon* rightFront;
-	CANTalon* leftRear;
+
 
 	SpeedController* feeder;
 
 public:
+	CANTalon* leftFront;
+	CANTalon* rightRear;
+	CANTalon* rightFront;
+	CANTalon* leftRear;
 	AnalogInput* feederSensor;
 	Shooter();
 	void InitDefaultCommand();

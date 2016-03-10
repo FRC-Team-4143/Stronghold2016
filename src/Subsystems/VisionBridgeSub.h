@@ -31,6 +31,7 @@ private:
 	double _position;
 	bool _debug;
 	std::thread _listeningThread;
+	int zeroCounter;
 
 	void DebugOutput(std::string packet);
 	void Listen();

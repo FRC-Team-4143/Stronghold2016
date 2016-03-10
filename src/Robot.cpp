@@ -32,9 +32,9 @@ void Robot::RobotInit() {
 	SmartDashboard::PutString("ScriptValid", "");
 
 	SmartDashboard::PutNumber("vision center", 20.0);
-	SmartDashboard::PutNumber("vision P", 0.2);
-	SmartDashboard::PutNumber("vision I", .005);
-	SmartDashboard::PutNumber("vision D", .05);
+	SmartDashboard::PutNumber("vision P", 0.15); //0.2
+	SmartDashboard::PutNumber("vision I", .00); //0.005 Worked without speed control
+	SmartDashboard::PutNumber("vision D", .02); //0.05
 	SmartDashboard::PutNumber("vision tol", 15);
 
 	gyroSub = new GyroSub();

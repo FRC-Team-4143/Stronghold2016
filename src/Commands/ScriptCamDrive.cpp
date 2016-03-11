@@ -18,7 +18,14 @@ ScriptCamDrive::ScriptCamDrive(const char* name, double x, double y, double maxs
 void ScriptCamDrive::Initialize()
 {
 	std::cout << GetName() << "::Initialize" << std::endl;
-	SetTimeout(_seconds);
+	if (_seconds == 0){
+		SetTimeout(4);
+		_returnQuick = true;
+	} else {
+		SetTimeout(_seconds);
+		_returnQuick = false;
+	}
+	_counter = 0;
 	_angle = Robot::gyroSub->PIDGet();
 	_angle /= 90.;
 	_angle = floor(_angle + .5); // round
@@ -39,7 +46,12 @@ void ScriptCamDrive::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void ScriptCamDrive::Execute()
 {
-	//_offset = Robot::visionBridge->GetPosition();
+	_offset = Robot::visionBridge->GetPosition();
+	if (std::abs(_offset - _center) < _tol){
+		_counter++;
+	} else {
+		_counter = 0;
+	}
 	//_offset -= _center;
 	//if(fabs(_offset) <= _tol)
 	//	_offset = 0;
@@ -61,7 +73,7 @@ bool ScriptCamDrive::IsFinished()
 {
 	//if (_x == 0.0 && _time > TIME)    //fabs(_offset) <= _tol)
 	//	return true;
-	return IsTimedOut();
+	return IsTimedOut() || (_returnQuick && _counter > 10);
 }
 
 // Called once after isFinished returns true
@@ -71,6 +83,7 @@ void ScriptCamDrive::End()
 	Robot::driveTrain->Crab(0, 0, 0, false);
 	pid->Disable();
 	Robot::driveTrain->disableSpeedControl();
+	_counter = 0;
 	//delete pid;
 }
 
@@ -82,5 +95,6 @@ void ScriptCamDrive::Interrupted()
 	Robot::driveTrain->Crab(0, 0, 0, false);
 	pid->Disable();
 	Robot::driveTrain->disableSpeedControl();
+	_counter = 0;
 	//delete pid;
 }

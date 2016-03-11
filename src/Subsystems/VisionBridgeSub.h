@@ -24,19 +24,23 @@ public:
 
 	// Get the latest vision data.
 	double GetPosition();
+	double GetDistance();
 
 private:
 	std::recursive_mutex _mutex;
 	uint16_t _listeningPort;
 	double _position;
+	double _distance;
 	bool _debug;
 	std::thread _listeningThread;
 	int zeroCounter;
+	char * pch;
 
 	void DebugOutput(std::string packet);
 	void Listen();
-	void ParsePacket(std::string packet);
+	void ParsePacket(char packet[]);
 	void SetPosition(double position);
+	void SetDistance(double distance);
 };
 
 #endif

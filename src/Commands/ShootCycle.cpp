@@ -7,11 +7,13 @@
 #include "StopShoot.h"
 #include "ScriptCamDrive.h"
 #include "DefeedShoot.h"
+#include "../Robot.h"
+
 ShootCycle::ShootCycle()
 {
-	AddParallel(new SetWinchPosition(2));
+	AddParallel(new SetWinchPosition(3, true));
 	AddParallel(new DefeedShoot(2));
-	AddSequential(new ScriptCamDrive("DriveCam", 0, 0, 0.35, 2));
+	AddSequential(new ScriptCamDrive("DriveCam", 0, 0, 0.35, 0));
 
 	AddParallel(new Feed(1));
 	AddSequential(new ScriptCamDrive("DriveCam", 0, 0, 0.35, 1));

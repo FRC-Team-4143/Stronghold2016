@@ -50,9 +50,9 @@ OI::OI() {
 	armDown = new ArmDown();
 	stowArm = new StowArm();
 	unwindWheels = new UnwindWheels();
-	winchSet1 = new SetWinchPosition(0); //starting
-	winchSet2 = new SetWinchPosition(1); //raised
-	winchSet3 = new SetWinchPosition(2); //lowered
+	winchSet1 = new SetWinchPosition(0, false); //starting
+	winchSet2 = new SetWinchPosition(1, false); //raised
+	winchSet3 = new SetWinchPosition(2, false); //lowered
 	resetWinch = new ResetWinch();
 	deFeed = new DeFeed(1);
 	arcade = new ArcadeDriveMode();
@@ -92,6 +92,9 @@ OI::OI() {
     //SmartDashboard::PutData("Turn Rear Right Steering Motor", turnRearRightSteer);
 
     SmartDashboard::PutData("Reset Winch", resetWinch);
+    SmartDashboard::PutNumber("Winch 0", 3.35);
+    SmartDashboard::PutNumber("Winch 1", 3.0);
+    SmartDashboard::PutNumber("Winch 2", 3.4);
 
     SmartDashboard::PutData("Update Positions", new UpdatePositions());
     //SmartDashboard::PutData("Reset Arm", new ResetArm());

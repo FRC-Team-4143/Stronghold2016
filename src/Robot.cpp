@@ -12,6 +12,7 @@
 #include "Commands/ScriptCamDrive.h"
 #include "Commands/ZeroYaw.h"
 #include "Commands/Feed.h"
+#include "Commands/ScriptFieldCentricCrab.h"
 
 OI* Robot::oi;
 Shooter* Robot::shooter = nullptr;
@@ -33,9 +34,9 @@ void Robot::RobotInit() {
 
 	SmartDashboard::PutNumber("vision center", 20.0);
 	SmartDashboard::PutNumber("vision P", 0.15); //0.2
-	SmartDashboard::PutNumber("vision I", .00); //0.005 Worked without speed control
-	SmartDashboard::PutNumber("vision D", .02); //0.05
-	SmartDashboard::PutNumber("vision tol", 15);
+	SmartDashboard::PutNumber("vision I", .005); //0.005 Worked without speed control
+	SmartDashboard::PutNumber("vision D", .022); //0.05
+	SmartDashboard::PutNumber("vision tol", 10);
 
 	gyroSub = new GyroSub();
 	driveTrain = new DriveTrain();
@@ -135,7 +136,8 @@ void Robot::ScriptInit() {
 	parser.AddCommand(CommandParseInfo("Winch", { "W", "w" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
 		parameters.resize(1);
 		auto pos = parameters[0];
-		Command* command = new SetWinchPosition(pos);
+		auto holdPos = parameters[1];
+		Command* command = new SetWinchPosition(pos, holdPos);
 		fCreateCommand(command, 0);
 	}));
 
@@ -175,6 +177,18 @@ void Robot::ScriptInit() {
 			Command* command = new Feed(timeout);
 			fCreateCommand(command, 0);
 		}));
+
+		parser.AddCommand(CommandParseInfo("FieldCentricDrive", { "FC", "fc" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+			parameters.resize(4);
+			auto y = parameters[0];
+			auto x = parameters[1];
+			auto z = parameters[2];
+			auto timeout = parameters[3];
+			Command* command = new ScriptFieldCentricCrab(z, y, x, timeout);
+			//if (0 == timeout) timeout = 4;
+			fCreateCommand(command, 0);
+		}));
+
 	/*
 	parser.AddCommand(CommandParseInfo("DriveMouse", { "DM", "dm" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
 		parameters.resize(4);

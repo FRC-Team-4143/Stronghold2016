@@ -26,7 +26,7 @@ void UpdatePositions::Execute()
 	SmartDashboard::PutBoolean("Shooter Raised", Robot::winchSub->shooterRaised);
 	SmartDashboard::PutNumber("Gyro Yaw", RobotMap::imu->GetYaw());
 	SmartDashboard::PutNumber("Vision Position", Robot::visionBridge->GetPosition());
-
+	SmartDashboard::PutNumber("Vision Distance", Robot::visionBridge->GetDistance());
 }
 
 // Make this return true when this Command no longer needs to run execute()

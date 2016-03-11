@@ -8,6 +8,7 @@ class Feed: public Command
 
 private:
 double Timeout;
+bool seenBall;
 
 public:
 	Feed(double Timeout);

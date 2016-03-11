@@ -10,19 +10,25 @@ Feed::Feed(double Timeout)
 // Called just before this Command runs the first time
 void Feed::Initialize()
 {
-Robot::shooter->feed();
+	Robot::shooter->shootFront();
+	Robot::shooter->shootBack();
+	seenBall = false;
+
 }
 
 // Called repeatedly when this Command is scheduled to run
 void Feed::Execute()
 {
-
+if (std::abs(Robot::shooter->leftFront->GetSpeed()) > 5000)
+	Robot::shooter->feed();
+if (Robot::shooter->feederSensor->GetAverageVoltage() > 4.0)
+	seenBall = true;
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool Feed::IsFinished()
 {
-	return IsTimedOut();// || Robot::shooter->feederSensor->GetAverageVoltage() < 4.0;
+	return IsTimedOut() || (Robot::shooter->feederSensor->GetAverageVoltage() < 4.0 && seenBall);
 }
 
 // Called once after isFinished returns true

@@ -32,6 +32,8 @@ private:
 	double _tol;
 	double _center;
 	int    _time;
+	bool _returnQuick;
+	int _counter;
 };
 
 #endif

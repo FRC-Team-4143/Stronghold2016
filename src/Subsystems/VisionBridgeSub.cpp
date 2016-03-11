@@ -43,6 +43,10 @@ double VisionBridgeSub::GetPosition() {
 	return _position;
 }
 
+double VisionBridgeSub::GetDistance(){
+	return _distance;
+}
+
 void VisionBridgeSub::DebugOutput(std::string packet) {
 	std::cout << "[DEBUG] visionPacket=" << packet << std::endl;
 }
@@ -93,11 +97,15 @@ void VisionBridgeSub::Listen() {
 	close(sockListener);
 }
 
-void VisionBridgeSub::ParsePacket(std::string packet) {
+void VisionBridgeSub::ParsePacket(char packet[]) {
 	if (_debug) DebugOutput(packet);
 	try {
-		auto position = std::stod(packet);
+		pch = std::strtok(packet, " ");
+		auto position = std::stod(pch);
 		SetPosition(position);
+		pch = std::strtok(nullptr, " ");
+		auto distance = std::stod(pch);
+		SetDistance(distance);
 	}
 	catch (...) {
 	}
@@ -116,4 +124,8 @@ void VisionBridgeSub::SetPosition(double position) {
 	}
 
 	std::cout << GetName() << position << std::endl;
+}
+
+void VisionBridgeSub::SetDistance(double distance){
+	_distance = distance;
 }

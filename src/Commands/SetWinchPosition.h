@@ -8,12 +8,13 @@ class SetWinchPosition: public Command
 private:
 	double pos;
 public:
-	SetWinchPosition(int pos);
+	SetWinchPosition(int pos, bool holdPos);
 	void Initialize();
 	void Execute();
 	bool IsFinished();
 	void End();
 	void Interrupted();
+	bool holdPos;
 };
 
 #endif

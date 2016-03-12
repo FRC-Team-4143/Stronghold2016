@@ -14,6 +14,7 @@ void ScriptDrive::Initialize()
 {
 	std::cout << GetName() << "::Initialize" << std::endl;
 	SetTimeout(_seconds);
+	Robot::driveTrain->enableSpeedControl();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -33,6 +34,7 @@ void ScriptDrive::End()
 {
 	std::cout << GetName() << "::End" << std::endl;
 	Robot::driveTrain->Crab(0, 0, 0, false);
+	Robot::driveTrain->disableSpeedControl();
 }
 
 // Called when another command which requires one or more of the same
@@ -41,4 +43,5 @@ void ScriptDrive::Interrupted()
 {
 	std::cout << GetName() << "::Interrupted" << std::endl;
 	Robot::driveTrain->Crab(0, 0, 0, false);
+	Robot::driveTrain->disableSpeedControl();
 }

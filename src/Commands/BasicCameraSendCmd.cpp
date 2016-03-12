@@ -7,6 +7,7 @@ BasicCameraSendCmd::BasicCameraSendCmd(BasicCameraSub* camera)
 	m_camera(camera)
 {
 	Requires(camera);
+	SetRunWhenDisabled(true);
 }
 
 // ==========================================================================

@@ -39,6 +39,7 @@ void ScriptCamDrive::Initialize()
 	pid->SetAbsoluteTolerance(_tol);
 	pid->SetSetpoint(_center);
 	pid->Enable();
+	pid->SetOutputRange(-0.3, 0.3);
 	_time = 0;
 	Robot::driveTrain->enableSpeedControl();
 }

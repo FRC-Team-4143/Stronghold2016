@@ -7,12 +7,12 @@
 
  	armMotor->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
  	armMotor->SetP(0.8);
- 	armMotor->SetI(0.0);
+ 	armMotor->SetI(0.005);
  	armMotor->SetD(0.05);
     armMotor->SetF(0.0);
     //armMotor->SetSensorDirection(true);
  	armMotor->SetSetpoint(0.0);
- 	armMotor->ConfigPeakOutputVoltage(10.0, -10.0);
+ 	armMotor->ConfigPeakOutputVoltage(12.0, -12.0);
  	armMotor->SetControlMode(CANSpeedController::kPercentVbus);
  	armMotor->Set(0);
 

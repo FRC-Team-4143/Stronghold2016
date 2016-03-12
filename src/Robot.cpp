@@ -34,7 +34,7 @@ void Robot::RobotInit() {
 
 	SmartDashboard::PutNumber("vision center", 20.0);
 	SmartDashboard::PutNumber("vision P", 0.15); //0.2
-	SmartDashboard::PutNumber("vision I", .005); //0.005 Worked without speed control
+	SmartDashboard::PutNumber("vision I", .01); //0.005 Worked without speed control
 	SmartDashboard::PutNumber("vision D", .022); //0.05
 	SmartDashboard::PutNumber("vision tol", 10);
 
@@ -134,7 +134,7 @@ void Robot::ScriptInit() {
 	}));
 
 	parser.AddCommand(CommandParseInfo("Winch", { "W", "w" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
-		parameters.resize(1);
+		parameters.resize(2);
 		auto pos = parameters[0];
 		auto holdPos = parameters[1];
 		Command* command = new SetWinchPosition(pos, holdPos);

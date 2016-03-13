@@ -1,22 +1,18 @@
-/*
- * VisionSink.cpp
- *
- *  Created on: Mar 8, 2016
- *      Author: Anthony
- */
-#include <WPILib.h>
-#include <Modules/VisionSink.h>
+#include "Modules/VisionSink.h"
 
-
-VisionSink::VisionSink() {
-	// TODO Auto-generated constructor stub
-
+VisionSink::VisionSink()
+: _mutex(), _value(0) {
 }
 
 VisionSink::~VisionSink() {
-	// TODO Auto-generated destructor stub
 }
 
-void VisionSink::PIDWrite(float output){
-	value = output;
+void VisionSink::PIDWrite(float output) {
+	std::unique_lock<std::recursive_mutex> lock(_mutex);
+	_value = output;
+}
+
+double VisionSink::GetValue() {
+	std::unique_lock<std::recursive_mutex> lock(_mutex);
+	return _value;
 }

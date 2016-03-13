@@ -1,19 +1,19 @@
-/*
- * VisionSink.h
- *
- *  Created on: Mar 8, 2016
- *      Author: Anthony
- */
+#pragma once
 
-#ifndef SRC_MODULES_VISIONSINK_H_
-#define SRC_MODULES_VISIONSINK_H_
+#include <WPILib.h>
+#include <condition_variable>
 
-class VisionSink : public PIDOutput{
+class VisionSink : public PIDOutput {
 public:
 	VisionSink();
 	virtual ~VisionSink();
-	double value;
-	void PIDWrite(float output);
-};
 
-#endif /* SRC_MODULES_VISIONSINK_H_ */
+	// PIDOutput methods
+	void PIDWrite(float output);
+
+	double GetValue();
+
+private:
+	std::recursive_mutex _mutex;
+	double _value;
+};

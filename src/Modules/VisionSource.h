@@ -1,18 +1,12 @@
-/*
- * VisionSource.h
- *
- *  Created on: Mar 8, 2016
- *      Author: Anthony
- */
+#pragma once
 
-#ifndef SRC_MODULES_VISIONSOURCE_H_
-#define SRC_MODULES_VISIONSOURCE_H_
+#include <WPILib.h>
 
-class VisionSource : public PIDSource{
+class VisionSource : public PIDSource {
 public:
 	VisionSource();
 	virtual ~VisionSource();
+
+	// PIDSource methods
 	double PIDGet();
 };
-
-#endif /* SRC_MODULES_VISIONSOURCE_H_ */

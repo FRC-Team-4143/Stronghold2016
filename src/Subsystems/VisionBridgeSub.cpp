@@ -123,9 +123,18 @@ void VisionBridgeSub::SetPosition(double position) {
 		}
 	}
 
-	std::cout << GetName() << position << std::endl;
+	//std::cout << GetName() << position << std::endl;
 }
 
 void VisionBridgeSub::SetDistance(double distance){
-	_distance = distance;
+	std::unique_lock<std::recursive_mutex> lock(_mutex);
+	if (distance != 0.0){
+		_distance = distance;
+		distanceZeroCounter = 0;
+	} else {
+		distanceZeroCounter++;
+		if (distanceZeroCounter > 10){
+			_distance = distance;
+		}
+	}
 }

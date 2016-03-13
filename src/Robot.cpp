@@ -13,6 +13,8 @@
 #include "Commands/ZeroYaw.h"
 #include "Commands/Feed.h"
 #include "Commands/ScriptFieldCentricCrab.h"
+#include "Commands/WaitForVision.h"
+#include "Commands/BackupToCenter.h"
 
 OI* Robot::oi;
 Shooter* Robot::shooter = nullptr;
@@ -32,8 +34,8 @@ void Robot::RobotInit() {
 	SmartDashboard::PutString("ScriptCommand", "S(0.5)");
 	SmartDashboard::PutString("ScriptValid", "");
 
-	SmartDashboard::PutNumber("vision center", 20.0);
-	SmartDashboard::PutNumber("vision P", 0.15); //0.2
+	SmartDashboard::PutNumber("vision center", 35.0);
+	SmartDashboard::PutNumber("vision P", 0.1); //0.2
 	SmartDashboard::PutNumber("vision I", .01); //0.005 Worked without speed control
 	SmartDashboard::PutNumber("vision D", .022); //0.05
 	SmartDashboard::PutNumber("vision tol", 10);
@@ -50,10 +52,7 @@ void Robot::RobotInit() {
 	driveTrain->SetWheelbase(24, 21.5, 24);
 	driveTrain->loadWheelOffsets();
 
-	driveTrain->frontLeft->Enable();
-	driveTrain->frontRight->Enable();
-	driveTrain->rearLeft->Enable();
-	driveTrain->rearRight->Enable();
+
 
 
   }
@@ -67,6 +66,8 @@ void Robot::DisabledPeriodic() {
 }
 
 void Robot::AutonomousInit() {
+	driveTrain->enableSteeringPID();
+
 	RobotMap::imu->ZeroYaw();
 	autonomousCommand = new ScriptCommand("ScriptCommand");
 	if (autonomousCommand != nullptr)
@@ -78,14 +79,13 @@ void Robot::AutonomousPeriodic() {
 }
 
 void Robot::TeleopInit() {
+	driveTrain->enableSteeringPID();
 	// This makes sure that the autonomous stops running when
 	// teleop starts running. If you want the autonomous to
 	// continue until interrupted by another command, remove
 	// these lines or comment it out.
 	if (autonomousCommand != nullptr)
 		autonomousCommand->Cancel();
-
-	driveTrain->SetWheelbase(24, 21.5, 24);
 }
 
 void Robot::TeleopPeriodic() {
@@ -108,6 +108,20 @@ void Robot::ScriptInit() {
 		auto z = parameters[2];
 		auto timeout = parameters[3];
 		Command* command = new ScriptDrive("Drive", x, y, z, timeout);
+		//if (0 == timeout) timeout = 4;
+		fCreateCommand(command, 0);
+	}));
+
+	parser.AddCommand(CommandParseInfo("WaitForVision", { "WAIT", "wait" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+		parameters.resize(0);
+		Command* command = new WaitForVision();
+		//if (0 == timeout) timeout = 4;
+		fCreateCommand(command, 0);
+	}));
+
+	parser.AddCommand(CommandParseInfo("BackupToCenter", { "BACK", "back" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+		parameters.resize(0);
+		Command* command = new BackupToCenter();
 		//if (0 == timeout) timeout = 4;
 		fCreateCommand(command, 0);
 	}));

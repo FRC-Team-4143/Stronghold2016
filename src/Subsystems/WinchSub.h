@@ -9,11 +9,11 @@ class WinchSub: public Subsystem
 private:
 	CANTalon* motor;
 	AnalogInput* shooterSensor;
-	PIDController* shooter;
+
 public:
 	bool shooterRaised;
 	const static bool angleSensor;
-
+	PIDController* shooter;
 	WinchSub();
 	void InitDefaultCommand();
 	void setPos(double pos);

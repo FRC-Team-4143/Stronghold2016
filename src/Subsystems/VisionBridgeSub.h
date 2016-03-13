@@ -34,6 +34,7 @@ private:
 	bool _debug;
 	std::thread _listeningThread;
 	int zeroCounter;
+	int distanceZeroCounter;
 	char * pch;
 
 	void DebugOutput(std::string packet);

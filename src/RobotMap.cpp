@@ -3,42 +3,42 @@
 
 bool RobotMap::SpeedControl = 0;
 
-PIDController*     RobotMap::driveTrainFrontLeft = nullptr;
-CANTalon*   RobotMap::driveTrainFrontLeftDrive = nullptr;
-AnalogChannelVolt* RobotMap::driveTrainFrontLeftPos = nullptr;
-CANTalon*   RobotMap::driveTrainFrontLeftSteer = nullptr;
+PIDController*     	RobotMap::driveTrainFrontLeft = nullptr;
+CANTalon*   		RobotMap::driveTrainFrontLeftDrive = nullptr;
+AnalogChannelVolt* 	RobotMap::driveTrainFrontLeftPos = nullptr;
+CANTalon*   		RobotMap::driveTrainFrontLeftSteer = nullptr;
 
-PIDController*     RobotMap::driveTrainFrontRight = nullptr;
-CANTalon*   RobotMap::driveTrainFrontRightDrive = nullptr;
-AnalogChannelVolt* RobotMap::driveTrainFrontRightPos = nullptr;
-CANTalon*   RobotMap::driveTrainFrontRightSteer = nullptr;
+PIDController*     	RobotMap::driveTrainFrontRight = nullptr;
+CANTalon*   		RobotMap::driveTrainFrontRightDrive = nullptr;
+AnalogChannelVolt* 	RobotMap::driveTrainFrontRightPos = nullptr;
+CANTalon*   		RobotMap::driveTrainFrontRightSteer = nullptr;
 
-PIDController*     RobotMap::driveTrainRearLeft = nullptr;
-CANTalon*   RobotMap::driveTrainRearLeftDrive = nullptr;
-AnalogChannelVolt* RobotMap::driveTrainRearLeftPos = nullptr;
-CANTalon*   RobotMap::driveTrainRearLeftSteer = nullptr;
+PIDController*     	RobotMap::driveTrainRearLeft = nullptr;
+CANTalon*   		RobotMap::driveTrainRearLeftDrive = nullptr;
+AnalogChannelVolt* 	RobotMap::driveTrainRearLeftPos = nullptr;
+CANTalon*   		RobotMap::driveTrainRearLeftSteer = nullptr;
 
-PIDController*     RobotMap::driveTrainRearRight = nullptr;
-CANTalon*   RobotMap::driveTrainRearRightDrive = nullptr;
-AnalogChannelVolt* RobotMap::driveTrainRearRightPos = nullptr;
-CANTalon*   RobotMap::driveTrainRearRightSteer = nullptr;
+PIDController*     	RobotMap::driveTrainRearRight = nullptr;
+CANTalon*   		RobotMap::driveTrainRearRightDrive = nullptr;
+AnalogChannelVolt* 	RobotMap::driveTrainRearRightPos = nullptr;
+CANTalon*   		RobotMap::driveTrainRearRightSteer = nullptr;
 
-I2C* RobotMap::i2c = nullptr;
+I2C* 				RobotMap::i2c = nullptr;
 
-SerialPort* RobotMap::serialPort = nullptr;
+SerialPort* 		RobotMap::serialPort = nullptr;
 
-CANTalon* RobotMap::leftFront;
-CANTalon* RobotMap::rightRear;
-CANTalon* RobotMap::rightFront;
-CANTalon* RobotMap::leftRear;
-SpeedController* RobotMap::feeder;
-AnalogInput* RobotMap::feederSensor;
+CANTalon* 			RobotMap::leftFront;
+CANTalon* 			RobotMap::rightRear;
+CANTalon* 			RobotMap::rightFront;
+CANTalon* 			RobotMap::leftRear;
+SpeedController* 	RobotMap::feeder;
+AnalogInput* 		RobotMap::feederSensor;
 
-CANTalon* RobotMap::armMotor;
+CANTalon* 			RobotMap::armMotor;
 
-CANTalon* RobotMap::winchMotor;
-AnalogInput* RobotMap::winchPot;
-PIDController* RobotMap::shooterWinch;
+CANTalon* 			RobotMap::winchMotor;
+AnalogInput* 		RobotMap::winchPot;
+PIDController* 		RobotMap::shooterWinch;
 
 
 
@@ -49,9 +49,9 @@ AHRS* RobotMap::imu = nullptr;
 #endif
 
 #define CONTINUOUS true
-#define P 0.7
+#define P 1.5 //0.7
 #define I 0.0
-#define D 0.0
+#define D 0.1 // 0.0
 #define F 0.0
 #define driveP 0.3
 #define driveI 0.0
@@ -60,7 +60,7 @@ AHRS* RobotMap::imu = nullptr;
 #define POTMIN 0.0
 #define POTMAX 5.0
 #define STEERPOW  0.6
-#define TOLERANCE 0.2
+#define TOLERANCE 0.1
 #define PERIOD .02
 #define RATIO 1
 
@@ -179,8 +179,9 @@ void RobotMap::init() {
 
     winchMotor = new CANTalon(5);
     winchPot = new AnalogInput(1);
-    shooterWinch = new PIDController(1.5, 0.0, 0.1, 0.0, winchPot, winchMotor);
+    shooterWinch = new PIDController(2.0, 0.0, 0.0, 0.0, winchPot, winchMotor);
     shooterWinch->SetOutputRange(-0.5, 0.5);
+    shooterWinch->SetAbsoluteTolerance(0.002);
 
 
 }

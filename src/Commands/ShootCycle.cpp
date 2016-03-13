@@ -18,7 +18,7 @@ ShootCycle::ShootCycle()
 	AddParallel(new Feed(1));
 	AddSequential(new ScriptCamDrive("DriveCam", 0, 0, 0.35, 1));
 
-	AddSequential(new DisableWinchControl());
+	AddParallel(new SetWinchPosition(2, false));
 	AddSequential(new StopShoot());
 
 

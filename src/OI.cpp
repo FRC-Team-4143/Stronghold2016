@@ -24,6 +24,7 @@
 #include "Commands/ScriptCamDrive.h"
 #include "Commands/GyroCrab.h"
 #include "Commands/ShootCycle.h"
+#include "Commands/FieldCentric.h"
 
 const uint32_t JOYSTICK_LX_AXIS    = 0;
 const uint32_t JOYSTICK_LY_AXIS    = 1;
@@ -53,31 +54,31 @@ OI::OI() {
 	winchSet1 = new SetWinchPosition(0, false); //starting
 	winchSet2 = new SetWinchPosition(1, false); //raised
 	winchSet3 = new SetWinchPosition(2, false); //lowered
-	resetWinch = new ResetWinch();
 	deFeed = new DeFeed(1);
-	arcade = new ArcadeDriveMode();
-	climb = new Climb();
-	cameraLineUp = new ScriptCamDrive("DriveCam", 0, 0, 0.35, 15);
 	gyroCrab = new GyroCrab();
+	fieldCentric = new FieldCentric();
 	shootCycle = new ShootCycle();
+	//arcade = new ArcadeDriveMode();
+	//climb = new Climb();
 
 	auto cameraEnableCmd = new BasicCameraEnableCmd(Robot::basicCameraSub);
 	auto cameraDisableCmd = new BasicCameraDisableCmd(Robot::basicCameraSub);
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhileHeld(armUp);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhileHeld(armDown);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhenPressed(stowArm);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_B))->WhenPressed(stowArm);
 
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_B))->WhenPressed(winchSet2);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhenPressed(winchSet3);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(winchSet2);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhenPressed(winchSet3);
 
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhileHeld(unwindWheels);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(unwindWheels);
 
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhileHeld(arcade);
+	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhileHeld(arcade);
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhenPressed(deFeed);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RIGHT))->WhenPressed(shootCycle);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LEFT))->WhileHeld(gyroCrab);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhileHeld(shootCycle);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RIGHT))->WhileHeld(gyroCrab);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LEFT))->WhileHeld(fieldCentric);
 
 	SmartDashboard::PutData("Camera On", cameraEnableCmd);
 	SmartDashboard::PutData("Camera Off", cameraDisableCmd);
@@ -86,21 +87,11 @@ OI::OI() {
     SmartDashboard::PutData("SetWheelOffsets", new SetWheelOffsets());
     SmartDashboard::PutData("Zero Yaw", new ZeroYaw());
 
-    //SmartDashboard::PutData("Turn Front Left Steering Motor", turnFrontLeftSteer);
-    //SmartDashboard::PutData("Turn Front Right Steering Motor", turnFrontRightSteer);
-    //SmartDashboard::PutData("Turn Rear Left Steering Motor", turnRearLeftSteer);
-    //SmartDashboard::PutData("Turn Rear Right Steering Motor", turnRearRightSteer);
-
-    SmartDashboard::PutData("Reset Winch", resetWinch);
-    SmartDashboard::PutNumber("Winch 0", 3.35);
+    SmartDashboard::PutNumber("Winch 0", 3.25);
     SmartDashboard::PutNumber("Winch 1", 3.0);
-    SmartDashboard::PutNumber("Winch 2", 3.4);
+    SmartDashboard::PutNumber("Winch 2", 3.3);
 
     SmartDashboard::PutData("Update Positions", new UpdatePositions());
-    //SmartDashboard::PutData("Reset Arm", new ResetArm());
-
-    SmartDashboard::PutData("Shoot Cycle", new ShootCycle());
-
     SmartDashboard::PutData("Validate Script", new ScriptValidate());
 
 }

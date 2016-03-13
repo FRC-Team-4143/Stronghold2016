@@ -18,22 +18,16 @@ public:
 	Command* armUp;
 	Command* armDown;
 	Command* stowArm;
-	Command* useCamera;
 	Command* unwindWheels;
-	Command* turnFrontRightSteer;
-	Command* turnFrontLeftSteer;
-	Command* turnRearRightSteer;
-	Command* turnRearLeftSteer;
 	Command* winchSet1;
 	Command* winchSet2;
 	Command* winchSet3;
-	Command* resetWinch;
 	Command* deFeed;
-	Command* arcade;
-	Command* climb;
-	Command* cameraLineUp;
+	//Command* arcade;
+	//Command* climb;
 	Command* gyroCrab;
 	Command* shootCycle;
+	Command* fieldCentric;
 
 	Joystick* GetDriverJoystick() { return driverJoystick; }
 };

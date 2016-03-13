@@ -171,4 +171,6 @@ public:
 	void ArcadeDriveMode(float y, float x);
 	void disableSpeedControl();
 	void enableSpeedControl();
+
+	void enableSteeringPID();
 };

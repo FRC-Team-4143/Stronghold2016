@@ -19,7 +19,7 @@ void ScriptCamDrive::Initialize()
 {
 	std::cout << GetName() << "::Initialize" << std::endl;
 	if (_seconds == 0){
-		SetTimeout(4);
+		SetTimeout(16);
 		_returnQuick = true;
 	} else {
 		SetTimeout(_seconds);
@@ -39,7 +39,7 @@ void ScriptCamDrive::Initialize()
 	pid->SetAbsoluteTolerance(_tol);
 	pid->SetSetpoint(_center);
 	pid->Enable();
-	pid->SetOutputRange(-0.3, 0.3);
+	pid->SetOutputRange(-0.25, 0.25);
 	_time = 0;
 	Robot::driveTrain->enableSpeedControl();
 }
@@ -56,11 +56,11 @@ void ScriptCamDrive::Execute()
 	//_offset -= _center;
 	//if(fabs(_offset) <= _tol)
 	//	_offset = 0;
-	double speed = -visionSink.value;
+	double speed = -visionSink.GetValue();
 	//if (speed > 0) speed += 0.1;
 	//else speed -= 0.1;
 	if (speed < 0.01 && speed > -0.01) speed = 0.01;
-	speed = std::min(_maxspeed, std::max(-_maxspeed, speed));
+	//speed = std::min(_maxspeed, std::max(-_maxspeed, speed));
 	SmartDashboard::PutNumber("vision pid value", speed);
 	Robot::driveTrain->Crab(speed, _x, _y, false);
 	//if(fabs(_offset) <= _tol)

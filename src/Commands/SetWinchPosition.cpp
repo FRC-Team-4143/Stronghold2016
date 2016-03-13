@@ -6,7 +6,7 @@ SetWinchPosition::SetWinchPosition(int pos, bool holdPos)
 	Requires(Robot::winchSub);
 	SetWinchPosition::pos = pos;
 	SetWinchPosition::holdPos = holdPos;
-	SetTimeout(1);
+	SetTimeout(1.5);
 }
 
 // Called just before this Command runs the first time
@@ -39,7 +39,7 @@ void SetWinchPosition::Execute()
 // Make this return true when this Command no longer needs to run execute()
 bool SetWinchPosition::IsFinished()
 {
-	return IsTimedOut();
+	return IsTimedOut() || Robot::winchSub->shooter->OnTarget();
 }
 
 // Called once after isFinished returns true

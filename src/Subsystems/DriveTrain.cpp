@@ -109,7 +109,7 @@ bool DriveTrain::unwindwheel(AnalogChannelVolt * wheel, PIDController * pid, dou
 }
 */
 bool DriveTrain::unwind(){//float y, float x){
-	Dashboard();
+	//Dashboard();
 	frontLeft->Disable();
 	frontRight->Disable();
 	rearLeft->Disable();
@@ -184,7 +184,8 @@ void DriveTrain::GyroCrab(float desiredangle, float y, float x, bool operatorCon
 }
 
 void DriveTrain::Crab(float twist, float y, float x, bool operatorControl) {
-	Dashboard();
+	//Dashboard();
+	//enableSpeedControl();
 
 	// stop PID loop if wires wrap.
 	if(unwinding ||
@@ -645,4 +646,22 @@ void DriveTrain::enableSpeedControl(){
 	rearLeftDrive->SetControlMode(CANSpeedController::kSpeed);
 	rearRightDrive->SetControlMode(CANSpeedController::kSpeed);
 	RobotMap::SpeedControl = 1;
+}
+
+void DriveTrain::enableSteeringPID(){
+	/*
+	if (FLOffset > 2.5) frontLeft->SetSetpoint(FLOffset - 2.5);
+	else frontLeft->SetSetpoint(FLOffset + 2.5);
+	if(FROffset > 2.5) frontRight->SetSetpoint(FROffset - 2.5);
+	else frontRight->SetSetpoint(FROffset + 2.5);
+	if(RLOffset > 2.5) rearLeft->SetSetpoint(RLOffset - 2.5);
+	else rearLeft->SetSetpoint(RLOffset + 2.5);
+	if (RROffset > 2.5) rearRight->SetSetpoint(RROffset - 2.5);
+	else rearRight->SetSetpoint(RROffset + 2.5);
+	 */
+
+	frontLeft->Enable();
+	frontRight->Enable();
+	rearLeft->Enable();
+	rearRight->Enable();
 }

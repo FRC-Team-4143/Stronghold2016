@@ -33,12 +33,12 @@ bool DefeedShoot::IsFinished()
 // Called once after isFinished returns true
 void DefeedShoot::End()
 {
-
+	Robot::shooter->stopFeed();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void DefeedShoot::Interrupted()
 {
-
+	Robot::shooter->stopFeed();
 }

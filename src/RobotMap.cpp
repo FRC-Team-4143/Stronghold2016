@@ -49,7 +49,7 @@ AHRS* RobotMap::imu = nullptr;
 #endif
 
 #define CONTINUOUS true
-#define P 1.5 //0.7
+#define P 1.1 //0.7
 #define I 0.0
 #define D 0.1 // 0.0
 #define F 0.0

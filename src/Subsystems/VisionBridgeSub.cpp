@@ -28,6 +28,7 @@ VisionBridgeSub::VisionBridgeSub(uint16_t listeningPort)
 {
 	zeroCounter = 0;
 	_position = 0;
+	autoAim = 0;
 }
 
 void VisionBridgeSub::InitDefaultCommand() {
@@ -40,10 +41,21 @@ void VisionBridgeSub::EnableDebug(bool debug) {
 
 double VisionBridgeSub::GetPosition() {
 	std::unique_lock<std::recursive_mutex> lock(_mutex);
-	return _position;
+	if(_position != 0){
+		autoAim = 0;
+		return _position;
+	}
+	auto gyroYaw = RobotMap::imu->GetYaw();
+	if(gyroYaw > 90){
+		autoAim = -150;
+	} else if (gyroYaw < -90){
+		autoAim = 150;
+	}
+	return autoAim;
 }
 
 double VisionBridgeSub::GetDistance(){
+	std::unique_lock<std::recursive_mutex> lock(_mutex);
 	return _distance;
 }
 

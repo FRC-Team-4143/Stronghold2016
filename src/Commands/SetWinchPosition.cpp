@@ -17,7 +17,7 @@ void SetWinchPosition::Initialize()
 		if (pos == 1) Robot::winchSub->setPos(SmartDashboard::GetNumber("Winch 1", 3.0));
 		if (pos == 2) Robot::winchSub->setPos(SmartDashboard::GetNumber("Winch 2", 3.4));
 		if (pos == 3){
-			if (Robot::visionBridge->GetDistance() > 130)
+			if (Robot::visionBridge->GetDistance() > SmartDashboard::GetNumber("long shot cutoff", 50))
 				Robot::winchSub->setPos(SmartDashboard::GetNumber("Winch 0", 3.2));
 			else
 				Robot::winchSub->setPos(SmartDashboard::GetNumber("Winch 2", 3.4));

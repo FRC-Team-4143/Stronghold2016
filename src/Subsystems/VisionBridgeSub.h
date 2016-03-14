@@ -36,6 +36,7 @@ private:
 	int zeroCounter;
 	int distanceZeroCounter;
 	char * pch;
+	double autoAim;
 
 	void DebugOutput(std::string packet);
 	void Listen();

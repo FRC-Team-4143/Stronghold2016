@@ -15,6 +15,7 @@
 #include "Commands/ScriptFieldCentricCrab.h"
 #include "Commands/WaitForVision.h"
 #include "Commands/BackupToCenter.h"
+#include "Commands/DriveTilVision.h"
 
 OI* Robot::oi;
 Shooter* Robot::shooter = nullptr;
@@ -39,6 +40,7 @@ void Robot::RobotInit() {
 	SmartDashboard::PutNumber("vision I", .01); //0.005 Worked without speed control
 	SmartDashboard::PutNumber("vision D", .022); //0.05
 	SmartDashboard::PutNumber("vision tol", 10);
+	SmartDashboard::PutNumber("long shot cutoff", 50);
 
 	gyroSub = new GyroSub();
 	driveTrain = new DriveTrain();
@@ -63,6 +65,14 @@ void Robot::DisabledInit(){
 
 void Robot::DisabledPeriodic() {
 	Scheduler::GetInstance()->Run();
+	//armSub->readPos();
+	winchSub->readPos();
+	driveTrain->updateDistanceEncoders();
+	SmartDashboard::PutNumber("feeder sensor", RobotMap::feederSensor->GetAverageVoltage());
+	SmartDashboard::PutBoolean("Shooter Raised", Robot::winchSub->shooterRaised);
+	SmartDashboard::PutNumber("Gyro Yaw", RobotMap::imu->GetYaw());
+	SmartDashboard::PutNumber("Vision Position", Robot::visionBridge->GetPosition());
+	SmartDashboard::PutNumber("Vision Distance", Robot::visionBridge->GetDistance());
 }
 
 void Robot::AutonomousInit() {
@@ -76,6 +86,14 @@ void Robot::AutonomousInit() {
 
 void Robot::AutonomousPeriodic() {
 	Scheduler::GetInstance()->Run();
+	//armSub->readPos();
+	winchSub->readPos();
+	driveTrain->updateDistanceEncoders();
+	SmartDashboard::PutNumber("feeder sensor", RobotMap::feederSensor->GetAverageVoltage());
+	SmartDashboard::PutBoolean("Shooter Raised", Robot::winchSub->shooterRaised);
+	SmartDashboard::PutNumber("Gyro Yaw", RobotMap::imu->GetYaw());
+	SmartDashboard::PutNumber("Vision Position", Robot::visionBridge->GetPosition());
+	SmartDashboard::PutNumber("Vision Distance", Robot::visionBridge->GetDistance());
 }
 
 void Robot::TeleopInit() {
@@ -90,6 +108,14 @@ void Robot::TeleopInit() {
 
 void Robot::TeleopPeriodic() {
 	Scheduler::GetInstance()->Run();
+	//armSub->readPos();
+	winchSub->readPos();
+	driveTrain->updateDistanceEncoders();
+	SmartDashboard::PutNumber("feeder sensor", RobotMap::feederSensor->GetAverageVoltage());
+	SmartDashboard::PutBoolean("Shooter Raised", Robot::winchSub->shooterRaised);
+	SmartDashboard::PutNumber("Gyro Yaw", RobotMap::imu->GetYaw());
+	SmartDashboard::PutNumber("Vision Position", Robot::visionBridge->GetPosition());
+	SmartDashboard::PutNumber("Vision Distance", Robot::visionBridge->GetDistance());
 }
 
 void Robot::TestPeriodic() {
@@ -108,6 +134,17 @@ void Robot::ScriptInit() {
 		auto z = parameters[2];
 		auto timeout = parameters[3];
 		Command* command = new ScriptDrive("Drive", x, y, z, timeout);
+		//if (0 == timeout) timeout = 4;
+		fCreateCommand(command, 0);
+	}));
+
+	parser.AddCommand(CommandParseInfo("DriveTilVision", { "DV", "dv" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
+		parameters.resize(4);
+		auto y = parameters[0];
+		auto x = parameters[1];
+		auto z = parameters[2];
+		auto timeout = parameters[3];
+		Command* command = new DriveTilVision(y, x, z, timeout);
 		//if (0 == timeout) timeout = 4;
 		fCreateCommand(command, 0);
 	}));

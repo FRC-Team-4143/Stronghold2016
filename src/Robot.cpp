@@ -185,10 +185,11 @@ void Robot::ScriptInit() {
 	}));
 
 	parser.AddCommand(CommandParseInfo("Winch", { "W", "w" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
-		parameters.resize(2);
+		parameters.resize(3);
 		auto pos = parameters[0];
 		auto holdPos = parameters[1];
-		Command* command = new SetWinchPosition(pos, holdPos);
+		auto timeout = parameters[2];
+		Command* command = new SetWinchPosition(pos, holdPos, timeout);
 		fCreateCommand(command, 0);
 	}));
 

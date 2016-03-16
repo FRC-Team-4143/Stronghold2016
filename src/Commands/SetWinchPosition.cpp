@@ -1,12 +1,12 @@
 #include <Commands/SetWinchPosition.h>
 #include "../Robot.h"
 
-SetWinchPosition::SetWinchPosition(int pos, bool holdPos)
+SetWinchPosition::SetWinchPosition(int pos, bool holdPos, double timeout)
 {
 	Requires(Robot::winchSub);
 	SetWinchPosition::pos = pos;
 	SetWinchPosition::holdPos = holdPos;
-	SetTimeout(1.5);
+	SetTimeout(timeout);
 }
 
 // Called just before this Command runs the first time

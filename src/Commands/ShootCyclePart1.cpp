@@ -1,28 +1,14 @@
-#include "ShootCycle.h"
-#include "SetWinchPosition.h"
-#include "Shoot.h"
-#include "Feed.h"
-#include "DeFeed.h"
-#include "DisableWinchControl.h"
-#include "StopShoot.h"
-#include "ScriptCamDrive.h"
-#include "DefeedShoot.h"
-#include "../Robot.h"
 #include "ShootCyclePart1.h"
+#include "SetWinchPosition.h"
+#include "DefeedShoot.h"
+#include "ScriptCamDrive.h"
 
-ShootCycle::ShootCycle()
+ShootCyclePart1::ShootCyclePart1()
 {
 
-	AddSequential(new ShootCyclePart1());
-
-	AddParallel(new Feed(1));
-	AddSequential(new ScriptCamDrive("DriveCam", 0, 0, 0.35, 1));
-
-	AddParallel(new SetWinchPosition(2, false, 0));
-	AddSequential(new StopShoot());
-
-
-
+	AddParallel(new SetWinchPosition(3, true, 0));
+	AddParallel(new DefeedShoot(2));
+	AddSequential(new ScriptCamDrive("DriveCam", 0, 0, 0.35, 0));
 
 	// Add Commands here:
 	// e.g. AddSequential(new Command1());

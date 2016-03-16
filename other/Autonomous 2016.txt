@@ -1,0 +1,35 @@
+S(time) - sleep
+SH - shoot
+D(x, y, z, time) - drive
+DG(x, y, desired angle, time) - drive with gyro
+DC(x, y, maxspeed, time) - drive with camera
+A(position) - arm (0 = stow, 1 = high, 2 = low)
+W(position) - winch (0 = start, 1 = raised, 2 = lowered)
+F(timeout) - feed / ball pickup
+FC(twist, forward, strafe, timeout) - field centric crab drive
+
+
+Low bar turn shoot
+W(2, 0, 1.5) DG(0.5, 0, 0, 2) DG(0.5, 0.05, 0, 1.6) DG(0, 0, 60, 1) DG(0.5, 0, 60, 0.4) DG(0, 0, 60, 0.5) SH S(0.5) DG(0, 0, 180, 1) DG(0.5, 0, 180, 1.2)
+
+Spy Box Shoot
+DG(-0.5, 0.3, 0, 0.5) DG(0, 0, 60, 1) SH
+
+Low bar center shoot
+W(2, 0, 1.5) DG(0.5, 0, 0, 2.5) DG(0, 0.5, 0, 2.5) SH
+
+Position 2 -> center
+DG(0, 0.5, 0, 1.4) SH
+
+reach defense
+DG(0.5, 0, 0, 0.6)
+
+////////////////////////
+/////Cross Defences/////
+////////////////////////
+
+Moat
+W(1, 1) D(0.6, 0, 0, 4.5) WAIT W(0, 0) DG(0, -0.5, 0, 0.5) SH
+
+ramparts + shoot
+W(1, 1, 0) DG(0.5, 0, 0, 0.9) FC(0.6, -0.2, 0.25, 3.5) DG(0, 0, 0, 1.5) W(2, 0, 0) BACK SH

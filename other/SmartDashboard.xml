@@ -1,0 +1,114 @@
+<xml version="1.0">
+<dashboard>
+	<widget field="vision D" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="912" y="311"/>
+		<property name="Background" value="51.255.51.255"/>
+	</widget>
+	<widget field="long shot cutoff" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="476" y="376"/>
+	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.WebcamViewerExtensionCompat">
+		<location x="724" y="1"/>
+	</static-widget>
+	<widget field="Vision Position" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="731" y="294"/>
+		<property name="Background" value="51.255.51.255"/>
+	</widget>
+	<widget field="Vision Distance" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="728" y="273"/>
+		<property name="Background" value="51.255.51.255"/>
+	</widget>
+	<widget field="Unwinding" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="12" y="307"/>
+	</widget>
+	<widget field="Gyro Yaw" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="489" y="278"/>
+	</widget>
+	<widget field="feeder sensor" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="445" y="210"/>
+		<property name="Background" value="255.51.51.255"/>
+	</widget>
+	<widget field="Arm Position" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="7" y="358"/>
+		<height>20</height>
+	</widget>
+	<widget field="Camera On" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="589" y="7"/>
+	</widget>
+	<widget field="Camera Off" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="585" y="37"/>
+	</widget>
+	<widget field="SetWheelOffsets" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="0" y="5"/>
+	</widget>
+	<widget field="Update Positions" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="481" y="340"/>
+	</widget>
+	<widget field="Winch 2" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="347" y="58"/>
+		<property name="Background" value="51.255.204.255"/>
+	</widget>
+	<widget field="Winch 1" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="347" y="34"/>
+		<property name="Background" value="51.255.204.255"/>
+	</widget>
+	<widget field="Winch 0" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="348" y="11"/>
+		<property name="Background" value="51.255.204.255"/>
+	</widget>
+	<widget field="vision tol" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="905" y="334"/>
+		<property name="Background" value="51.255.51.255"/>
+	</widget>
+	<widget field="vision pid value" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="876" y="383"/>
+		<property name="Background" value="51.255.51.255"/>
+	</widget>
+	<widget field="Reset Winch" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="5" y="379"/>
+	</widget>
+	<widget field="vision P" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="913" y="265"/>
+		<property name="Background" value="51.255.51.255"/>
+	</widget>
+	<widget field="vision I" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="913" y="288"/>
+		<property name="Background" value="51.255.51.255"/>
+	</widget>
+	<widget field="Validate Script" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="206" y="411"/>
+	</widget>
+	<widget field="Winch Angle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="329" y="88"/>
+		<property name="Background" value="51.255.204.255"/>
+	</widget>
+	<widget field="Winch Position" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="-5" y="376"/>
+	</widget>
+	<widget field="ScriptValid" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="349" y="419"/>
+		<property name="Background" value="255.255.51.255"/>
+	</widget>
+	<widget field="Zero Yaw" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="483" y="304"/>
+	</widget>
+	<widget field="Shoot Cycle" type="Command" class="edu.wpi.first.smartdashboard.gui.elements.Command">
+		<location x="5" y="421"/>
+	</widget>
+	<widget field="Shooter Raised" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="280" y="210"/>
+		<property name="Background" value="255.51.51.255"/>
+	</widget>
+	<widget field="vision center" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="888" y="359"/>
+		<property name="Background" value="51.255.51.255"/>
+	</widget>
+	<widget field="ScriptCommand" type="String" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="207" y="443"/>
+		<width>819</width>
+		<property name="Background" value="255.255.51.255"/>
+	</widget>
+</dashboard>
+<live-window>
+</live-window>
+</xml>

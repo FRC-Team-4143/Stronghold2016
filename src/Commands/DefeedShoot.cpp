@@ -21,6 +21,9 @@ void DefeedShoot::Execute()
 		Robot::shooter->shootBack();
 		Robot::shooter->stopFeed();
 	}
+	if (Robot::oi->GetLeftTrigger() > 0.1){
+		Robot::shooter->feed();
+	}
 
 }
 

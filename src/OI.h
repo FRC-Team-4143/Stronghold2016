@@ -14,6 +14,7 @@ public:
 	float GetJoystickY();
 	float GetJoystickZ();
 	bool GetButtonStart();
+	bool GetButtonA();
 
 	Command* armUp;
 	Command* armDown;

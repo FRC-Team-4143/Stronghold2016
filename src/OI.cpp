@@ -87,9 +87,9 @@ OI::OI() {
     SmartDashboard::PutData("SetWheelOffsets", new SetWheelOffsets());
     SmartDashboard::PutData("Zero Yaw", new ZeroYaw());
 
-    SmartDashboard::PutNumber("Winch 0", 3.27);
-    SmartDashboard::PutNumber("Winch 1", 3.07);
-    SmartDashboard::PutNumber("Winch 2", 3.37);
+    SmartDashboard::PutNumber("Winch 0", 3.41);
+    SmartDashboard::PutNumber("Winch 1", 3.16);
+    SmartDashboard::PutNumber("Winch 2", 3.46);
 
     SmartDashboard::PutData("Update Positions", new UpdatePositions());
     SmartDashboard::PutData("Validate Script", new ScriptValidate());
@@ -123,5 +123,10 @@ float OI::GetJoystickZ() {
 
 bool OI::GetButtonStart(){
 	auto value = GetDriverJoystick()->GetRawButton(JOYSTICK_BUTTON_START);
+	return (value);
+}
+
+bool OI::GetButtonA(){
+	auto value = GetDriverJoystick()->GetRawButton(JOYSTICK_BUTTON_A);
 	return (value);
 }

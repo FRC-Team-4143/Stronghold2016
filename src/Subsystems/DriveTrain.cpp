@@ -207,9 +207,13 @@ void DriveTrain::Crab(float twist, float y, float x, bool operatorControl) {
 			x = std::min(std::max(lastx, -DEAD_ZONE), DEAD_ZONE);
 			twist = std::min(std::max(lasttwist, -DEAD_ZONE), DEAD_ZONE);
 		} else {
-			y = .05; // default wheel position
+			y = .05;
+			 // default wheel position
 		}
+	} else if(Robot::oi->GetButtonA() && !operatorControl && twist == 0.0){
+		twist = 0.05;
 	}
+
 	lastx = x;
 	lasty = y;
 	lasttwist = twist;

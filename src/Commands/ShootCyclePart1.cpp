@@ -6,7 +6,7 @@
 ShootCyclePart1::ShootCyclePart1()
 {
 
-	AddParallel(new SetWinchPosition(3, true, 0));
+	AddParallel(new SetWinchPosition(3, true, 1));
 	AddParallel(new DefeedShoot(2));
 	AddSequential(new ScriptCamDrive("DriveCam", 0, 0, 0.35, 0));
 

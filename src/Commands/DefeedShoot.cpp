@@ -30,7 +30,7 @@ void DefeedShoot::Execute()
 // Make this return true when this Command no longer needs to run execute()
 bool DefeedShoot::IsFinished()
 {
-	return IsTimedOut() || (!(Robot::shooter->feederSensor->GetAverageVoltage() < 4.0) && std::abs(Robot::shooter->leftFront->GetSpeed()) > 5000);
+	return IsTimedOut() || (!(Robot::shooter->feederSensor->GetAverageVoltage() < 4.0) && std::abs(Robot::shooter->leftFront->GetSpeed()) > 4000);
 }
 
 // Called once after isFinished returns true

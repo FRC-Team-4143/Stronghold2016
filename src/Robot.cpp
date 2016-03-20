@@ -35,8 +35,8 @@ void Robot::RobotInit() {
 	SmartDashboard::PutString("ScriptCommand", "S(0.5)");
 	SmartDashboard::PutString("ScriptValid", "");
 
-	SmartDashboard::PutNumber("vision center", 35.0);
-	SmartDashboard::PutNumber("vision P", 0.1); //0.2
+	SmartDashboard::PutNumber("vision center", 30.0);
+	SmartDashboard::PutNumber("vision P", 0.11); //0.2
 	SmartDashboard::PutNumber("vision I", .01); //0.005 Worked without speed control
 	SmartDashboard::PutNumber("vision D", .022); //0.05
 	SmartDashboard::PutNumber("vision tol", 10);

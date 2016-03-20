@@ -72,7 +72,7 @@ void Shooter::stopBack(){
 }
 
 void Shooter::feed() {
-	feeder->Set(-1);
+	feeder->Set(-0.7);
 }
 
 void Shooter::deFeed(){

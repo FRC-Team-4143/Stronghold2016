@@ -87,9 +87,9 @@ OI::OI() {
     SmartDashboard::PutData("SetWheelOffsets", new SetWheelOffsets());
     SmartDashboard::PutData("Zero Yaw", new ZeroYaw());
 
-    SmartDashboard::PutNumber("Winch 0", 3.41);
-    SmartDashboard::PutNumber("Winch 1", 3.16);
-    SmartDashboard::PutNumber("Winch 2", 3.46);
+    SmartDashboard::PutNumber("Winch 0", 2.95);
+    SmartDashboard::PutNumber("Winch 1", 2.44);
+    SmartDashboard::PutNumber("Winch 2", 3.0);
 
     SmartDashboard::PutData("Update Positions", new UpdatePositions());
     SmartDashboard::PutData("Validate Script", new ScriptValidate());

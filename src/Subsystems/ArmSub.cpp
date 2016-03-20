@@ -12,7 +12,7 @@
     armMotor->SetF(0.0);
     //armMotor->SetSensorDirection(true);
  	armMotor->SetSetpoint(0.0);
- 	armMotor->ConfigPeakOutputVoltage(12.0, -12.0);
+ 	armMotor->ConfigPeakOutputVoltage(10.0, -10.0);
  	armMotor->SetControlMode(CANSpeedController::kPercentVbus);
  	armMotor->Set(0);
 

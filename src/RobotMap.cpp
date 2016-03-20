@@ -181,7 +181,7 @@ void RobotMap::init() {
     winchPot = new AnalogInput(1);
     shooterWinch = new PIDController(2.0, 0.0, 0.0, 0.0, winchPot, winchMotor);
     shooterWinch->SetOutputRange(-0.5, 0.5);
-    shooterWinch->SetAbsoluteTolerance(0.002);
+    shooterWinch->SetAbsoluteTolerance(0.015);
 
 
 }

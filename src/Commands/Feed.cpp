@@ -19,7 +19,7 @@ void Feed::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void Feed::Execute()
 {
-if (std::abs(Robot::shooter->leftFront->GetSpeed()) > 5000)
+if (std::abs(Robot::shooter->leftFront->GetSpeed()) > 4000)
 	Robot::shooter->feed();
 if (Robot::shooter->feederSensor->GetAverageVoltage() > 4.0)
 	seenBall = true;

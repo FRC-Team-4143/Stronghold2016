@@ -74,7 +74,7 @@ void CommandListParser::Parse(std::string commands, std::function<void(bool, Com
 }
 
 std::vector<float> CommandListParser::_ParseParameterList(std::string s) {
-	std::cout << "CommandListParser::_ParseParameterList" << std::endl;
+	if (IsDebug()) std::cout << "CommandListParser::_ParseParameterList" << std::endl;
 
 	std::vector<float> result;
 

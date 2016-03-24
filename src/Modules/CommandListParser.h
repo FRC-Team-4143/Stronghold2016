@@ -1,9 +1,9 @@
 #pragma once
+#include "CommandParseInfo.h"
 #include <functional>
 #include <regex>
 #include <string>
 #include <vector>
-#include "CommandParseInfo.h"
 
 class CommandListParser
 {

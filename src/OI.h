@@ -29,6 +29,7 @@ public:
 	Command* gyroCrab;
 	Command* shootCycle;
 	Command* fieldCentric;
+	Command* lowShot;
 
 	Joystick* GetDriverJoystick() { return driverJoystick; }
 };

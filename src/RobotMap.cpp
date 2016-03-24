@@ -57,6 +57,11 @@ AHRS* RobotMap::imu = nullptr;
 #define driveI 0.0
 #define driveD 0.0
 #define driveF 0.1
+#define pdriveP 1.5
+#define pdriveI 0.01
+#define pdriveIZone 100.0
+#define pdriveD 0.0
+#define pdriveF 0.0
 #define POTMIN 0.0
 #define POTMAX 5.0
 #define STEERPOW  0.6
@@ -92,11 +97,17 @@ void RobotMap::init() {
     driveTrainFrontLeftDrive = new CANTalon(FLD);
 	driveTrainFrontLeftDrive->SetFeedbackDevice(CANTalon::CtreMagEncoder_Relative);
 	driveTrainFrontLeftDrive->ConfigPeakOutputVoltage(12.0, -12.0);
-	driveTrainFrontLeftDrive->SetP(driveP);
+		driveTrainFrontLeftDrive->SetP(driveP);
 		driveTrainFrontLeftDrive->SetI(driveI);
 		driveTrainFrontLeftDrive->SetD(driveD);
 		driveTrainFrontLeftDrive->SetF(driveF);
 		driveTrainFrontLeftDrive->SetSensorDirection(true);
+		driveTrainFrontLeftDrive->SelectProfileSlot(1);
+		driveTrainFrontLeftDrive->SetP(pdriveP);
+		driveTrainFrontLeftDrive->SetI(pdriveI);
+		driveTrainFrontLeftDrive->SetIzone(pdriveIZone);
+		driveTrainFrontLeftDrive->SetD(pdriveD);
+		driveTrainFrontLeftDrive->SetF(pdriveF);
 	driveTrainFrontLeftSteer = new CANTalon(FLS);
 	driveTrainFrontLeftSteer->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
 	driveTrainFrontLeftPos   = new AnalogChannelVolt(FLP, true, RATIO, driveTrainFrontLeftSteer);
@@ -116,6 +127,12 @@ void RobotMap::init() {
 		driveTrainFrontRightDrive->SetD(driveD);
 		driveTrainFrontRightDrive->SetF(driveF);
 		driveTrainFrontRightDrive->SetSensorDirection(true);
+		driveTrainFrontRightDrive->SelectProfileSlot(1);
+		driveTrainFrontRightDrive->SetP(pdriveP);
+		driveTrainFrontRightDrive->SetI(pdriveI);
+		driveTrainFrontRightDrive->SetIzone(pdriveIZone);
+		driveTrainFrontRightDrive->SetD(pdriveD);
+		driveTrainFrontRightDrive->SetF(pdriveF);
 	driveTrainFrontRightSteer = new CANTalon(FRS);
 	driveTrainFrontRightSteer->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
 	driveTrainFrontRightPos   = new AnalogChannelVolt(FRP, true, RATIO, driveTrainFrontRightSteer);
@@ -135,6 +152,12 @@ void RobotMap::init() {
 		driveTrainRearLeftDrive->SetD(driveD);
 		driveTrainRearLeftDrive->SetF(driveF);
 		driveTrainRearLeftDrive->SetSensorDirection(true);
+		driveTrainRearLeftDrive->SelectProfileSlot(1);
+		driveTrainRearLeftDrive->SetP(pdriveP);
+		driveTrainRearLeftDrive->SetI(pdriveI);
+		driveTrainRearLeftDrive->SetIzone(pdriveIZone);
+		driveTrainRearLeftDrive->SetD(pdriveD);
+		driveTrainRearLeftDrive->SetF(pdriveF);
 	driveTrainRearLeftSteer = new CANTalon(RLS);
 	driveTrainRearLeftSteer->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
 	driveTrainRearLeftPos   = new AnalogChannelVolt(RLP, true, RATIO, driveTrainRearLeftSteer);
@@ -154,6 +177,12 @@ void RobotMap::init() {
 		driveTrainRearRightDrive->SetD(driveD);
 		driveTrainRearRightDrive->SetF(driveF);
 		driveTrainRearRightDrive->SetSensorDirection(true);
+		driveTrainRearRightDrive->SelectProfileSlot(1);
+		driveTrainRearRightDrive->SetP(pdriveP);
+		driveTrainRearRightDrive->SetI(pdriveI);
+		driveTrainRearRightDrive->SetIzone(pdriveIZone);
+		driveTrainRearRightDrive->SetD(pdriveD);
+		driveTrainRearRightDrive->SetF(pdriveF);
 	driveTrainRearRightSteer = new CANTalon(RRS);
 	driveTrainRearRightSteer->SetFeedbackDevice(CANTalon::CtreMagEncoder_Absolute);
 	driveTrainRearRightPos   = new AnalogChannelVolt(RRP, true, RATIO, driveTrainRearRightSteer);

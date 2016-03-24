@@ -1,16 +1,18 @@
-#include "ShootCyclePart1.h"
+#include "LowShot.h"
 #include "SetWinchPosition.h"
-#include "DefeedShoot.h"
-#include "ScriptCamDrive.h"
 #include "PositionDrive.h"
+#include "Feed.h"
+#include "StopShoot.h"
 
-ShootCyclePart1::ShootCyclePart1()
+LowShot::LowShot()
 {
+	AddParallel(new PositionDrive(40));
+	AddSequential(new SetWinchPosition(1, true, 2));
 
-	AddParallel(new SetWinchPosition(3, true, 1));
-	AddParallel(new DefeedShoot(2));
-	AddSequential(new PositionDrive());//ScriptCamDrive("DriveCam", 0, 0, 0.35, 0));
+	AddSequential(new Feed(2));
 
+	AddParallel(new SetWinchPosition(2, false, 4));
+	AddSequential(new StopShoot());
 	// Add Commands here:
 	// e.g. AddSequential(new Command1());
 	//      AddSequential(new Command2());

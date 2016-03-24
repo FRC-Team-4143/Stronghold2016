@@ -2,6 +2,7 @@
 #include "../Modules/Logger.h"
 #include "../RobotMap.h"
 #include "../Commands/CrabDrive.h"
+#include "../Commands/PositionDrive.h"
 #include "../Robot.h"
 #include "../Modules/Constants.h"
 #include "Subsystems/EncoderConstants.h"
@@ -151,6 +152,14 @@ bool DriveTrain::unwind(){//float y, float x){
 
 void DriveTrain::doneunwind(){
 	unwinding = 0;
+}
+
+void DriveTrain::PositionModeTwist(float desiredangle){
+	frontLeft->SetSetpoint(CorrectSteerSetpoint(FLOffset + 0.625));
+	frontRight->SetSetpoint(CorrectSteerSetpoint(FROffset - 0.625));
+	rearLeft->SetSetpoint(CorrectSteerSetpoint(RLOffset - 0.625));
+	rearRight->SetSetpoint(CorrectSteerSetpoint(RROffset + 0.625));
+
 }
 
 // keeps controls consistent regardless of rotation of robot
@@ -642,14 +651,39 @@ void DriveTrain::disableSpeedControl(){
 	rearLeftDrive->SetControlMode(CANSpeedController::kPercentVbus);
 	rearRightDrive->SetControlMode(CANSpeedController::kPercentVbus);
 	RobotMap::SpeedControl = 0;
+
 }
 
 void DriveTrain::enableSpeedControl(){
+	frontLeftDrive->SelectProfileSlot(0);
+	frontRightDrive->SelectProfileSlot(0);
+	rearLeftDrive->SelectProfileSlot(0);
+	rearRightDrive->SelectProfileSlot(0);
+	frontLeftDrive->ConfigPeakOutputVoltage(12.0, -12.0);
+	frontRightDrive->ConfigPeakOutputVoltage(12.0, -12.0);
+	rearLeftDrive->ConfigPeakOutputVoltage(12.0, -12.0);
+	rearRightDrive->ConfigPeakOutputVoltage(12.0, -12.0);
 	frontLeftDrive->SetControlMode(CANSpeedController::kSpeed);
 	frontRightDrive->SetControlMode(CANSpeedController::kSpeed);
 	rearLeftDrive->SetControlMode(CANSpeedController::kSpeed);
 	rearRightDrive->SetControlMode(CANSpeedController::kSpeed);
 	RobotMap::SpeedControl = 1;
+}
+
+void DriveTrain::enablePositionControl(){
+	frontLeftDrive->SelectProfileSlot(1);
+	frontRightDrive->SelectProfileSlot(1);
+	rearLeftDrive->SelectProfileSlot(1);
+	rearRightDrive->SelectProfileSlot(1);
+	frontLeftDrive->ConfigPeakOutputVoltage(4.0, -4.0);
+	frontRightDrive->ConfigPeakOutputVoltage(4.0, -4.0);
+	rearLeftDrive->ConfigPeakOutputVoltage(4.0, -4.0);
+	rearRightDrive->ConfigPeakOutputVoltage(4.0, -4.0);
+	frontLeftDrive->SetControlMode(CANSpeedController::kPosition);
+	frontRightDrive->SetControlMode(CANSpeedController::kPosition);
+	rearLeftDrive->SetControlMode(CANSpeedController::kPosition);
+	rearRightDrive->SetControlMode(CANSpeedController::kPosition);
+	RobotMap::SpeedControl = 2;
 }
 
 void DriveTrain::enableSteeringPID(){

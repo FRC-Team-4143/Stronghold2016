@@ -158,6 +158,7 @@ public:
 	//bool unwindwheel(AnalogChannelVolt*, PIDController*, double offset, bool output); //unwinds one wheel to fix wires (returns false if not done unwinding)
 	void GyroCrab(float desiredangle, float y, float x, bool operatorControl); //drive using gyro values
 	void FieldCentricCrab(float twist, float y, float x, bool operatorControl); //drive at 90 degree angle to field
+	void PositionModeTwist(float desiredangle);
 	void updateDistanceEncoders(); //updates the values of drive train variables with distance encoder values
 	double getDistanceEncodersValues(); // returns average value from driving encoders
 	void zeroDistanceEncoders(); //Reset driving encoders to 0
@@ -171,6 +172,7 @@ public:
 	void ArcadeDriveMode(float y, float x);
 	void disableSpeedControl();
 	void enableSpeedControl();
+	void enablePositionControl();
 
 	void enableSteeringPID();
 };

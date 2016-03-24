@@ -9,14 +9,16 @@
 #include "DefeedShoot.h"
 #include "../Robot.h"
 #include "ShootCyclePart1.h"
+#include "PositionDrive.h"
+#include "SetWheelsTwist.h"
 
 ShootCycle::ShootCycle()
 {
 
 	AddSequential(new ShootCyclePart1());
 
-	AddParallel(new Feed(1));
-	AddSequential(new ScriptCamDrive("DriveCam", 0, 0, 0.35, 1));
+	AddParallel(new Feed(2));
+	AddSequential(new SetWheelsTwist(2));//ScriptCamDrive("DriveCam", 0, 0, 0.35, 1));
 
 	AddParallel(new SetWinchPosition(2, false, 0));
 	AddSequential(new StopShoot());

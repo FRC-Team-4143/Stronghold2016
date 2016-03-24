@@ -25,6 +25,8 @@
 #include "Commands/GyroCrab.h"
 #include "Commands/ShootCycle.h"
 #include "Commands/FieldCentric.h"
+#include "Commands/PositionDrive.h"
+#include "Commands/LowShot.h"
 
 const uint32_t JOYSTICK_LX_AXIS    = 0;
 const uint32_t JOYSTICK_LY_AXIS    = 1;
@@ -58,6 +60,7 @@ OI::OI() {
 	gyroCrab = new GyroCrab();
 	fieldCentric = new FieldCentric();
 	shootCycle = new ShootCycle();
+	lowShot = new LowShot();
 	//arcade = new ArcadeDriveMode();
 	//climb = new Climb();
 
@@ -65,8 +68,9 @@ OI::OI() {
 	auto cameraDisableCmd = new BasicCameraDisableCmd(Robot::basicCameraSub);
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhileHeld(armUp);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhileHeld(armDown);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_B))->WhenPressed(stowArm);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhileHeld(stowArm);
+
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_B))->WhileHeld(lowShot);
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(winchSet2);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhenPressed(winchSet3);
@@ -87,9 +91,9 @@ OI::OI() {
     SmartDashboard::PutData("SetWheelOffsets", new SetWheelOffsets());
     SmartDashboard::PutData("Zero Yaw", new ZeroYaw());
 
-    SmartDashboard::PutNumber("Winch 0", 2.95);
-    SmartDashboard::PutNumber("Winch 1", 2.44);
-    SmartDashboard::PutNumber("Winch 2", 3.0);
+    SmartDashboard::PutNumber("Winch 0", 3.41);
+    SmartDashboard::PutNumber("Winch 1", 3.0);
+    SmartDashboard::PutNumber("Winch 2", 3.46);
 
     SmartDashboard::PutData("Update Positions", new UpdatePositions());
     SmartDashboard::PutData("Validate Script", new ScriptValidate());

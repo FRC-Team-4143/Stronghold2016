@@ -34,12 +34,13 @@ void Robot::RobotInit() {
 	ScriptInit();
 	SmartDashboard::PutString("ScriptCommand", "S(0.5)");
 	SmartDashboard::PutString("ScriptValid", "");
+	SmartDashboard::PutNumber("Twist Angle", 0);
 
-	SmartDashboard::PutNumber("vision center", 30.0);
+	SmartDashboard::PutNumber("vision center", 35.0);
 	SmartDashboard::PutNumber("vision P", 0.11); //0.2
 	SmartDashboard::PutNumber("vision I", .01); //0.005 Worked without speed control
 	SmartDashboard::PutNumber("vision D", .022); //0.05
-	SmartDashboard::PutNumber("vision tol", 10);
+	SmartDashboard::PutNumber("vision tol", 5);
 	SmartDashboard::PutNumber("long shot cutoff", 50);
 
 	gyroSub = new GyroSub();
@@ -76,12 +77,14 @@ void Robot::DisabledPeriodic() {
 }
 
 void Robot::AutonomousInit() {
+	//printf("Match time start: %f", (DriverStation::GetInstance())->GetMatchTime());
 	driveTrain->enableSteeringPID();
 
 	RobotMap::imu->ZeroYaw();
 	autonomousCommand = new ScriptCommand("ScriptCommand");
 	if (autonomousCommand != nullptr)
 		autonomousCommand->Start();
+	//printf("Match time end of init: %f", (DriverStation::GetInstance())->GetMatchTime());
 }
 
 void Robot::AutonomousPeriodic() {

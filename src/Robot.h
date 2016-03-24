@@ -26,6 +26,7 @@ public:
 	static std::shared_ptr<BasicCameraSub> basicCameraSub;
 	static WinchSub* winchSub;
 	static VisionBridgeSub* visionBridge;
+	//DriverStation ds = DriverStation::GetInstance();
 	LiveWindow *lw = LiveWindow::GetInstance();
 
 	virtual void RobotInit();

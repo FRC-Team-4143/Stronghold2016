@@ -12,6 +12,7 @@ SetWinchPosition::SetWinchPosition(int pos, bool holdPos, double timeout)
 // Called just before this Command runs the first time
 void SetWinchPosition::Initialize()
 {
+	//printf("winch command time start: %f", DriverStation::GetInstance()->GetMatchTime());
 	if (Robot::winchSub->angleSensor){
 		if (pos == 0) Robot::winchSub->setPos(SmartDashboard::GetNumber("Winch 0", 3.2));
 		if (pos == 1) Robot::winchSub->setPos(SmartDashboard::GetNumber("Winch 1", 3.0));
@@ -47,6 +48,7 @@ void SetWinchPosition::End()
 {
 	if (!holdPos)
 		Robot::winchSub->disablePositionControl();
+	//printf("winch command time end: %f", DriverStation::GetInstance()->GetMatchTime());
 }
 
 // Called when another command which requires one or more of the same

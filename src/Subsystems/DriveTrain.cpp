@@ -697,10 +697,11 @@ void DriveTrain::enableSteeringPID(){
 	if (RROffset > 2.5) rearRight->SetSetpoint(RROffset - 2.5);
 	else rearRight->SetSetpoint(RROffset + 2.5);
 	 */
-	frontLeft->SetSetpoint(frontLeftPos->GetAverageVoltage());
-	frontRight->SetSetpoint(frontRightPos->GetAverageVoltage());
-	rearLeft->SetSetpoint(rearLeftPos->GetAverageVoltage());
-	rearRight->SetSetpoint(rearRightPos->GetAverageVoltage());
+
+	//frontLeft->SetSetpoint(frontLeftPos->GetAverageVoltage());
+	//frontRight->SetSetpoint(frontRightPos->GetAverageVoltage());
+	//rearLeft->SetSetpoint(rearLeftPos->GetAverageVoltage());
+	//rearRight->SetSetpoint(rearRightPos->GetAverageVoltage());
 
 	frontLeft->Enable();
 	frontRight->Enable();

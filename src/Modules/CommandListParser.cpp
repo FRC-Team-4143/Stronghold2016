@@ -40,27 +40,27 @@ void CommandListParser::Parse(std::string commands, std::function<void(bool, Com
 
 	auto rx = _GetCommandListRx();
 	std::smatch m;
-	std::cout << "[DEBUG] Command list: " << commands << std::endl;
+	//std::cout << "[DEBUG] Command list: " << commands << std::endl;
 	while (std::regex_match(commands.cbegin(), commands.cend(), m, rx)) {
 		bool isParallel = m.str(1).length() > 0 && m.str(1)[0] == 'P';
 		auto alias = m.str(2);
 		auto parameters = m.str(3);
 		auto remainder = m.str(4);
 
-		std::cout << "[DEBUG] Parallel: " << isParallel << std::endl;
-		std::cout << "[DEBUG] Alias: " << alias << std::endl;
-		std::cout << "[DEBUG] Parameters: " << parameters << std::endl;
+		//std::cout << "[DEBUG] Parallel: " << isParallel << std::endl;
+		//std::cout << "[DEBUG] Alias: " << alias << std::endl;
+		//std::cout << "[DEBUG] Parameters: " << parameters << std::endl;
 
 		auto values = _ParseParameterList(parameters);
-		std::cout << "[DEBUG] Parsed parameters" << std::endl;
+		//std::cout << "[DEBUG] Parsed parameters" << std::endl;
 
 		auto cpi = _GetCommandParseInfo(alias);
-		std::cout << "[DEBUG] Parsed " << cpi.GetName() << std::endl;
+		//std::cout << "[DEBUG] Parsed " << cpi.GetName() << std::endl;
 		cpi.CreateCommand(values, [fAddCommand, isParallel](Command* c, float t) { fAddCommand(isParallel, c, t); });
 		commands = remainder;
-		std::cout << "[DEBUG] Command list: " << commands << std::endl;
+		//std::cout << "[DEBUG] Command list: " << commands << std::endl;
 	}
-	std::cout << "[DEBUG] Done parsing commands" << std::endl;
+	//std::cout << "[DEBUG] Done parsing commands" << std::endl;
 }
 
 std::vector<float> CommandListParser::_ParseParameterList(std::string s) {
@@ -107,7 +107,7 @@ std::regex CommandListParser::_GetCommandListRx() {
 		s += ")"; // close capture group
 		s += R"(\s*)"; // optional whitespace
 		s += "$";
-		std::cout << "[DEBUG] Command List RegEx = " << s << std::endl;
+		//std::cout << "[DEBUG] Command List RegEx = " << s << std::endl;
 		_rxCommandList.assign(s);
 		_dirty = false;
 	}
@@ -156,7 +156,7 @@ std::regex CommandListParser::_GetParameterListRx() {
 		s += ")*"; // close group, zero or more instances
 		s += ")"; // close capture group
 		s += ")?"; // close group, zero or one instance
-		std::cout << "[DEBUG] Parameter List RegEx = " << s << std::endl;
+		//std::cout << "[DEBUG] Parameter List RegEx = " << s << std::endl;
 		_rxParameterList.assign(s);
 		_haveParameterListRx = true;
 	}

@@ -27,7 +27,6 @@ WinchSub* Robot::winchSub = nullptr;
 VisionBridgeSub* Robot::visionBridge = nullptr;
 
 void Robot::RobotInit() {
-
 	Preferences::GetInstance();
 	RobotMap::init();
 
@@ -41,7 +40,7 @@ void Robot::RobotInit() {
 	SmartDashboard::PutNumber("vision I", .01); //0.005 Worked without speed control
 	SmartDashboard::PutNumber("vision D", .022); //0.05
 	SmartDashboard::PutNumber("vision tol", 5);
-	SmartDashboard::PutNumber("long shot cutoff", 50);
+	SmartDashboard::PutNumber("long shot cutoff", 100);
 
 	gyroSub = new GyroSub();
 	driveTrain = new DriveTrain();
@@ -51,7 +50,6 @@ void Robot::RobotInit() {
     winchSub = new WinchSub();
 	oi = new OI();
 	visionBridge = new VisionBridgeSub();
-
 	driveTrain->SetWheelbase(24, 21.5, 24);
 	driveTrain->loadWheelOffsets();
 
@@ -77,14 +75,17 @@ void Robot::DisabledPeriodic() {
 }
 
 void Robot::AutonomousInit() {
-	//printf("Match time start: %f", (DriverStation::GetInstance())->GetMatchTime());
+	printf("Match time start: %f", (DriverStation::GetInstance().GetMatchTime()));
 	driveTrain->enableSteeringPID();
 
 	RobotMap::imu->ZeroYaw();
+	printf("Before new ScriptCommand: %f", (DriverStation::GetInstance().GetMatchTime()));
 	autonomousCommand = new ScriptCommand("ScriptCommand");
+	printf("After new ScriptCommand: %f", (DriverStation::GetInstance().GetMatchTime()));
 	if (autonomousCommand != nullptr)
 		autonomousCommand->Start();
-	//printf("Match time end of init: %f", (DriverStation::GetInstance())->GetMatchTime());
+	printf("Match time end of init: %f", (DriverStation::GetInstance().GetMatchTime()));
+
 }
 
 void Robot::AutonomousPeriodic() {

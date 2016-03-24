@@ -23,8 +23,8 @@ public:
 
 protected:
 	std::vector<float> _ParseParameterList(std::string s);
-	std::regex _GetCommandListRx();
-	std::regex _GetParameterListRx();
+	std::regex& _GetCommandListRx();
+	std::regex& _GetParameterListRx();
 	std::string _GetCommandName(const std::string& alias) const;
 	CommandParseInfo _GetCommandParseInfo(const std::string& alias) const;
 	std::string _BuildModeRx(bool capturing) const;

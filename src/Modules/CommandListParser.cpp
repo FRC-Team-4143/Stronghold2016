@@ -35,6 +35,9 @@ bool CommandListParser::AddCommand(const CommandParseInfo& cpi) {
 }
 
 bool CommandListParser::IsValid(std::string s) {
+	// Initialize the parameter list RegEx. Not needed for this method
+	// but caches it for better performance in the Parse method.
+	_GetParameterListRx();
 	return std::regex_match(s, _GetCommandListRx());
 }
 
@@ -92,7 +95,7 @@ std::vector<float> CommandListParser::_ParseParameterList(std::string s) {
 	return result;
 }
 
-std::regex CommandListParser::_GetCommandListRx() {
+std::regex& CommandListParser::_GetCommandListRx() {
 	if (_dirty) {
 		std::string s;
 		s += "^";
@@ -121,7 +124,7 @@ std::regex CommandListParser::_GetCommandListRx() {
 	return _rxCommandList;
 }
 
-std::regex CommandListParser::_GetParameterListRx() {
+std::regex& CommandListParser::_GetParameterListRx() {
 	//if (_rxParameterList.mark_count() == 0) {
 	if (!_haveParameterListRx) {
 		std::string s;

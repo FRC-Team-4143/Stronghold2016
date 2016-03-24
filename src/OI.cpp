@@ -67,7 +67,7 @@ OI::OI() {
 	auto cameraEnableCmd = new BasicCameraEnableCmd(Robot::basicCameraSub);
 	auto cameraDisableCmd = new BasicCameraDisableCmd(Robot::basicCameraSub);
 
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhileHeld(armUp);
+	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhileHeld(armDown);
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhileHeld(stowArm);
 
 	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_B))->WhileHeld(lowShot);
@@ -91,9 +91,9 @@ OI::OI() {
     SmartDashboard::PutData("SetWheelOffsets", new SetWheelOffsets());
     SmartDashboard::PutData("Zero Yaw", new ZeroYaw());
 
-    SmartDashboard::PutNumber("Winch 0", 3.41);
-    SmartDashboard::PutNumber("Winch 1", 3.0);
-    SmartDashboard::PutNumber("Winch 2", 3.46);
+    SmartDashboard::PutNumber("Winch 0", 3.4);
+    SmartDashboard::PutNumber("Winch 1", 2.9);
+    SmartDashboard::PutNumber("Winch 2", 3.4);
 
     SmartDashboard::PutData("Update Positions", new UpdatePositions());
     SmartDashboard::PutData("Validate Script", new ScriptValidate());

@@ -3,13 +3,17 @@
 #include "PositionDrive.h"
 #include "Feed.h"
 #include "StopShoot.h"
+#include "LowGoalShoot.h"
+#include "SetWheelsTwist.h"
 
 LowShot::LowShot()
 {
 	AddParallel(new PositionDrive(40));
 	AddSequential(new SetWinchPosition(1, true, 2));
 
-	AddSequential(new Feed(2));
+	AddParallel(new LowGoalShoot(2));
+	AddParallel(new Feed(2));
+	AddSequential(new SetWheelsTwist(2));
 
 	AddParallel(new SetWinchPosition(2, false, 4));
 	AddSequential(new StopShoot());

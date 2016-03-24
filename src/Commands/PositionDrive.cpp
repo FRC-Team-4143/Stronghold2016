@@ -48,7 +48,10 @@ void PositionDrive::Execute()
 	auto frPos = RobotMap::driveTrainFrontRightDrive->GetPosition();
 	auto rlPos = RobotMap::driveTrainRearLeftDrive->GetPosition();
 	auto rrPos = RobotMap::driveTrainRearRightDrive->GetPosition();
-	if (std::fabs(flPos - RobotMap::driveTrainFrontLeftDrive->GetSetpoint()) < 0.002) waitingCounter++;
+	if (std::fabs(flPos - RobotMap::driveTrainFrontLeftDrive->GetSetpoint()) < 0.002 ||
+		std::fabs(frPos - RobotMap::driveTrainFrontRightDrive->GetSetpoint()) < 0.002 ||
+		std::fabs(rlPos - RobotMap::driveTrainRearLeftDrive->GetSetpoint()) < 0.002 ||
+		std::fabs(rrPos - RobotMap::driveTrainRearRightDrive->GetSetpoint()) < 0.002) waitingCounter++;
 	else waitingCounter = 0;
 	if (waitingCounter > 5){
 		waiting = 0;

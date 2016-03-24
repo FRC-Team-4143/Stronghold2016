@@ -117,6 +117,7 @@ std::regex& CommandListParser::_GetCommandListRx() {
 		s += ")"; // close capture group
 		s += R"(\s*)"; // optional whitespace
 		s += "$";
+
 		if (IsDebug()) std::cout << "[DEBUG] Command List RegEx = " << s << std::endl;
 		_rxCommandList.assign(s);
 		_dirty = false;

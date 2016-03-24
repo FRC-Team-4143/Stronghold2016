@@ -13,6 +13,9 @@ public:
         return instance;
 	}
 
+	static void EnableDebug(bool debug);
+	static bool IsDebug();
+
 	bool AddCommand(const CommandParseInfo& cpi);
 
 	bool IsValid(std::string s);
@@ -32,6 +35,8 @@ protected:
 
 private:
 	CommandListParser();
+
+	static bool _debug;
 
 	std::vector<CommandParseInfo> _commands;
 	std::regex _rxCommandList;

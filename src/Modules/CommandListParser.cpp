@@ -2,14 +2,19 @@
 #include "StringUtils.h"
 #include <iostream>
 
-std::vector<CommandParseInfo> _commands;
-std::regex _rxCommandList;
-std::regex _rxValidName;
-bool _dirty;
+bool CommandListParser::_debug = false;
 
 CommandListParser::CommandListParser()
 	: _commands(), _rxCommandList(), _rxParameterList(), _rxValidName("[A-Za-z][0-9A-Za-z]*"), _dirty(true), _haveParameterListRx(false)
 {
+}
+
+void CommandListParser::EnableDebug(bool debug) {
+	_debug = debug;
+}
+
+bool CommandListParser::IsDebug() {
+	return _debug;
 }
 
 bool CommandListParser::AddCommand(const CommandParseInfo& cpi) {
@@ -40,27 +45,29 @@ void CommandListParser::Parse(std::string commands, std::function<void(bool, Com
 
 	auto rx = _GetCommandListRx();
 	std::smatch m;
-	//std::cout << "[DEBUG] Command list: " << commands << std::endl;
+
+	if (IsDebug()) std::cout << "[DEBUG] Command list: " << commands << std::endl;
+
 	while (std::regex_match(commands.cbegin(), commands.cend(), m, rx)) {
 		bool isParallel = m.str(1).length() > 0 && m.str(1)[0] == 'P';
 		auto alias = m.str(2);
 		auto parameters = m.str(3);
 		auto remainder = m.str(4);
 
-		//std::cout << "[DEBUG] Parallel: " << isParallel << std::endl;
-		//std::cout << "[DEBUG] Alias: " << alias << std::endl;
-		//std::cout << "[DEBUG] Parameters: " << parameters << std::endl;
+		if (IsDebug()) std::cout << "[DEBUG] Parallel: " << isParallel << std::endl;
+		if (IsDebug()) std::cout << "[DEBUG] Alias: " << alias << std::endl;
+		if (IsDebug()) std::cout << "[DEBUG] Parameters: " << parameters << std::endl;
 
 		auto values = _ParseParameterList(parameters);
-		//std::cout << "[DEBUG] Parsed parameters" << std::endl;
+		if (IsDebug()) std::cout << "[DEBUG] Parsed parameters" << std::endl;
 
 		auto cpi = _GetCommandParseInfo(alias);
-		//std::cout << "[DEBUG] Parsed " << cpi.GetName() << std::endl;
+		if (IsDebug()) std::cout << "[DEBUG] Parsed " << cpi.GetName() << std::endl;
 		cpi.CreateCommand(values, [fAddCommand, isParallel](Command* c, float t) { fAddCommand(isParallel, c, t); });
 		commands = remainder;
-		//std::cout << "[DEBUG] Command list: " << commands << std::endl;
+		if (IsDebug()) std::cout << "[DEBUG] Command list: " << commands << std::endl;
 	}
-	//std::cout << "[DEBUG] Done parsing commands" << std::endl;
+	if (IsDebug()) std::cout << "[DEBUG] Done parsing commands" << std::endl;
 }
 
 std::vector<float> CommandListParser::_ParseParameterList(std::string s) {
@@ -70,18 +77,18 @@ std::vector<float> CommandListParser::_ParseParameterList(std::string s) {
 
 	auto rx = _GetParameterListRx();
 	std::smatch m;
-	//std::cout << "[DEBUG] Parameter list: " << s << std::endl;
+	if (IsDebug()) std::cout << "[DEBUG] Parameter list: " << s << std::endl;
 	while (std::regex_match(s.cbegin(), s.cend(), m, rx)) {
 		auto parameter = m.str(1);
 		auto remainder = m.str(2);
 
-		//std::cout << "[DEBUG] Parameter: " << parameter << std::endl;
+		if (IsDebug()) std::cout << "[DEBUG] Parameter: " << parameter << std::endl;
 
 		result.push_back(std::stof(parameter));
 		s = remainder;
-		//std::cout << "[DEBUG] Parameter list: " << s << std::endl;
+		if (IsDebug()) std::cout << "[DEBUG] Parameter list: " << s << std::endl;
 	}
-	//std::cout << "[DEBUG] Done parsing parameters" << std::endl;
+	if (IsDebug()) std::cout << "[DEBUG] Done parsing parameters" << std::endl;
 	return result;
 }
 
@@ -107,7 +114,8 @@ std::regex CommandListParser::_GetCommandListRx() {
 		s += ")"; // close capture group
 		s += R"(\s*)"; // optional whitespace
 		s += "$";
-		//std::cout << "[DEBUG] Command List RegEx = " << s << std::endl;
+
+		if (IsDebug()) std::cout << "[DEBUG] Command List RegEx = " << s << std::endl;
 		_rxCommandList.assign(s);
 		_dirty = false;
 	}
@@ -156,11 +164,11 @@ std::regex CommandListParser::_GetParameterListRx() {
 		s += ")*"; // close group, zero or more instances
 		s += ")"; // close capture group
 		s += ")?"; // close group, zero or one instance
-		//std::cout << "[DEBUG] Parameter List RegEx = " << s << std::endl;
+		if (IsDebug()) std::cout << "[DEBUG] Parameter List RegEx = " << s << std::endl;
 		_rxParameterList.assign(s);
 		_haveParameterListRx = true;
 	}
-	std::cout << "[DEBUG] Got Parameter List RegEx" << std::endl;
+	if (IsDebug()) std::cout << "[DEBUG] Got Parameter List RegEx" << std::endl;
 	return _rxParameterList;
 }
 

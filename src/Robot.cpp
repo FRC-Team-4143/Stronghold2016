@@ -35,7 +35,7 @@ void Robot::RobotInit() {
 	SmartDashboard::PutString("ScriptValid", "");
 	SmartDashboard::PutNumber("Twist Angle", 0);
 
-	SmartDashboard::PutNumber("vision center", 35.0);
+	SmartDashboard::PutNumber("vision center", 40.0);
 	SmartDashboard::PutNumber("vision P", 0.11); //0.2
 	SmartDashboard::PutNumber("vision I", .01); //0.005 Worked without speed control
 	SmartDashboard::PutNumber("vision D", .022); //0.05

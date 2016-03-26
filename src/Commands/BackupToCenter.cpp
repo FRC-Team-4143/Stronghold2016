@@ -15,7 +15,7 @@ void BackupToCenter::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void BackupToCenter::Execute()
 {
-	auto speed = Robot::visionBridge->GetDistance() * 0.01;
+	auto speed = (Robot::visionBridge->GetDistance()-50) * 0.01;
 	speed = std::min(std::max(speed, -0.5), 0.5);
 	Robot::driveTrain->FieldCentricCrab(0, speed, 0, false);
 }
@@ -23,7 +23,7 @@ void BackupToCenter::Execute()
 // Make this return true when this Command no longer needs to run execute()
 bool BackupToCenter::IsFinished()
 {
-	return (std::abs(Robot::visionBridge->GetDistance()) < 20);
+	return (Robot::visionBridge->GetDistance() < 60 && Robot::visionBridge->GetDistance() > 40);
 }
 
 // Called once after isFinished returns true

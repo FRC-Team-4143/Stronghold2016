@@ -54,7 +54,7 @@ OI::OI() {
 	stowArm = new StowArm();
 	unwindWheels = new UnwindWheels();
 	winchSet1 = new SetWinchPosition(0, false, 1.5); //starting
-	winchSet2 = new SetWinchPosition(1, false, 1.5); //raised
+	winchSet2 = new SetWinchPosition(1, false, 2.5); //raised
 	winchSet3 = new SetWinchPosition(2, false, 1.5); //lowered
 	deFeed = new DeFeed(1);
 	gyroCrab = new GyroCrab();
@@ -91,9 +91,9 @@ OI::OI() {
     SmartDashboard::PutData("SetWheelOffsets", new SetWheelOffsets());
     SmartDashboard::PutData("Zero Yaw", new ZeroYaw());
 
-    SmartDashboard::PutNumber("Winch 0", 3.4);
-    SmartDashboard::PutNumber("Winch 1", 2.9);
-    SmartDashboard::PutNumber("Winch 2", 3.4);
+    SmartDashboard::PutNumber("Winch 0", 3.0);
+    SmartDashboard::PutNumber("Winch 1", 2.5);
+    SmartDashboard::PutNumber("Winch 2", 3.0);
 
     SmartDashboard::PutData("Update Positions", new UpdatePositions());
     SmartDashboard::PutData("Validate Script", new ScriptValidate());

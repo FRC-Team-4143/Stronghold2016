@@ -8,5 +8,5 @@ VisionSource::~VisionSource() {
 }
 
 double VisionSource::PIDGet() {
-	return Robot::visionBridge->GetPosition();
+	return Robot::visionBridge->GetPosition(0);
 }

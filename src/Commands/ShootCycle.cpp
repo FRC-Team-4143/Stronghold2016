@@ -12,10 +12,10 @@
 #include "PositionDrive.h"
 #include "SetWheelsTwist.h"
 
-ShootCycle::ShootCycle()
+ShootCycle::ShootCycle(int side)
 {
 
-	AddSequential(new ShootCyclePart1());
+	AddSequential(new ShootCyclePart1(side));
 
 	AddParallel(new Feed(2));
 	AddSequential(new SetWheelsTwist(2));//ScriptCamDrive("DriveCam", 0, 0, 0.35, 1));

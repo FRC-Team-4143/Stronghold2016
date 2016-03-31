@@ -26,7 +26,8 @@ VisionBridgeSub::VisionBridgeSub(uint16_t listeningPort)
 	_debug(false),
 	_listeningThread(&VisionBridgeSub::Listen, this)
 {
-	zeroCounter = 0;
+	zeroCounterRight = 0;
+	zeroCounterLeft = 0;
 	_position = 0;
 	autoAim = 0;
 }
@@ -39,12 +40,21 @@ void VisionBridgeSub::EnableDebug(bool debug) {
 	_debug = debug;
 }
 
-double VisionBridgeSub::GetPosition() {
+double VisionBridgeSub::GetPosition(int side) { //0 is left 1 is right
 	std::unique_lock<std::recursive_mutex> lock(_mutex);
-	if(_position != 0){
-		autoAim = 0;
-		return _position;
+	if (side == 0){
+		if(_positionLeft != 0){
+			autoAim = 0;
+			return _positionLeft;
+		}
 	}
+	if (side == 1){
+		if(_positionRight != 0){
+			autoAim = 0;
+			return _positionRight;
+		}
+	}
+
 	auto gyroYaw = RobotMap::imu->GetYaw();
 	if(gyroYaw > 90){
 		autoAim = -150;
@@ -113,25 +123,41 @@ void VisionBridgeSub::ParsePacket(char packet[]) {
 	if (_debug) DebugOutput(packet);
 	try {
 		pch = std::strtok(packet, " ");
-		auto position = std::stod(pch);
-		SetPosition(position);
+		auto positionLeft = std::stod(pch);
+		SetPositionLeft(positionLeft);
 		pch = std::strtok(nullptr, " ");
 		auto distance = std::stod(pch);
 		SetDistance(distance);
+		pch = std::strtok(nullptr, " ");
+		auto positionRight = std::stod(pch);
+		SetPositionRight(positionRight);
 	}
 	catch (...) {
 	}
 }
 
-void VisionBridgeSub::SetPosition(double position) {
+void VisionBridgeSub::SetPositionLeft(double position) {
 	std::unique_lock<std::recursive_mutex> lock(_mutex);
 	if (position != 0.0){
-		_position = position;
-		zeroCounter = 0;
+		_positionLeft = position;
+		zeroCounterLeft = 0;
 	} else {
-		zeroCounter++;
-		if (zeroCounter > 10){
-			_position = position;
+		zeroCounterLeft++;
+		if (zeroCounterLeft > 10){
+			_positionLeft = position;
+		}
+	}
+
+	//std::cout << GetName() << position << std::endl;
+}
+
+void VisionBridgeSub::SetPositionRight(double position) {
+	std::unique_lock<std::recursive_mutex> lock(_mutex);
+	if (position != 0.0){
+		_positionRight = position;
+		zeroCounterRight++;
+		if (zeroCounterRight > 10){
+			_positionRight = position;
 		}
 	}
 

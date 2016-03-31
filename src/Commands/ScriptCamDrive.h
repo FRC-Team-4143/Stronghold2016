@@ -9,7 +9,7 @@
 class ScriptCamDrive: public Command
 {
 public:
-	ScriptCamDrive(const char* name, double x, double y, double maxspeed, double seconds);
+	ScriptCamDrive(const char* name, double x, double y, double maxspeed, double seconds, int side);
 	void Initialize();
 	void Execute();
 	bool IsFinished();
@@ -20,6 +20,7 @@ public:
 	PIDController* pid;
 
 private:
+	int _side;
 	double _x;
 	double _y;
 	double _maxspeed;

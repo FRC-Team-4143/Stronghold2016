@@ -59,7 +59,7 @@ OI::OI() {
 	deFeed = new DeFeed(1);
 	gyroCrab = new GyroCrab();
 	fieldCentric = new FieldCentric();
-	shootCycle = new ShootCycle();
+	shootCycle = new ShootCycle(0);
 	lowShot = new LowShot();
 	//arcade = new ArcadeDriveMode();
 	//climb = new Climb();

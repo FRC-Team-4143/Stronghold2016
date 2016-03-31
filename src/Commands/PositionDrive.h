@@ -10,7 +10,7 @@ class PositionDrive: public Command
 {
 public:
 	double pixels;
-	PositionDrive(int offset = 0);//const char* name, double x, double y, double maxspeed, double seconds);
+	PositionDrive(int offset = 0, int side = 0);//const char* name, double x, double y, double maxspeed, double seconds);
 	void Initialize();
 	void Execute();
 	bool IsFinished();
@@ -18,6 +18,7 @@ public:
 	void Interrupted();
 
 private:
+	int _side;
 	int _offset;
 	int waiting;
 	int waitingCounter;

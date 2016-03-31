@@ -70,7 +70,8 @@ void Robot::DisabledPeriodic() {
 	SmartDashboard::PutNumber("feeder sensor", RobotMap::feederSensor->GetAverageVoltage());
 	SmartDashboard::PutBoolean("Shooter Raised", Robot::winchSub->shooterRaised);
 	SmartDashboard::PutNumber("Gyro Yaw", RobotMap::imu->GetYaw());
-	SmartDashboard::PutNumber("Vision Position", Robot::visionBridge->GetPosition());
+	SmartDashboard::PutNumber("Vision Position Left", Robot::visionBridge->GetPosition(0));
+	SmartDashboard::PutNumber("Vision Position Right", Robot::visionBridge->GetPosition(1));
 	SmartDashboard::PutNumber("Vision Distance", Robot::visionBridge->GetDistance());
 }
 
@@ -96,7 +97,8 @@ void Robot::AutonomousPeriodic() {
 	SmartDashboard::PutNumber("feeder sensor", RobotMap::feederSensor->GetAverageVoltage());
 	SmartDashboard::PutBoolean("Shooter Raised", Robot::winchSub->shooterRaised);
 	SmartDashboard::PutNumber("Gyro Yaw", RobotMap::imu->GetYaw());
-	SmartDashboard::PutNumber("Vision Position", Robot::visionBridge->GetPosition());
+	SmartDashboard::PutNumber("Vision Position Left", Robot::visionBridge->GetPosition(0));
+	SmartDashboard::PutNumber("Vision Position Right", Robot::visionBridge->GetPosition(1));
 	SmartDashboard::PutNumber("Vision Distance", Robot::visionBridge->GetDistance());
 }
 
@@ -118,7 +120,8 @@ void Robot::TeleopPeriodic() {
 	SmartDashboard::PutNumber("feeder sensor", RobotMap::feederSensor->GetAverageVoltage());
 	SmartDashboard::PutBoolean("Shooter Raised", Robot::winchSub->shooterRaised);
 	SmartDashboard::PutNumber("Gyro Yaw", RobotMap::imu->GetYaw());
-	SmartDashboard::PutNumber("Vision Position", Robot::visionBridge->GetPosition());
+	SmartDashboard::PutNumber("Vision Position Left", Robot::visionBridge->GetPosition(0));
+	SmartDashboard::PutNumber("Vision Position Right", Robot::visionBridge->GetPosition(1));
 	SmartDashboard::PutNumber("Vision Distance", Robot::visionBridge->GetDistance());
 }
 
@@ -168,8 +171,9 @@ void Robot::ScriptInit() {
 	}));
 
 	parser.AddCommand(CommandParseInfo("Shoot", { "SH", "sh" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
-		parameters.resize(0);
-		Command* command = new ShootCycle();
+		parameters.resize(1);
+		auto preferredSide = parameters[0];
+		Command* command = new ShootCycle(preferredSide);
 		//if (0 == timeout) timeout = 4;
 		fCreateCommand(command, 0);
 	}));
@@ -218,12 +222,13 @@ void Robot::ScriptInit() {
 		}));
 
 		parser.AddCommand(CommandParseInfo("DriveCam", { "DC", "dc" }, [](std::vector<float> parameters, std::function<void(Command*, float)> fCreateCommand) {
-			parameters.resize(4);
+			parameters.resize(5);
 			auto x = parameters[0];
 			auto y = parameters[1];
 			auto maxspeed = parameters[2];
 			auto timeout = parameters[3];
-			Command* command = new ScriptCamDrive("DriveCam", x, y, maxspeed, timeout);
+			auto preferredSide = parameters[4];
+			Command* command = new ScriptCamDrive("DriveCam", x, y, maxspeed, timeout, preferredSide);
 			fCreateCommand(command, 0);
 		}));
 

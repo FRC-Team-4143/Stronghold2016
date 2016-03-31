@@ -23,17 +23,20 @@ public:
 	void EnableDebug(bool debug);
 
 	// Get the latest vision data.
-	double GetPosition();
+	double GetPosition(int side);
 	double GetDistance();
 
 private:
 	std::recursive_mutex _mutex;
 	uint16_t _listeningPort;
+	double _positionLeft;
+	double _positionRight;
 	double _position;
 	double _distance;
 	bool _debug;
 	std::thread _listeningThread;
-	int zeroCounter;
+	int zeroCounterLeft;
+	int zeroCounterRight;
 	int distanceZeroCounter;
 	char * pch;
 	double autoAim;
@@ -41,7 +44,8 @@ private:
 	void DebugOutput(std::string packet);
 	void Listen();
 	void ParsePacket(char packet[]);
-	void SetPosition(double position);
+	void SetPositionLeft(double position);
+	void SetPositionRight(double position);
 	void SetDistance(double distance);
 };
 

@@ -4,12 +4,13 @@
 
 #define TIME   10
 
-PositionDrive::PositionDrive(int offset)//const char* name, double x, double y, double maxspeed, double seconds)
+PositionDrive::PositionDrive(int offset, int side)//const char* name, double x, double y, double maxspeed, double seconds)
 : Command(""), _x(0), _y(0), _maxspeed(0.35), _seconds(10)
 {
 	//std::cout << GetName() << "::ctor(" << x << ", " << y << ", " << maxspeed << ", " << seconds << ")" << std::endl;
 	Requires(Robot::driveTrain);
 	_offset = offset;
+	_side = side;
 }
 
 // Called just before this Command runs the first time
@@ -59,7 +60,7 @@ void PositionDrive::Execute()
 	}
 	SmartDashboard::PutBoolean("Waiting", waiting);
 	SmartDashboard::PutNumber("Waiting counter", waitingCounter);
-	pixels = Robot::visionBridge->GetPosition() - SmartDashboard::GetNumber("vision center", 30) - _offset;
+	pixels = Robot::visionBridge->GetPosition(_side) - SmartDashboard::GetNumber("vision center", 40) - _offset;
 	if (std::abs(pixels) < _tol) _counter++;
 	else _counter = 0;
 	pixels *= 0.1;

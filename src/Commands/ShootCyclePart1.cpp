@@ -4,12 +4,12 @@
 #include "ScriptCamDrive.h"
 #include "PositionDrive.h"
 
-ShootCyclePart1::ShootCyclePart1()
+ShootCyclePart1::ShootCyclePart1(int side)
 {
 
 	AddParallel(new SetWinchPosition(3, true, 1));
 	AddParallel(new DefeedShoot(2));
-	AddSequential(new PositionDrive());//ScriptCamDrive("DriveCam", 0, 0, 0.35, 0));
+	AddSequential(new PositionDrive(side));//ScriptCamDrive("DriveCam", 0, 0, 0.35, 0));
 
 	// Add Commands here:
 	// e.g. AddSequential(new Command1());

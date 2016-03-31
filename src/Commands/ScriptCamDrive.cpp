@@ -4,14 +4,14 @@
 
 #define TIME   10
 
-ScriptCamDrive::ScriptCamDrive(const char* name, double x, double y, double maxspeed, double seconds)
+ScriptCamDrive::ScriptCamDrive(const char* name, double x, double y, double maxspeed, double seconds, int side)
 : Command(name), _x(x), _y(y), _maxspeed(maxspeed), _seconds(seconds)
 {
 	std::cout << GetName() << "::ctor(" << x << ", " << y << ", " << maxspeed << ", " << seconds << ")" << std::endl;
 	Requires(Robot::driveTrain);
 
 	pid = new PIDController(0, 0, 0, 0, &visionSource, &visionSink);
-
+	_side = side;
 }
 
 // Called just before this Command runs the first time
@@ -47,7 +47,7 @@ void ScriptCamDrive::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void ScriptCamDrive::Execute()
 {
-	_offset = Robot::visionBridge->GetPosition();
+	_offset = Robot::visionBridge->GetPosition(_side);
 	if (std::abs(_offset - _center) < _tol){
 		_counter++;
 	} else {

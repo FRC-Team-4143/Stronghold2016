@@ -56,7 +56,8 @@ AHRS* RobotMap::imu = nullptr;
 #define driveP 0.3
 #define driveI 0.0
 #define driveD 0.0
-#define driveF 0.1
+//#define driveF 0.1 //14 tooth gear
+#define driveF 0.108 //13 tooth gear
 #define pdriveP 1.5
 #define pdriveI 0.01
 #define pdriveIZone 100.0

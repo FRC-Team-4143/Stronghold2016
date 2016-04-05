@@ -1,5 +1,32 @@
 <xml version="1.0">
 <dashboard>
+	<widget field="Vision Position Left" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="677" y="359"/>
+	</widget>
+	<widget field="Vision Position Right" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="672" y="339"/>
+	</widget>
+	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.ConnectionIndicator">
+		<location x="0" y="165"/>
+	</static-widget>
+	<widget field="Front Left Drive Position" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="144"/>
+	</widget>
+	<widget field="Twist Angle" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="123"/>
+	</widget>
+	<widget field="Pixels" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="102"/>
+	</widget>
+	<widget field="Angle Error" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="81"/>
+	</widget>
+	<widget field="Waiting counter" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="60"/>
+	</widget>
+	<widget field="Waiting" type="Boolean" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
+		<location x="0" y="39"/>
+	</widget>
 	<widget field="vision D" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="912" y="311"/>
 		<property name="Background" value="51.255.51.255"/>
@@ -9,6 +36,7 @@
 	</widget>
 	<static-widget class="edu.wpi.first.smartdashboard.gui.elements.WebcamViewerExtensionCompat">
 		<location x="724" y="1"/>
+		<property name="FPS" value="10"/>
 	</static-widget>
 	<widget field="Vision Position" type="Number" class="edu.wpi.first.smartdashboard.gui.elements.TextBox">
 		<location x="731" y="294"/>

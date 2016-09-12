@@ -6,12 +6,12 @@
 class StowArm: public Command
 {
 public:
-	StowArm();
-	void Initialize();
-	void Execute();
-	bool IsFinished();
-	void End();
-	void Interrupted();
+    StowArm();
+    void Initialize();
+    void Execute();
+    bool IsFinished();
+    void End();
+    void Interrupted();
 };
 
 #endif

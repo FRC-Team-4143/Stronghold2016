@@ -107,7 +107,7 @@ private:
     long                last_sensor_timestamp;
     double              last_update_time;
 
-    std::shared_ptr<ITable>	table;
+    std::shared_ptr<ITable>    table;
 
     InertialDataIntegrator *integrator;
     ContinuousAngleTracker *yaw_angle_tracker;

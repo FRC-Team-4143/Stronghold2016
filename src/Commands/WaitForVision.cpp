@@ -3,8 +3,8 @@
 
 WaitForVision::WaitForVision()
 {
-	// Use Requires() here to declare subsystem dependencies
-	// eg. Requires(chassis);
+    // Use Requires() here to declare subsystem dependencies
+    // eg. Requires(chassis);
 }
 
 // Called just before this Command runs the first time
@@ -22,7 +22,7 @@ void WaitForVision::Execute()
 // Make this return true when this Command no longer needs to run execute()
 bool WaitForVision::IsFinished()
 {
-	return Robot::visionBridge->GetDistance() != 0;// || Robot::visionBridge->GetPosition(1) != 0;
+    return Robot::visionBridge->GetDistance() != 0;// || Robot::visionBridge->GetPosition(1) != 0;
 }
 
 // Called once after isFinished returns true

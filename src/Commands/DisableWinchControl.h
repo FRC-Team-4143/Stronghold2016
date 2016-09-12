@@ -6,12 +6,12 @@
 class DisableWinchControl: public Command
 {
 public:
-	DisableWinchControl();
-	void Initialize();
-	void Execute();
-	bool IsFinished();
-	void End();
-	void Interrupted();
+    DisableWinchControl();
+    void Initialize();
+    void Execute();
+    bool IsFinished();
+    void End();
+    void Interrupted();
 };
 
 #endif

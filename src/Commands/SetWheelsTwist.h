@@ -6,12 +6,12 @@
 class SetWheelsTwist: public Command
 {
 public:
-	SetWheelsTwist(double timeout);
-	void Initialize();
-	void Execute();
-	bool IsFinished();
-	void End();
-	void Interrupted();
+    SetWheelsTwist(double timeout);
+    void Initialize();
+    void Execute();
+    bool IsFinished();
+    void End();
+    void Interrupted();
 };
 
 #endif

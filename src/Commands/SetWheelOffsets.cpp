@@ -3,14 +3,14 @@
 
 SetWheelOffsets::SetWheelOffsets()
 {
-	SetRunWhenDisabled(true);
-	SetTimeout(1);
+    SetRunWhenDisabled(true);
+    SetTimeout(1);
 }
 
 // Called just before this Command runs the first time
 void SetWheelOffsets::Initialize()
 {
-	Robot::driveTrain->setWheelOffsets();
+    Robot::driveTrain->setWheelOffsets();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -22,7 +22,7 @@ void SetWheelOffsets::Execute()
 // Make this return true when this Command no longer needs to run execute()
 bool SetWheelOffsets::IsFinished()
 {
-	return IsTimedOut();
+    return IsTimedOut();
 }
 
 // Called once after isFinished returns true

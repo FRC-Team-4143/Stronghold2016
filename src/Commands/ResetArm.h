@@ -6,12 +6,12 @@
 class ResetArm: public Command
 {
 public:
-	ResetArm();
-	void Initialize();
-	void Execute();
-	bool IsFinished();
-	void End();
-	void Interrupted();
+    ResetArm();
+    void Initialize();
+    void Execute();
+    bool IsFinished();
+    void End();
+    void Interrupted();
 };
 
 #endif

@@ -7,21 +7,21 @@
 class WinchSub: public Subsystem
 {
 private:
-	CANTalon* motor;
-	AnalogInput* shooterSensor;
+    CANTalon* motor;
+    AnalogInput* shooterSensor;
 
 public:
-	bool shooterRaised;
-	const static bool angleSensor;
-	PIDController* shooter;
-	WinchSub();
-	void InitDefaultCommand();
-	void setPos(double pos);
-	void readPos();
-	void disablePositionControl();
-	void reset();
-	void climb();
-	void stopClimb();
+    bool shooterRaised;
+    const static bool angleSensor;
+    PIDController* shooter;
+    WinchSub();
+    void InitDefaultCommand();
+    void setPos(double pos);
+    void readPos();
+    void disablePositionControl();
+    void reset();
+    void climb();
+    void stopClimb();
 };
 
 #endif

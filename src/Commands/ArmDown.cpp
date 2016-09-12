@@ -6,7 +6,7 @@ ArmDown::ArmDown(): Command() {
 
 // Called just before this Command runs the first time
 void ArmDown::Initialize() {
-	Robot::armSub->armDown();
+    Robot::armSub->armDown();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -21,11 +21,11 @@ bool ArmDown::IsFinished() {
 
 // Called once after isFinished returns true
 void ArmDown::End() {
-	Robot::armSub->stop();
+    Robot::armSub->stop();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void ArmDown::Interrupted() {
-	Robot::armSub->stop();
+    Robot::armSub->stop();
 }

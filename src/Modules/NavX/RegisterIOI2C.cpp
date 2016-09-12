@@ -18,14 +18,14 @@ bool RegisterIO_I2C::Init() {
 }
 
 bool RegisterIO_I2C::Write(uint8_t address, uint8_t value ) {
-	std::unique_lock<priority_mutex> sync(imu_mutex);
+    std::unique_lock<priority_mutex> sync(imu_mutex);
     return port->Write(address | 0x80, value);
 }
 
 static int MAX_WPILIB_I2C_READ_BYTES = 127;
 
 bool RegisterIO_I2C::Read(uint8_t first_address, uint8_t* buffer, uint8_t buffer_len) {
-	std::unique_lock<priority_mutex> sync(imu_mutex);
+    std::unique_lock<priority_mutex> sync(imu_mutex);
     int len = buffer_len;
     int buffer_offset = 0;
     uint8_t read_buffer[MAX_WPILIB_I2C_READ_BYTES];

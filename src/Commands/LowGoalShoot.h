@@ -6,13 +6,13 @@
 class LowGoalShoot: public Command
 {
 public:
-	int counter;
-	LowGoalShoot(double timeout);
-	void Initialize();
-	void Execute();
-	bool IsFinished();
-	void End();
-	void Interrupted();
+    int counter;
+    LowGoalShoot(double timeout);
+    void Initialize();
+    void Execute();
+    bool IsFinished();
+    void End();
+    void Interrupted();
 };
 
 #endif

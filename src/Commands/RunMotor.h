@@ -6,13 +6,13 @@
 class RunMotor: public Command
 {
 public:
-	CANTalon* motor;
-	RunMotor(CANTalon* motor);
-	void Initialize();
-	void Execute();
-	bool IsFinished();
-	void End();
-	void Interrupted();
+    CANTalon* motor;
+    RunMotor(CANTalon* motor);
+    void Initialize();
+    void Execute();
+    bool IsFinished();
+    void End();
+    void Interrupted();
 };
 
 #endif

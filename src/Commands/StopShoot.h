@@ -6,12 +6,12 @@
 class StopShoot: public Command
 {
 public:
-	StopShoot();
-	void Initialize();
-	void Execute();
-	bool IsFinished();
-	void End();
-	void Interrupted();
+    StopShoot();
+    void Initialize();
+    void Execute();
+    bool IsFinished();
+    void End();
+    void Interrupted();
 };
 
 #endif

@@ -5,15 +5,15 @@
 
 class VisionSink : public PIDOutput {
 public:
-	VisionSink();
-	virtual ~VisionSink();
+    VisionSink();
+    virtual ~VisionSink();
 
-	// PIDOutput methods
-	void PIDWrite(float output);
+    // PIDOutput methods
+    void PIDWrite(float output);
 
-	double GetValue();
+    double GetValue();
 
 private:
-	std::recursive_mutex _mutex;
-	double _value;
+    std::recursive_mutex _mutex;
+    double _value;
 };

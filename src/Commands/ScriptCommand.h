@@ -8,13 +8,13 @@
 
 class ScriptCommand: public CommandGroup {
 public:
-	ScriptCommand(const char* name);
-	ScriptCommand(const char* name, std::string commands);
+    ScriptCommand(const char* name);
+    ScriptCommand(const char* name, std::string commands);
 
-	static void InitParameters();
+    static void InitParameters();
 
 protected:
-	void ParseCommands(std::string commands);
+    void ParseCommands(std::string commands);
 
 private:
 };

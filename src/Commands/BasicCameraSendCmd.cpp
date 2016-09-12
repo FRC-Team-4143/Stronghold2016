@@ -3,11 +3,11 @@
 // ==========================================================================
 
 BasicCameraSendCmd::BasicCameraSendCmd(BasicCameraSub* camera)
-:	Command("BasicCamera Send"),
-	m_camera(camera)
+:    Command("BasicCamera Send"),
+    m_camera(camera)
 {
-	Requires(camera);
-	SetRunWhenDisabled(true);
+    Requires(camera);
+    SetRunWhenDisabled(true);
 }
 
 // ==========================================================================
@@ -20,14 +20,14 @@ void BasicCameraSendCmd::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 
 void BasicCameraSendCmd::Execute() {
-	m_camera->SendImage();
+    m_camera->SendImage();
 }
 
 // ==========================================================================
 // Make this return true when this Command no longer needs to run Execute.
 
 bool BasicCameraSendCmd::IsFinished() {
-	return false;
+    return false;
 }
 
 // ==========================================================================
@@ -40,7 +40,7 @@ void BasicCameraSendCmd::End() {
 // Called when another command which requires this subsystem is scheduled to run
 
 void BasicCameraSendCmd::Interrupted() {
-	End();
+    End();
 }
 
 // ==========================================================================

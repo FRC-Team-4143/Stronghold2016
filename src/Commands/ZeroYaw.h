@@ -6,12 +6,12 @@
 class ZeroYaw: public Command
 {
 public:
-	ZeroYaw();
-	void Initialize();
-	void Execute();
-	bool IsFinished();
-	void End();
-	void Interrupted();
+    ZeroYaw();
+    void Initialize();
+    void Execute();
+    bool IsFinished();
+    void End();
+    void Interrupted();
 };
 
 #endif

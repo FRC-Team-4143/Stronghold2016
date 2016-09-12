@@ -28,7 +28,7 @@ THE SOFTWARE.
 /*****************************************************************************/
 /* This protocol, introduced first with the navX MXP, expands upon the IMU   */
 /* protocol by adding the following new functionality:                       */
-/*         																	 */
+/*                                                                              */
 /* AHRS Update:  Includes Fused Heading and Altitude Info                    */
 /* Magnetometer Calibration:  Enables configuration of coefficients from PC  */
 /* Board Identity:  Enables retrieval of Board Identification Info           */
@@ -64,10 +64,10 @@ THE SOFTWARE.
 typedef enum
 {
     UNSPECIFIED = 0,
-    MOTION_THRESHOLD = 1,			/* In G */
-    YAW_STABLE_THRESHOLD = 2,		/* In Degrees */
-    MAG_DISTURBANCE_THRESHOLD =3,	/* Ratio */
-    SEA_LEVEL_PRESSURE = 4,			/* Millibars */
+    MOTION_THRESHOLD = 1,            /* In G */
+    YAW_STABLE_THRESHOLD = 2,        /* In Degrees */
+    MAG_DISTURBANCE_THRESHOLD =3,    /* Ratio */
+    SEA_LEVEL_PRESSURE = 4,            /* Millibars */
     MIN_TUNING_VAR_ID = MOTION_THRESHOLD,
     MAX_TUNING_VAR_ID = SEA_LEVEL_PRESSURE,
 } AHRS_TUNING_VAR_ID;
@@ -86,8 +86,8 @@ typedef enum
     DATA_SET_TO_DEFAULT = 2,
 } AHRS_DATA_ACTION;
 
-#define DATA_GETSET_SUCCESS	0
-#define DATA_GETSET_ERROR	1
+#define DATA_GETSET_SUCCESS    0
+#define DATA_GETSET_ERROR    1
 
 // AHRS Update Packet - e.g., !a[yaw][pitch][roll][heading][altitude][fusedheading][accelx/y/z][angular rot x/y/z][opstatus][fusionstatus][cr][lf]
 
@@ -625,7 +625,7 @@ public:
         // Data
         protocol_buffer[MAG_CAL_DATA_ACTION_VALUE_INDEX] = action;
         for ( int i = 0; i < 3; i++ ) {
-            IMURegisters::encodeProtocolInt16(	bias[i],
+            IMURegisters::encodeProtocolInt16(    bias[i],
                     &protocol_buffer[MAG_X_BIAS_VALUE_INDEX + (i * sizeof(int16_t))]);
         }
         for ( int i = 0; i < 9; i++ ) {

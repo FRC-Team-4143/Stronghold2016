@@ -6,7 +6,7 @@ ArmUp::ArmUp(): Command() {
 
 // Called just before this Command runs the first time
 void ArmUp::Initialize() {
-	Robot::armSub->armUp();
+    Robot::armSub->armUp();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -21,11 +21,11 @@ bool ArmUp::IsFinished() {
 
 // Called once after isFinished returns true
 void ArmUp::End() {
-	Robot::armSub->stop();
+    Robot::armSub->stop();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void ArmUp::Interrupted() {
-	Robot::armSub->stop();
+    Robot::armSub->stop();
 }

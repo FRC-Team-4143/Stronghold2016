@@ -6,15 +6,15 @@
 class SetWinchPosition: public Command
 {
 private:
-	double pos;
+    double pos;
 public:
-	SetWinchPosition(int pos, bool holdPos, double timeout);
-	void Initialize();
-	void Execute();
-	bool IsFinished();
-	void End();
-	void Interrupted();
-	bool holdPos;
+    SetWinchPosition(int pos, bool holdPos, double timeout);
+    void Initialize();
+    void Execute();
+    bool IsFinished();
+    void End();
+    void Interrupted();
+    bool holdPos;
 };
 
 #endif

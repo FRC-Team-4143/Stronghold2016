@@ -11,12 +11,12 @@ double Timeout;
 bool seenBall;
 
 public:
-	Feed(double Timeout);
-	void Initialize();
-	void Execute();
-	bool IsFinished();
-	void End();
-	void Interrupted();
+    Feed(double Timeout);
+    void Initialize();
+    void Execute();
+    bool IsFinished();
+    void End();
+    void Interrupted();
 };
 
 #endif

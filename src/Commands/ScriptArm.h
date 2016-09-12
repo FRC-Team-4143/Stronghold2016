@@ -6,14 +6,14 @@
 class ScriptArm: public Command
 {
 private:
-	int pos;
+    int pos;
 public:
-	ScriptArm(int pos);
-	void Initialize();
-	void Execute();
-	bool IsFinished();
-	void End();
-	void Interrupted();
+    ScriptArm(int pos);
+    void Initialize();
+    void Execute();
+    bool IsFinished();
+    void End();
+    void Interrupted();
 };
 
 #endif

@@ -3,9 +3,9 @@
 
 Wait::Wait(double time)
 {
-	SetTimeout(time);
-	// Use Requires() here to declare subsystem dependencies
-	// eg. Requires(chassis);
+    SetTimeout(time);
+    // Use Requires() here to declare subsystem dependencies
+    // eg. Requires(chassis);
 }
 
 // Called just before this Command runs the first time
@@ -23,7 +23,7 @@ void Wait::Execute()
 // Make this return true when this Command no longer needs to run execute()
 bool Wait::IsFinished()
 {
-	return IsTimedOut();
+    return IsTimedOut();
 }
 
 // Called once after isFinished returns true

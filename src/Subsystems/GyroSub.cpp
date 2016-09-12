@@ -4,15 +4,15 @@
 // ==========================================================================
 
 GyroSub::GyroSub() : Subsystem("GyroSub") {
-	LOG("GyroSub::GyroSub");
+    LOG("GyroSub::GyroSub");
 }
 
 // ==========================================================================
 
 void GyroSub::InitDefaultCommand() {
-	LOG("GyroSub::InitDefaultCommand");
-	// Set the default command for a subsystem here.
-	//SetDefaultCommand(new MyCommand());
+    LOG("GyroSub::InitDefaultCommand");
+    // Set the default command for a subsystem here.
+    //SetDefaultCommand(new MyCommand());
 }
 
 // ==========================================================================
@@ -20,7 +20,7 @@ void GyroSub::InitDefaultCommand() {
 // ==========================================================================
 
 double GyroSub::PIDGet() {
-	return theGyro()->GetYaw();
+    return theGyro()->GetYaw();
 }
 
 // ==========================================================================
@@ -29,34 +29,34 @@ double GyroSub::PIDGet() {
 // ==========================================================================
 
 double GyroSub::GetHeading() {
-	return theGyro()->GetCompassHeading();
+    return theGyro()->GetCompassHeading();
 }
 
 // ==========================================================================
 
 bool GyroSub::IsCalibrating() {
-	return theGyro()->IsCalibrating();
+    return theGyro()->IsCalibrating();
 }
 
 // ==========================================================================
 
 void GyroSub::ResetGyro() {
-	theGyro()->ZeroYaw();
+    theGyro()->ZeroYaw();
 #ifdef USE_NAVX
-	theGyro()->ResetDisplacement();
+    theGyro()->ResetDisplacement();
 #endif
 }
 
 // ==========================================================================
 #ifdef USE_NAVX
 float GyroSub::GetDisplacementX() {
-	return theGyro()->GetDisplacementX();
+    return theGyro()->GetDisplacementX();
 }
 #endif
 // ==========================================================================
 #ifdef USE_NAVX
 float GyroSub::GetDisplacementY() {
-	return theGyro()->GetDisplacementY();
+    return theGyro()->GetDisplacementY();
 }
 #endif
 

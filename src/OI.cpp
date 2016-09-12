@@ -48,46 +48,46 @@ const uint32_t JOYSTICK_BUTTON_RIGHT = 10;
 const float JOYSTICK_DEAD_ZONE = 0.1;
 
 OI::OI() {
-	driverJoystick = new Joystick(0);
-	armUp = new ArmUp();
-	armDown = new ArmDown();
-	stowArm = new StowArm();
-	unwindWheels = new UnwindWheels();
-	winchSet1 = new SetWinchPosition(0, false, 1.5); //starting
-	winchSet2 = new SetWinchPosition(1, false, 2.5); //raised
-	winchSet3 = new SetWinchPosition(2, false, 1.5); //lowered
-	deFeed = new DeFeed(1);
-	gyroCrab = new GyroCrab();
-	fieldCentric = new FieldCentric();
-	shootCycle = new ShootCycle(0);
-	lowShot = new LowShot();
-	//arcade = new ArcadeDriveMode();
-	//climb = new Climb();
+    driverJoystick = new Joystick(0);
+    armUp = new ArmUp();
+    armDown = new ArmDown();
+    stowArm = new StowArm();
+    unwindWheels = new UnwindWheels();
+    winchSet1 = new SetWinchPosition(0, false, 1.5); //starting
+    winchSet2 = new SetWinchPosition(1, false, 2.5); //raised
+    winchSet3 = new SetWinchPosition(2, false, 1.5); //lowered
+    deFeed = new DeFeed(1);
+    gyroCrab = new GyroCrab();
+    fieldCentric = new FieldCentric();
+    shootCycle = new ShootCycle(0);
+    lowShot = new LowShot();
+    //arcade = new ArcadeDriveMode();
+    //climb = new Climb();
 
-	auto cameraEnableCmd = new BasicCameraEnableCmd(Robot::basicCameraSub);
-	auto cameraDisableCmd = new BasicCameraDisableCmd(Robot::basicCameraSub);
+    auto cameraEnableCmd = new BasicCameraEnableCmd(Robot::basicCameraSub);
+    auto cameraDisableCmd = new BasicCameraDisableCmd(Robot::basicCameraSub);
 
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhileHeld(armDown);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhileHeld(stowArm);
+    (new JoystickButton(driverJoystick, JOYSTICK_BUTTON_Y))->WhileHeld(armDown);
+    (new JoystickButton(driverJoystick, JOYSTICK_BUTTON_X))->WhileHeld(stowArm);
 
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_B))->WhileHeld(lowShot);
+    (new JoystickButton(driverJoystick, JOYSTICK_BUTTON_B))->WhileHeld(lowShot);
 
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(winchSet2);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhenPressed(winchSet3);
+    (new JoystickButton(driverJoystick, JOYSTICK_BUTTON_BACK))->WhenPressed(winchSet2);
+    (new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhenPressed(winchSet3);
 
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(unwindWheels);
+    (new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RB))->WhileHeld(unwindWheels);
 
-	//(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhileHeld(arcade);
+    //(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_START))->WhileHeld(arcade);
 
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhenPressed(deFeed);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhileHeld(shootCycle);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RIGHT))->WhileHeld(gyroCrab);
-	(new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LEFT))->WhileHeld(fieldCentric);
+    (new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LB))->WhenPressed(deFeed);
+    (new JoystickButton(driverJoystick, JOYSTICK_BUTTON_A))->WhileHeld(shootCycle);
+    (new JoystickButton(driverJoystick, JOYSTICK_BUTTON_RIGHT))->WhileHeld(gyroCrab);
+    (new JoystickButton(driverJoystick, JOYSTICK_BUTTON_LEFT))->WhileHeld(fieldCentric);
 
-	SmartDashboard::PutData("Camera On", cameraEnableCmd);
-	SmartDashboard::PutData("Camera Off", cameraDisableCmd);
+    SmartDashboard::PutData("Camera On", cameraEnableCmd);
+    SmartDashboard::PutData("Camera Off", cameraDisableCmd);
 
-	//SmartDashboard::PutData("Camera", useCamera);
+    //SmartDashboard::PutData("Camera", useCamera);
     SmartDashboard::PutData("SetWheelOffsets", new SetWheelOffsets());
     SmartDashboard::PutData("Zero Yaw", new ZeroYaw());
 
@@ -101,36 +101,36 @@ OI::OI() {
 }
 
 float OI::GetRightTrigger() {
-	auto value = driverJoystick->GetRawAxis(JOYSTICK_RTRIG_AXIS);
-	return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : value;
+    auto value = driverJoystick->GetRawAxis(JOYSTICK_RTRIG_AXIS);
+    return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : value;
 }
 
 float OI::GetLeftTrigger() {
-	auto value = driverJoystick->GetRawAxis(JOYSTICK_LTRIG_AXIS);
-	return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : value;
+    auto value = driverJoystick->GetRawAxis(JOYSTICK_LTRIG_AXIS);
+    return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : value;
 }
 
 float OI::GetJoystickX() {
-	auto value = driverJoystick->GetRawAxis(JOYSTICK_LX_AXIS);
-	return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : value;
+    auto value = driverJoystick->GetRawAxis(JOYSTICK_LX_AXIS);
+    return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : value;
 }
 
 float OI::GetJoystickY() {
-	auto value =driverJoystick->GetRawAxis(JOYSTICK_LY_AXIS);
-	return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : value;
+    auto value =driverJoystick->GetRawAxis(JOYSTICK_LY_AXIS);
+    return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : value;
 }
 
 float OI::GetJoystickZ() {
-	auto value = driverJoystick->GetRawAxis(JOYSTICK_RX_AXIS);
-	return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : value;
+    auto value = driverJoystick->GetRawAxis(JOYSTICK_RX_AXIS);
+    return (fabs(value) < JOYSTICK_DEAD_ZONE) ? 0 : value;
 }
 
 bool OI::GetButtonStart(){
-	auto value = GetDriverJoystick()->GetRawButton(JOYSTICK_BUTTON_START);
-	return (value);
+    auto value = GetDriverJoystick()->GetRawButton(JOYSTICK_BUTTON_START);
+    return (value);
 }
 
 bool OI::GetButtonA(){
-	auto value = GetDriverJoystick()->GetRawButton(JOYSTICK_BUTTON_A);
-	return (value);
+    auto value = GetDriverJoystick()->GetRawButton(JOYSTICK_BUTTON_A);
+    return (value);
 }

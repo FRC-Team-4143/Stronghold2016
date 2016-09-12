@@ -7,7 +7,7 @@
 class ShootCycle: public CommandGroup
 {
 public:
-	ShootCycle(int side);
+    ShootCycle(int side);
 };
 
 #endif

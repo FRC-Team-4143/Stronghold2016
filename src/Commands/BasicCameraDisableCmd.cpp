@@ -3,11 +3,11 @@
 // ==========================================================================
 
 BasicCameraDisableCmd::BasicCameraDisableCmd(std::shared_ptr<BasicCameraSub> camera)
-:	Command("BasicCamera Send"),
-	m_camera(camera)
+:    Command("BasicCamera Send"),
+    m_camera(camera)
 {
-	Requires(camera.get());
-	SetRunWhenDisabled(true);
+    Requires(camera.get());
+    SetRunWhenDisabled(true);
 }
 
 // ==========================================================================
@@ -20,14 +20,14 @@ void BasicCameraDisableCmd::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 
 void BasicCameraDisableCmd::Execute() {
-	m_camera->Disable();
+    m_camera->Disable();
 }
 
 // ==========================================================================
 // Make this return true when this Command no longer needs to run Execute.
 
 bool BasicCameraDisableCmd::IsFinished() {
-	return true;
+    return true;
 }
 
 // ==========================================================================
@@ -40,7 +40,7 @@ void BasicCameraDisableCmd::End() {
 // Called when another command which requires this subsystem is scheduled to run
 
 void BasicCameraDisableCmd::Interrupted() {
-	End();
+    End();
 }
 
 // ==========================================================================

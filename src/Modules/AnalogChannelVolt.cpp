@@ -5,8 +5,8 @@
 AnalogChannelVolt::AnalogChannelVolt(uint32_t channel, CANTalon* motor, double offset)
   : AnalogInput(channel)
 {
-	m_motor = motor;
-	m_offset = offset;
+    m_motor = motor;
+    m_offset = offset;
 }
 
 AnalogChannelVolt::AnalogChannelVolt(uint32_t channel, bool inv, int ratio, CANTalon* motor)
@@ -51,7 +51,7 @@ void AnalogChannelVolt::ResetTurns()
 /*
 void AnalogChannelVolt::Start()
 {
-	LOG("analogChannelVolt start\r");
+    LOG("analogChannelVolt start\r");
 }
 */
 /*
@@ -62,12 +62,12 @@ float AnalogChannelVolt::GetVoltage()
 */
 double AnalogChannelVolt::GetAngle()
 {
-	double position = m_motor->GetPosition() - m_offset;
-	position -= trunc(position);
-	if (position < 0)
-		position++;
-	position *= EncoderConstants::FULL_TURN;
-	return position;
+    double position = m_motor->GetPosition() - m_offset;
+    position -= trunc(position);
+    if (position < 0)
+        position++;
+    position *= EncoderConstants::FULL_TURN;
+    return position;
 }
 
 double AnalogChannelVolt::GetRawAngle()
@@ -81,25 +81,25 @@ double AnalogChannelVolt::GetTurns() const
 }
 
 void AnalogChannelVolt::SetOffset(double offset) {
-	m_offset = offset;
+    m_offset = offset;
 }
 
 double AnalogChannelVolt::PIDGet()
 {
-	double position = m_motor->GetPosition();
-	position -= trunc(position);
-	if (position < 0)
-		position++;
-	position *= EncoderConstants::FULL_TURN;
-	return position;
+    double position = m_motor->GetPosition();
+    position -= trunc(position);
+    if (position < 0)
+        position++;
+    position *= EncoderConstants::FULL_TURN;
+    return position;
 }
 
 AnalogChannelVolt::~AnalogChannelVolt()
 {
 /*
-	if(m_trig)
-		delete m_trig;
-	if(m_count)
-		delete m_count;
+    if(m_trig)
+        delete m_trig;
+    if(m_count)
+        delete m_count;
 */
 }

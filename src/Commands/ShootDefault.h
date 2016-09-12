@@ -6,12 +6,12 @@
 class ShootDefault: public Command
 {
 public:
-	ShootDefault();
-	void Initialize();
-	void Execute();
-	bool IsFinished();
-	void End();
-	void Interrupted();
+    ShootDefault();
+    void Initialize();
+    void Execute();
+    bool IsFinished();
+    void End();
+    void Interrupted();
 };
 
 #endif

@@ -13,29 +13,29 @@
 //
 class GyroSub: public Subsystem, public PIDSource {
 public:
-	GyroSub();
+    GyroSub();
 
-	// Subsystem methods
-	virtual void InitDefaultCommand();
+    // Subsystem methods
+    virtual void InitDefaultCommand();
 
-	// PIDSource methods
-	virtual double PIDGet();
+    // PIDSource methods
+    virtual double PIDGet();
 
-	double GetHeading();
-	bool IsCalibrating();
-	void ResetGyro();
+    double GetHeading();
+    bool IsCalibrating();
+    void ResetGyro();
 
 #ifdef USE_NAVX
-	float GetDisplacementX();
-	float GetDisplacementY();
+    float GetDisplacementX();
+    float GetDisplacementY();
 #endif
 
 private:
-	// Put everything in private except methods that implement subsystem capabilities.
+    // Put everything in private except methods that implement subsystem capabilities.
 #ifdef USE_NAVX
-	KauaiNavX::AHRS* theGyro() { return RobotMap::imu; }
+    KauaiNavX::AHRS* theGyro() { return RobotMap::imu; }
 #else
-	AHRS* theGyro() { return RobotMap::imu; }
+    AHRS* theGyro() { return RobotMap::imu; }
 #endif
 };
 

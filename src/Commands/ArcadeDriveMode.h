@@ -6,12 +6,12 @@
 class ArcadeDriveMode: public Command
 {
 public:
-	ArcadeDriveMode();
-	void Initialize();
-	void Execute();
-	bool IsFinished();
-	void End();
-	void Interrupted();
+    ArcadeDriveMode();
+    void Initialize();
+    void Execute();
+    bool IsFinished();
+    void End();
+    void Interrupted();
 };
 
 #endif

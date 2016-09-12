@@ -6,12 +6,12 @@
 class DefeedShoot: public Command
 {
 public:
-	DefeedShoot(double timeout);
-	void Initialize();
-	void Execute();
-	bool IsFinished();
-	void End();
-	void Interrupted();
+    DefeedShoot(double timeout);
+    void Initialize();
+    void Execute();
+    bool IsFinished();
+    void End();
+    void Interrupted();
 };
 
 #endif

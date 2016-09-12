@@ -6,14 +6,14 @@
 class DriveTilVision: public Command
 {
 public:
-	double _x, _y, _twist;
+    double _x, _y, _twist;
 
-	DriveTilVision(double y, double x, double twist, double timeout);
-	void Initialize();
-	void Execute();
-	bool IsFinished();
-	void End();
-	void Interrupted();
+    DriveTilVision(double y, double x, double twist, double timeout);
+    void Initialize();
+    void Execute();
+    bool IsFinished();
+    void End();
+    void Interrupted();
 };
 
 #endif

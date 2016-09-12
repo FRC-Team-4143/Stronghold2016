@@ -7,7 +7,7 @@
 class LowShot: public CommandGroup
 {
 public:
-	LowShot();
+    LowShot();
 };
 
 #endif

@@ -3,15 +3,14 @@
 
 #include "WPILib.h"
 
-class DisablePID: public Command
-{
+class DisablePID : public Command {
 public:
-    DisablePID();
-    void Initialize();
-    void Execute();
-    bool IsFinished();
-    void End();
-    void Interrupted();
+  DisablePID();
+  void Initialize();
+  void Execute();
+  bool IsFinished();
+  void End();
+  void Interrupted();
 };
 
 #endif

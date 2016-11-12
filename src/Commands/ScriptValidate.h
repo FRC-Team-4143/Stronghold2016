@@ -6,23 +6,23 @@
 
 // ==========================================================================
 
-class ScriptValidate: public Command {
+class ScriptValidate : public Command {
 public:
-    ScriptValidate();
-    ScriptValidate(const char* dashboardInput, const char* dashboardOutput);
+  ScriptValidate();
+  ScriptValidate(const char *dashboardInput, const char *dashboardOutput);
 
-    void Initialize();
-    void Execute();
-    bool IsFinished();
-    void End();
-    void Interrupted();
+  void Initialize();
+  void Execute();
+  bool IsFinished();
+  void End();
+  void Interrupted();
 
 protected:
-    void ValidateCommands();
+  void ValidateCommands();
 
 private:
-    std::string _dashboardInput;
-    std::string _dashboardOutput;
+  std::string _dashboardInput;
+  std::string _dashboardOutput;
 };
 
 // ==========================================================================

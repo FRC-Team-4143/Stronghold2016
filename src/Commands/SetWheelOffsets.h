@@ -3,15 +3,14 @@
 
 #include "WPILib.h"
 
-class SetWheelOffsets: public Command
-{
+class SetWheelOffsets : public Command {
 public:
-    SetWheelOffsets();
-    void Initialize();
-    void Execute();
-    bool IsFinished();
-    void End();
-    void Interrupted();
+  SetWheelOffsets();
+  void Initialize();
+  void Execute();
+  bool IsFinished();
+  void End();
+  void Interrupted();
 };
 
 #endif

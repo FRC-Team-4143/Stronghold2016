@@ -3,14 +3,14 @@
 
 #include <Commands/Command.h>
 
-class CrabDrive: public Command {
+class CrabDrive : public Command {
 public:
-    CrabDrive();
-    virtual void Initialize();
-    virtual void Execute();
-    virtual bool IsFinished();
-    virtual void End();
-    virtual void Interrupted();
+  CrabDrive();
+  virtual void Initialize();
+  virtual void Execute();
+  virtual bool IsFinished();
+  virtual void End();
+  virtual void Interrupted();
 
 private:
 };

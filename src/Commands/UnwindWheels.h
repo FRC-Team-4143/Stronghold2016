@@ -3,18 +3,17 @@
 
 #include "WPILib.h"
 
-class UnwindWheels: public Command
-{
+class UnwindWheels : public Command {
 public:
-    UnwindWheels();
-    void Initialize();
-    void Execute();
-    bool IsFinished();
-    void End();
-    void Interrupted();
+  UnwindWheels();
+  void Initialize();
+  void Execute();
+  bool IsFinished();
+  void End();
+  void Interrupted();
 
 private:
-    bool doneUnwinding;
+  bool doneUnwinding;
 };
 
 #endif

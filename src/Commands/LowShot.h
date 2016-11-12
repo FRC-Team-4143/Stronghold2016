@@ -4,10 +4,9 @@
 #include "Commands/CommandGroup.h"
 #include "WPILib.h"
 
-class LowShot: public CommandGroup
-{
+class LowShot : public CommandGroup {
 public:
-    LowShot();
+  LowShot();
 };
 
 #endif

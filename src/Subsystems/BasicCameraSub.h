@@ -2,26 +2,25 @@
 
 #include <WPILib.h>
 
-class BasicCameraSub : public Subsystem
-{
+class BasicCameraSub : public Subsystem {
 public:
-    BasicCameraSub(const std::string& cameraName);
-    ~BasicCameraSub();
+  BasicCameraSub(const std::string &cameraName);
+  ~BasicCameraSub();
 
-    // Inherited from Subsystem
-    virtual void InitDefaultCommand();
+  // Inherited from Subsystem
+  virtual void InitDefaultCommand();
 
-    void Disable();
-    void Enable();
-    bool IsEnabled() const;
-    void SendImage();
+  void Disable();
+  void Enable();
+  bool IsEnabled() const;
+  void SendImage();
 
 private:
-    bool m_enabled;
-    bool m_initialized;
-    Image* m_image;
-    USBCamera m_camera;
+  bool m_enabled;
+  bool m_initialized;
+  Image *m_image;
+  USBCamera m_camera;
 
-    void _InitializeCamera();
-    void _UninitializeCamera();
+  void _InitializeCamera();
+  void _UninitializeCamera();
 };

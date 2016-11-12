@@ -4,10 +4,9 @@
 #include "Commands/CommandGroup.h"
 #include "WPILib.h"
 
-class ShootCyclePart1: public CommandGroup
-{
+class ShootCyclePart1 : public CommandGroup {
 public:
-    ShootCyclePart1(int side);
+  ShootCyclePart1(int side);
 };
 
 #endif

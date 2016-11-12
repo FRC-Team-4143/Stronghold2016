@@ -4,9 +4,9 @@
 
 class VisionSource : public PIDSource {
 public:
-    VisionSource();
-    virtual ~VisionSource();
+  VisionSource();
+  virtual ~VisionSource();
 
-    // PIDSource methods
-    double PIDGet();
+  // PIDSource methods
+  double PIDGet();
 };

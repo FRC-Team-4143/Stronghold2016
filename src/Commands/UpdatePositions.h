@@ -3,15 +3,14 @@
 
 #include "WPILib.h"
 
-class UpdatePositions: public Command
-{
+class UpdatePositions : public Command {
 public:
-    UpdatePositions();
-    void Initialize();
-    void Execute();
-    bool IsFinished();
-    void End();
-    void Interrupted();
+  UpdatePositions();
+  void Initialize();
+  void Execute();
+  bool IsFinished();
+  void End();
+  void Interrupted();
 };
 
 #endif

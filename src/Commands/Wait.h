@@ -3,15 +3,14 @@
 
 #include "WPILib.h"
 
-class Wait: public Command
-{
+class Wait : public Command {
 public:
-    Wait(double time);
-    void Initialize();
-    void Execute();
-    bool IsFinished();
-    void End();
-    void Interrupted();
+  Wait(double time);
+  void Initialize();
+  void Execute();
+  bool IsFinished();
+  void End();
+  void Interrupted();
 };
 
 #endif

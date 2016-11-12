@@ -12,25 +12,24 @@
 std::mutex Logger::m_mutex;
 int Logger::m_counter = 0;
 
-Logger::Logger() {
-}
+Logger::Logger() {}
 
 void Logger::Log(std::string msg) {
-    //DriverStation::ReportError(msg.append("\r\n"));
-    std::lock_guard<std::mutex> lck (m_mutex);
+  // DriverStation::ReportError(msg.append("\r\n"));
+  std::lock_guard<std::mutex> lck(m_mutex);
 
-    time_t rawtime;
-    time(&rawtime);
+  time_t rawtime;
+  time(&rawtime);
 
-    tm* timeinfo = localtime(&rawtime);
+  tm *timeinfo = localtime(&rawtime);
 
-    char buffer[64];
-    strftime(buffer, 64, "%Y-%m-%d %H:%M:%S", timeinfo);
+  char buffer[64];
+  strftime(buffer, 64, "%Y-%m-%d %H:%M:%S", timeinfo);
 
-    int counter = ++m_counter;
-    char buffer2[64];
-    sprintf(buffer2, "%s %i ", buffer, counter);
+  int counter = ++m_counter;
+  char buffer2[64];
+  sprintf(buffer2, "%s %i ", buffer, counter);
 
-    std::cout << buffer2 << msg << std::endl;
-    std::cout.flush();
+  std::cout << buffer2 << msg << std::endl;
+  std::cout.flush();
 }

@@ -3,20 +3,19 @@
 
 #include "WPILib.h"
 
-class Feed: public Command
-{
+class Feed : public Command {
 
 private:
-double Timeout;
-bool seenBall;
+  double Timeout;
+  bool seenBall;
 
 public:
-    Feed(double Timeout);
-    void Initialize();
-    void Execute();
-    bool IsFinished();
-    void End();
-    void Interrupted();
+  Feed(double Timeout);
+  void Initialize();
+  void Execute();
+  bool IsFinished();
+  void End();
+  void Interrupted();
 };
 
 #endif

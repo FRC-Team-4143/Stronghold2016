@@ -3,19 +3,18 @@
 
 #include "WPILib.h"
 
-class ScriptFieldCentricCrab: public Command
-{
+class ScriptFieldCentricCrab : public Command {
 public:
-    float twist;
-    float y;
-    float x;
+  float twist;
+  float y;
+  float x;
 
-    ScriptFieldCentricCrab(float twist, float y, float x, float timeout);
-    void Initialize();
-    void Execute();
-    bool IsFinished();
-    void End();
-    void Interrupted();
+  ScriptFieldCentricCrab(float twist, float y, float x, float timeout);
+  void Initialize();
+  void Execute();
+  bool IsFinished();
+  void End();
+  void Interrupted();
 };
 
 #endif

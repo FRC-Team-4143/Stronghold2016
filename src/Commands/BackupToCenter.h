@@ -3,15 +3,14 @@
 
 #include "WPILib.h"
 
-class BackupToCenter: public Command
-{
+class BackupToCenter : public Command {
 public:
-    BackupToCenter();
-    void Initialize();
-    void Execute();
-    bool IsFinished();
-    void End();
-    void Interrupted();
+  BackupToCenter();
+  void Initialize();
+  void Execute();
+  bool IsFinished();
+  void End();
+  void Interrupted();
 };
 
 #endif

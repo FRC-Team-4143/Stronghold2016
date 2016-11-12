@@ -3,14 +3,14 @@
 
 #include <Commands/Command.h>
 
-class FieldCentric: public Command {
+class FieldCentric : public Command {
 public:
-    FieldCentric();
-    virtual void Initialize();
-    virtual void Execute();
-    virtual bool IsFinished();
-    virtual void End();
-    virtual void Interrupted();
+  FieldCentric();
+  virtual void Initialize();
+  virtual void Execute();
+  virtual bool IsFinished();
+  virtual void End();
+  virtual void Interrupted();
 
 private:
 };

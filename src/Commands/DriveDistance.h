@@ -3,21 +3,21 @@
 
 #include "WPILib.h"
 
-class DriveDistance: public Command
-{
+class DriveDistance : public Command {
 public:
-    DriveDistance(float speed, float driveangle, float twistangle, float distance);
-    void Initialize();
-    void Execute();
-    bool IsFinished();
-    void End();
-    void Interrupted();
+  DriveDistance(float speed, float driveangle, float twistangle,
+                float distance);
+  void Initialize();
+  void Execute();
+  bool IsFinished();
+  void End();
+  void Interrupted();
 
 private:
-    float X;
-    float Y;
-    float TwistAngle;
-    float Distance;
+  float X;
+  float Y;
+  float TwistAngle;
+  float Distance;
 };
 
 #endif

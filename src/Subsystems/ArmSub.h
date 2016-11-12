@@ -4,21 +4,22 @@
 #include "Commands/Subsystem.h"
 #include "WPILib.h"
 
-class ArmSub: public Subsystem {
+class ArmSub : public Subsystem {
 private:
-    double offset;
+  double offset;
+
 public:
-    CANTalon* armMotor;
-    ArmSub();
-    void InitDefaultCommand();
-    void armDown();
-    void stop();
-    void armUp();
-    void readPos();
-    void reset();
-    void stowArm();
-    void setOffset(double offset);
-    void disablePositionControl();
+  CANTalon *armMotor;
+  ArmSub();
+  void InitDefaultCommand();
+  void armDown();
+  void stop();
+  void armUp();
+  void readPos();
+  void reset();
+  void stowArm();
+  void setOffset(double offset);
+  void disablePositionControl();
 };
 
 #endif

@@ -3,15 +3,14 @@
 
 #include "WPILib.h"
 
-class ResetWinch: public Command
-{
+class ResetWinch : public Command {
 public:
-    ResetWinch();
-    void Initialize();
-    void Execute();
-    bool IsFinished();
-    void End();
-    void Interrupted();
+  ResetWinch();
+  void Initialize();
+  void Execute();
+  bool IsFinished();
+  void End();
+  void Interrupted();
 };
 
 #endif

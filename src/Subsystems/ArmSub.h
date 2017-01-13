@@ -3,6 +3,8 @@
 
 #include "Commands/Subsystem.h"
 #include "WPILib.h"
+#include "CANTalon.h"
+
 
 class ArmSub : public Subsystem {
 private:

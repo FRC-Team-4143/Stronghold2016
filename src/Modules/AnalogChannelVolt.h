@@ -7,6 +7,8 @@
 #include <Base.h>
 #include <Counter.h>
 #include <WPILib.h>
+#include "CANTalon.h"
+
 
 class AnalogChannelVolt : public AnalogInput {
 public:

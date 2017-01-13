@@ -14,6 +14,8 @@
 #include "Modules/Logger.h"
 #include "Modules/NavX/AHRS.h"
 #include "WPILib.h"
+#include "CANTalon.h"
+
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
